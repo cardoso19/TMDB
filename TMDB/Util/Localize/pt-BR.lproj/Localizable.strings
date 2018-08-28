@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  TMDB
+
+  Created by Matheus Cardoso kuhn on 28/08/2018.
+  Copyright © 2018 MDT. All rights reserved.
+*/
+
+"NO OVERVIEW" = "Sem descrição disponível.";
+"SEARCH" = "Buscar";
+"NO RESULT" = "Nenhum resultado disponível.";
+"DO A SEARCH" = "Procure um filme.";
