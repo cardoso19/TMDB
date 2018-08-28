@@ -23,3 +23,8 @@ After the project had been cloned, inside of the generated directory, using Term
 `pod install`
 
 With the dependencies managemend has been made by Cocoa Pods, to run the project you need to open it by clicking on the file "TMDB.xcworkspace".
+
+## Third-party Libraries Used
+- [Alamofire](https://github.com/Alamofire/Alamofire): Was choosed by his easy utilization and for his confiability with request on all of kind of types. It was used on each request that the app do to the backend.
+- [Alamofire Image](https://github.com/Alamofire/AlamofireImage): As a componnent library of Alamofire, Alamofire Image provides a easy way to get images from the backend and cache them. The application has used this Framework to manage the memory usage of the cache of images.
+- [DZNEmptyDataSet](https://github.com/dzenbot/DZNEmptyDataSet):This framework provide a simplified form to show UITableViews and UICollectionView without content. The app used this framework to show messages when the collection view of movies don't have any content to show.
