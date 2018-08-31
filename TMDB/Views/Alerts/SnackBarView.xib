@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="9JE-pr-PmN" customClass="SnackBarView" customModule="Coopcerto" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKK-65-1n5">
+                    <rect key="frame" x="35" y="5" width="305" height="35"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPA-8i-Zrh">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                    <connections>
+                        <action selector="actionTap:" destination="9JE-pr-PmN" eventType="touchUpInside" id="8pr-Pd-DBX"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.027450980390000001" green="0.10980392160000001" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="CPA-8i-Zrh" firstAttribute="bottom" secondItem="eez-Tg-f5T" secondAttribute="bottom" id="1VO-OI-SSm"/>
+                <constraint firstAttribute="bottom" secondItem="LKK-65-1n5" secondAttribute="bottom" constant="10" id="2aq-M8-EGE"/>
+                <constraint firstAttribute="trailing" secondItem="LKK-65-1n5" secondAttribute="trailing" constant="35" id="94h-B3-LY3"/>
+                <constraint firstItem="LKK-65-1n5" firstAttribute="top" secondItem="eez-Tg-f5T" secondAttribute="top" constant="5" id="Aof-Ns-yP8"/>
+                <constraint firstItem="CPA-8i-Zrh" firstAttribute="top" secondItem="9JE-pr-PmN" secondAttribute="top" id="QMr-Li-ny0"/>
+                <constraint firstItem="CPA-8i-Zrh" firstAttribute="trailing" secondItem="eez-Tg-f5T" secondAttribute="trailing" id="Rh3-ck-0Q7"/>
+                <constraint firstItem="CPA-8i-Zrh" firstAttribute="leading" secondItem="eez-Tg-f5T" secondAttribute="leading" id="fk2-7Q-f0I"/>
+                <constraint firstItem="LKK-65-1n5" firstAttribute="leading" secondItem="9JE-pr-PmN" secondAttribute="leading" constant="35" id="yzv-uV-y8c"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="eez-Tg-f5T"/>
+            <connections>
+                <outlet property="labelMessage" destination="LKK-65-1n5" id="5aa-io-bQz"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="54"/>
+        </view>
+    </objects>
+</document>
