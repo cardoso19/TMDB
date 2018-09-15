@@ -10,31 +10,34 @@ import UIKit
 
 class SnackBarView: UIView {
     //==--------------------------------==
-    //MARK: - IBOutlets
+    // MARK: - IBOutlets
     //==--------------------------------==
     @IBOutlet weak var labelMessage: UILabel!
-    
     //===----------------------------------------===//
-    //MARK: - Variables
+    // MARK: - Variables
     //===----------------------------------------===//
     var dismissTime: TimeInterval = 3
-    var delegate: AlertDelegate?
+    weak var delegate: AlertDelegate?
     weak var parentView: UIView?
-    
     //==--------------------------------==
-    //MARK: - Init
+    // MARK: - Init
     //==--------------------------------==
-    public class func instanceFromNib(parentView: UIView, message: String, isError: Bool, dismissTime: TimeInterval) -> SnackBarView {
-        let view: SnackBarView = UINib(nibName: "SnackBarView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! SnackBarView
-        view.configLayout(isError: isError)
-        view.dismissTime = dismissTime
-        view.parentView = parentView
-        view.labelMessage.text = message
-        view.resizeView()
-        parentView.addSubview(view)
-        return view
+    public class func instanceFromNib(parentView: UIView,
+                                      message: String,
+                                      isError: Bool,
+                                      dismissTime: TimeInterval) -> SnackBarView? {
+        if let view = UINib(nibName: "SnackBarView", bundle: nil).instantiate(withOwner: nil,
+                                                                              options: nil).first as? SnackBarView {
+            view.configLayout(isError: isError)
+            view.dismissTime = dismissTime
+            view.parentView = parentView
+            view.labelMessage.text = message
+            view.resizeView()
+            parentView.addSubview(view)
+            return view
+        }
+        return nil
     }
-    
     func configLayout(isError: Bool) {
         if isError {
             backgroundColor = Colors.red
@@ -42,28 +45,30 @@ class SnackBarView: UIView {
             backgroundColor = Colors.darkGray
         }
     }
-    
     //===----------------------------------------===//
-    //MARK: - IBActions
+    // MARK: - IBActions
     //===----------------------------------------===//
     @IBAction func actionTap(_ sender: UIButton) {
         hide(canChangeWindowLevel: true)
     }
-    
     //===----------------------------------------===//
-    //MARK: - Interactions
+    // MARK: - Interactions
     //===----------------------------------------===//
     private func startTimer() {
         if dismissTime != 0 {
-            Timer.scheduledTimer(timeInterval: dismissTime, target: self, selector: #selector(hide), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: dismissTime,
+                                 target: self,
+                                 selector: #selector(hide),
+                                 userInfo: nil,
+                                 repeats: false)
         }
     }
-    
     func resizeView() {
         self.frame.size.width = UIScreen.main.bounds.size.width
         self.layoutIfNeeded()
         let verticalMargin: CGFloat = 20
-        var newHeight: CGFloat = (labelMessage.text ?? "").height(withConstrainedWidth: labelMessage.frame.size.width, font: labelMessage.font) + verticalMargin
+        var newHeight: CGFloat = (labelMessage.text ?? "").height(withConstrainedWidth: labelMessage.frame.size.width,
+                                                                  font: labelMessage.font) + verticalMargin
         if #available(iOS 11.0, *) {
             let window = UIApplication.shared.keyWindow
             if let topPadding = window?.safeAreaInsets.top {
@@ -75,7 +80,7 @@ class SnackBarView: UIView {
 }
 
 //===----------------------------------------===//
-//MARK: - AlertDelegate
+// MARK: - AlertDelegate
 //===----------------------------------------===//
 extension SnackBarView: AlertDelegate {
     func show() {
@@ -88,7 +93,6 @@ extension SnackBarView: AlertDelegate {
                         self.frame.origin = CGPoint(x: self.frame.origin.x, y: 0)
         }, completion: nil)
     }
-    
     @objc func hide(canChangeWindowLevel: Bool) {
         UIView.animate(withDuration: 0.25,
                        delay: 0,

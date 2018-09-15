@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol MoviesCollectionController {    
+protocol MoviesCollectionController {
     func updateMovies(_ movies: [Movie])
     func reloadData()
 }

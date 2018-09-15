@@ -9,11 +9,20 @@
 import UIKit
 
 class Movie: Codable {
-    var id: Int?
+    var identifier: Int?
     var title: String?
-    var genre_ids: [Int]?
-    var poster_path: String?
-    var backdrop_path: String?
-    var release_date: String?
+    var genreIDs: [Int]?
+    var posterPath: String?
+    var backdropPath: String?
+    var releaseDate: String?
     var overview: String?
+    enum CodingKeys: String, CodingKey {
+        case identifier
+        case title
+        case genreIDs = "genre_ids"
+        case posterPath = "poster_path"
+        case backdropPath = "backdrop_path"
+        case releaseDate = "release_date"
+        case overview
+    }
 }

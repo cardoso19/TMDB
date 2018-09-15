@@ -10,21 +10,18 @@ import Foundation
 
 class MDTGenres {
     //==--------------------------------==
-    //MARK: - Variables n Init
+    // MARK: - Variables n Init
     //==--------------------------------==
     static let shared: MDTGenres = MDTGenres()
     var genres: [Genre]?
     private init() {}
-    
     //==--------------------------------==
-    //MARK: - Get
+    // MARK: - Get
     //==--------------------------------==
     func getMovieGenreBy(genreID: Int) -> String? {
         if let genres = genres {
-            for genre in genres {
-                if (genre.id ?? -1) == genreID {
-                    return genre.name
-                }
+            for genre in genres where (genre.identifier ?? -1) == genreID {
+                return genre.name
             }
         }
         return nil

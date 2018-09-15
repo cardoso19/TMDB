@@ -10,43 +10,21 @@ import UIKit
 
 class BaseTabBarController: UITabBarController {
     //==--------------------------------==
-    //MARK: - IBOutlets
-    //==--------------------------------==
-    
-    //==--------------------------------==
-    //MARK: - Init
+    // MARK: - Init
     //==--------------------------------==
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.backgroundColor = Colors.darkGray
         tabBar.barTintColor = Colors.darkGray
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !isLayoutDefined {
-            isLayoutDefined = true
-            configLayout()
-        }
-    }
-    
-    func configLayout() {
-        
-    }
-    
     //==--------------------------------==
-    //MARK: - IBActions
-    //==--------------------------------==
-    
-    //==--------------------------------==
-    //MARK: - Interactions
-    //==--------------------------------==
-    
-    //==--------------------------------==
-    //MARK: - Navigation
+    // MARK: - Navigation
     //==--------------------------------==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let identifier = segue.identifier, identifier == "detailMovie", let movie = sender as? MovieDetail, let controller = segue.destination as? MovieDetailViewController {
+        if let identifier = segue.identifier,
+            identifier == "detailMovie",
+            let movie = sender as? MovieDetail,
+            let controller = segue.destination as? MovieDetailViewController {
             controller.movieDetail = movie
         }
     }

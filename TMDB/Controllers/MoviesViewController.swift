@@ -10,38 +10,32 @@ import UIKit
 
 class MoviesViewController: UIViewController {
     //==--------------------------------==
-    //MARK: - IBOutlets
+    // MARK: - IBOutlets
     //==--------------------------------==
     @IBOutlet weak var viewHeaderSafeArea: UIView!
     @IBOutlet weak var viewHeader: UIView!
-    
     @IBOutlet weak var imageViewIcon: UIImageView!
-    
     //==--------------------------------==
-    //MARK: - Variables
+    // MARK: - Variables
     //==--------------------------------==
     var collectionController: MoviesCollectionController?
-    
     var movies: [Movie] = []
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isRequesting: Bool = false
-    
     //==--------------------------------==
-    //MARK: - Init
+    // MARK: - Init
     //==--------------------------------==
     override func viewDidLoad() {
         super.viewDidLoad()
         callGenres()
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         callMovies()
     }
-    
     //==--------------------------------==
-    //MARK: - Interactions
+    // MARK: - Interactions
     //==--------------------------------==
     func callMovies() {
         if !isRequesting && (totalPages == 0 || currentPage <= totalPages) {
@@ -57,7 +51,7 @@ class MoviesViewController: UIViewController {
                 if let error = error {
                     MDTAlert.shared.showSnackBar(message: error.message ?? "", isError: true)
                 } else if let response = response, let newMovies = response.results {
-                    self.totalPages = response.total_pages ?? -1
+                    self.totalPages = response.totalPages ?? -1
                     self.currentPage += 1
                     self.movies.append(contentsOf: newMovies)
                     self.collectionController?.updateMovies(self.movies)
@@ -65,7 +59,6 @@ class MoviesViewController: UIViewController {
             }
         }
     }
-    
     func callGenres() {
         GenreServices.getGenres { (response, error) in
             if let error = error {
@@ -76,12 +69,13 @@ class MoviesViewController: UIViewController {
             }
         }
     }
-    
     //==--------------------------------==
-    //MARK: - Navigation
+    // MARK: - Navigation
     //==--------------------------------==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let identifier = segue.identifier, identifier == "collection", let controller = segue.destination as? MoviesCollectionViewController {
+        if let identifier = segue.identifier,
+            identifier == "collection",
+            let controller = segue.destination as? MoviesCollectionViewController {
             controller.moviesController = self
             collectionController = controller
         }
@@ -89,13 +83,12 @@ class MoviesViewController: UIViewController {
 }
 
 //==--------------------------------==
-//MARK: - MoviesController
+// MARK: - MoviesController
 //==--------------------------------==
 extension MoviesViewController: MoviesController {
     func reachedTheEndOfList() {
         callMovies()
     }
-    
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }
