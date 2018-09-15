@@ -12,12 +12,16 @@ import Alamofire
 class SearchServices {
     static func getMoviesBy(query: String,
                             page: Int,
-                            completion: @escaping (_ response: MoviesDTO?,_ error: ErrorObject?) -> Void) -> Alamofire.Request {
-        return Request.shared.JSON(path: String(format: "search/movie?api_key=%@&language=%@&query=%@&page=%d&include_adult=false",
-                                                MDTConstants.apiKey,
-                                                MDTCurrentDevice.language,
-                                                query,
-                                                page),
+                            completion: @escaping (_ response: MoviesDTO?,
+                                                   _ error: ErrorObject?) -> Void) -> Alamofire.Request {
+        let basePath: String = "search/movie?"
+        let apiKey: String = String(format: "api_key=%@", MDTConstants.apiKey)
+        let language: String = String(format: "language=%@", MDTCurrentDevice.language)
+        let query: String = String(format: "query=%@", query)
+        let page: String = String(format: "page=%d", page)
+        var path: String = basePath + apiKey + "&" + language + "&"
+        path += query + "&" + page + "&" + "include_adult=false"
+        return Request.shared.JSON(path: path,
                                    method: .get,
                                    parameters: nil,
                                    headers: nil) { (response: MoviesDTO?, error) in

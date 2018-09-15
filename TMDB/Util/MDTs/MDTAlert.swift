@@ -12,9 +12,8 @@ class MDTAlert {
     static let shared: MDTAlert = MDTAlert()
     private weak var snackBar: SnackBarView?
     private init() {}
-    
     //==--------------------------------==
-    //MARK: - Snack Bar
+    // MARK: - Snack Bar
     //==--------------------------------==
     public func showSnackBar(message: String, isError: Bool, dismissTime: TimeInterval = 3) {
         if let snack = self.snackBar {
@@ -26,16 +25,16 @@ class MDTAlert {
             presentSnackBar(message: message, isError: isError, dismissTime: dismissTime)
         }
     }
-    
     private func presentSnackBar(message: String, isError: Bool, dismissTime: TimeInterval) {
         if let window = UIApplication.shared.keyWindow {
             window.windowLevel = UIWindowLevelStatusBar
-            let snackBar: SnackBarView = SnackBarView.instanceFromNib(parentView: window,
+            if let snackBar: SnackBarView = SnackBarView.instanceFromNib(parentView: window,
                                                                       message: message,
                                                                       isError: isError,
-                                                                      dismissTime: dismissTime)
-            snackBar.show()
-            self.snackBar = snackBar
+                                                                      dismissTime: dismissTime) {
+                snackBar.show()
+                self.snackBar = snackBar
+            }
         }
     }
 }

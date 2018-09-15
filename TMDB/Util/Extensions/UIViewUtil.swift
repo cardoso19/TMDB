@@ -23,7 +23,6 @@ extension UIView {
         if let path = path {
             layer.shadowPath = path
         }
-        
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }

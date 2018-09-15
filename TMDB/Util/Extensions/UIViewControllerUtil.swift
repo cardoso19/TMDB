@@ -13,6 +13,9 @@ extension UIViewController {
     /// Flag that define if the style was applied.
     var isLayoutDefined: Bool {
         get { return objc_getAssociatedObject(self, &kAssociationKeyIsLayoutDefined) as? Bool ?? false }
-        set(newValue) { objc_setAssociatedObject(self, &kAssociationKeyIsLayoutDefined, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN) }
+        set(newValue) { objc_setAssociatedObject(self,
+                                                 &kAssociationKeyIsLayoutDefined,
+                                                 newValue,
+                                                 objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN) }
     }
 }
