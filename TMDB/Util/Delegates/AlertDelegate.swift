@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AlertDelegate {
+protocol AlertDelegate: class {
     func show()
     func hide(canChangeWindowLevel: Bool)
 }

@@ -11,38 +11,32 @@ import Alamofire
 
 class MovieDetailViewController: UIViewController {
     //==--------------------------------==
-    //MARK: - IBOutlets
+    // MARK: - IBOutlets
     //==--------------------------------==
     @IBOutlet weak var imageViewPoster: UIImageView!
-    
     @IBOutlet weak var labelGenre: UILabel!
     @IBOutlet weak var labelReleaseDate: UILabel!
     @IBOutlet weak var textViewOverview: UITextView!
-    
     //==--------------------------------==
-    //MARK: - Variables
+    // MARK: - Variables
     //==--------------------------------==
     var movieDetail: MovieDetail?
     var posterRequest: Alamofire.Request?
-    
     //==--------------------------------==
-    //MARK: - Init
+    // MARK: - Init
     //==--------------------------------==
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = Colors.green
         navigationController?.isNavigationBarHidden = false
-        
         loadMovieTexts()
         loadMovieImage()
     }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = true
         posterRequest?.cancel()
     }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !isLayoutDefined {
@@ -50,16 +44,14 @@ class MovieDetailViewController: UIViewController {
             configLayout()
         }
     }
-    
     func configLayout() {
         imageViewPoster.dropShadow()
     }
-    
     func loadMovieImage() {
         imageViewPoster.image = #imageLiteral(resourceName: "defaultPosterImage")
         if let image = movieDetail?.poster {
             imageViewPoster.image = image
-        } else if let posterPath = movieDetail?.movie.poster_path {
+        } else if let posterPath = movieDetail?.movie.posterPath {
             posterRequest = Request.shared.IMAGE(path: posterPath) { (image) in
                 self.posterRequest = nil
                 if let image = image {
@@ -68,16 +60,15 @@ class MovieDetailViewController: UIViewController {
             }
         }
     }
-    
     func loadMovieTexts() {
         navigationItem.title = movieDetail?.movie.title
-        
-        if let genreID = movieDetail?.movie.genre_ids?.first, let genreName = MDTGenres.shared.getMovieGenreBy(genreID: genreID) {
+        if let genreID = movieDetail?.movie.genreIDs?.first,
+           let genreName = MDTGenres.shared.getMovieGenreBy(genreID: genreID) {
             labelGenre.text = genreName
         } else {
             labelGenre.text = "-"
         }
-        if let date = movieDetail?.movie.release_date?.toDate(format: "yyyy/MM/dd") {
+        if let date = movieDetail?.movie.releaseDate?.toDate(format: "yyyy/MM/dd") {
             labelReleaseDate.text = date.dateString(ofStyle: .short)
         } else {
             labelReleaseDate.text = "-/-/-"

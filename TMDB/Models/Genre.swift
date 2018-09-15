@@ -9,6 +9,6 @@
 import Foundation
 
 class Genre: Codable {
-    var id: Int?
+    var identifier: Int?
     var name: String?
 }
