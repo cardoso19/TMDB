@@ -8,11 +8,6 @@
 
 import UIKit
 
-struct MovieDetail {
-    var movie: Movie
-    var poster: UIImage?
-}
-
 protocol MoviesController {
     func reachedTheEndOfList()
     func detail(movie: MovieDetail)

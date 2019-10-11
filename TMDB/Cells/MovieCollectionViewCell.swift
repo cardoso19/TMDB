@@ -11,31 +11,27 @@ import Alamofire
 import AlamofireImage
 
 class MovieCollectionViewCell: UICollectionViewCell {
-    //==--------------------------------==
+    
     // MARK: - IBOutlets
-    //==--------------------------------==
     @IBOutlet weak var imageViewPoster: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelGenre: UILabel!
     @IBOutlet weak var labelReleaseDate: UILabel!
-    //==--------------------------------==
+
     // MARK: - Variables
-    //==--------------------------------==
     var imageRequest: Alamofire.Request?
     var downloadedImage: UIImage?
-    //==--------------------------------==
+    
     // MARK: - Init
-    //==--------------------------------==
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    //==--------------------------------==
+
     // MARK: - Interactions
-    //==--------------------------------==
     func setContent(item: Movie) {
         labelTitle.text = item.title ?? "-"
-        if let date = item.releaseDate?.toDate(format: "yyyy/MM/dd") {
-            labelReleaseDate.text = date.dateString(ofStyle: .short)
+        if let releaseDate = item.releaseDate?.value {
+            labelReleaseDate.text = releaseDate.convertToString(format: "dd/MM/yyyy")
         } else {
             labelReleaseDate.text = "-/-/-"
         }

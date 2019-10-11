@@ -12,15 +12,13 @@ import DZNEmptyDataSet
 private let reuseIdentifier = "movieCell"
 
 class MoviesCollectionViewController: UICollectionViewController {
-    //==--------------------------------==
+    
     // MARK: - Variables
-    //==--------------------------------==
     var emptyContentText: String = NSLocalizedString("DO A SEARCH", comment: "")
     var moviesController: MoviesController?
     var movies: [Movie] = []
-    //==--------------------------------==
-    // MARK: - Init
-    //==--------------------------------==
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.emptyDataSetSource = self
@@ -32,13 +30,8 @@ class MoviesCollectionViewController: UICollectionViewController {
         super.viewWillTransition(to: size, with: coordinator)
         collectionView?.reloadData()
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    //==--------------------------------==
+
     // MARK: - UIScrollViewDelegate
-    //==--------------------------------==
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if movies.count > 0 && scrollView.contentSize.height > scrollView.frame.size.height {
             if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height * 0.8 {
@@ -46,9 +39,8 @@ class MoviesCollectionViewController: UICollectionViewController {
             }
         }
     }
-    //==--------------------------------==
+    
     // MARK: - UICollectionViewDelegate
-    //==--------------------------------==
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var detail: MovieDetail = MovieDetail(movie: movies[indexPath.row], poster: nil)
         if let image = (collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell)?.downloadedImage {
@@ -56,12 +48,12 @@ class MoviesCollectionViewController: UICollectionViewController {
         }
         moviesController?.detail(movie: detail)
     }
-    //==--------------------------------==
+    
     // MARK: - UICollectionViewDataSource
-    //==--------------------------------==
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = createMovieCell(collectionView, indexPath: indexPath, data: movies[indexPath.row]) {
@@ -69,9 +61,8 @@ class MoviesCollectionViewController: UICollectionViewController {
         }
         return UICollectionViewCell()
     }
-    //===----------------------------------------===//
+    
     // MARK: - Cell Constructor
-    //===----------------------------------------===//
     private func createMovieCell(_ collectionView: UICollectionView,
                                  indexPath: IndexPath,
                                  data: Movie) -> MovieCollectionViewCell? {
@@ -84,9 +75,7 @@ class MoviesCollectionViewController: UICollectionViewController {
     }
 }
 
-//==--------------------------------==
 // MARK: - UICollectionViewDelegateFlowLayout
-//==--------------------------------==
 extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -103,10 +92,9 @@ extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//==--------------------------------==
 // MARK: - MoviesCollectionController
-//==--------------------------------==
 extension MoviesCollectionViewController: MoviesCollectionController {
+    
     func updateMovies(_ movies: [Movie]) {
         self.movies = movies
         if movies.count == 0 {
@@ -114,15 +102,15 @@ extension MoviesCollectionViewController: MoviesCollectionController {
         }
         collectionView?.reloadData()
     }
+    
     func reloadData() {
         collectionView?.reloadData()
     }
 }
 
-//==--------------------------------==
-// MARK: - DZNEmptyDataSetSource n DZNEmptyDataSetDelegate
-//==--------------------------------==
+// MARK: - DZNEmptyDataSetSource
 extension MoviesCollectionViewController: DZNEmptyDataSetSource {
+    
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         return NSAttributedString(string: emptyContentText)
     }

@@ -9,5 +9,5 @@
 import Foundation
 
 class MDTCurrentDevice {
-    static let language: String = String(Locale.preferredLanguages.first ??? "en-US")
+    static let language: String = String(Locale.preferredLanguages.first ?? "en-US")
 }

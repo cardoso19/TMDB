@@ -9,17 +9,15 @@
 import UIKit
 
 class BaseTabBarController: UITabBarController {
-    //==--------------------------------==
-    // MARK: - Init
-    //==--------------------------------==
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.backgroundColor = Colors.darkGray
         tabBar.barTintColor = Colors.darkGray
     }
-    //==--------------------------------==
+    
     // MARK: - Navigation
-    //==--------------------------------==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier,
             identifier == "detailMovie",

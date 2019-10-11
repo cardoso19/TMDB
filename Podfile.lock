@@ -10,7 +10,7 @@ DEPENDENCIES:
   - DZNEmptyDataSet
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - AlamofireImage
     - DZNEmptyDataSet
@@ -22,4 +22,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 160d65e89bf24655986b5d8647fe682fa554f7fb
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.8.3

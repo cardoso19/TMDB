@@ -9,19 +9,16 @@
 import UIKit
 
 extension String {
-    /// Create a date by a string.
-    /// - Parameter format: date format.
-    public func toDate(format: String) -> Date? {
+    
+    /// Try to convert the string to date in the given format.
+    /// - Parameter format: date's final format.
+    public func convertToDate(format: String) -> Date? {
         let dateFormat: DateFormatter = DateFormatter()
         dateFormat.dateFormat = format
-        dateFormat.locale = NSLocale.system
-        let date: Date? = dateFormat.date(from: self)
-        if date == nil && format == "yyyy/MM/dd" {
-            dateFormat.dateFormat = "yyyy/MM/dd HH"
-            return dateFormat.date(from: self + " 01")
-        }
-        return date
+        dateFormat.locale = Locale(identifier: "en_US_POSIX")
+        return dateFormat.date(from: self)
     }
+    
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect,
@@ -30,6 +27,7 @@ extension String {
                                             context: nil)
         return ceil(boundingBox.height)
     }
+    
     func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = self.boundingRect(with: constraintRect,

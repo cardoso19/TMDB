@@ -9,11 +9,13 @@
 import UIKit
 
 extension UIView {
+    
     /// Add shadow to the view.
     /// - Parameters:
     ///   - scale: indicate if the layer will rasterize by the content.
     ///   - path: path that the shadow will follow.
     ///   - shadowColor: color that will be added on the shadow.
+    ///   - opacity: the alpha of the shadow.
     func dropShadow(scale: Bool = true, path: CGPath? = nil, shadowColor: UIColor = .black, opacity: Float = 0.2) {
         layer.masksToBounds = false
         layer.shadowColor = shadowColor.cgColor

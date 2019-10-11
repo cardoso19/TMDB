@@ -8,6 +8,6 @@
 
 import Foundation
 
-class GenresDTO: Codable {
-    var genres: [Genre]?
+struct GenresDTO: Decodable {
+    let genres: [Genre]?
 }

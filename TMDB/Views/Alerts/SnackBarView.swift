@@ -9,19 +9,16 @@
 import UIKit
 
 class SnackBarView: UIView {
-    //==--------------------------------==
+    
     // MARK: - IBOutlets
-    //==--------------------------------==
     @IBOutlet weak var labelMessage: UILabel!
-    //===----------------------------------------===//
+    
     // MARK: - Variables
-    //===----------------------------------------===//
     var dismissTime: TimeInterval = 3
     weak var delegate: AlertDelegate?
     weak var parentView: UIView?
-    //==--------------------------------==
+    
     // MARK: - Init
-    //==--------------------------------==
     public class func instanceFromNib(parentView: UIView,
                                       message: String,
                                       isError: Bool,
@@ -45,15 +42,13 @@ class SnackBarView: UIView {
             backgroundColor = Colors.darkGray
         }
     }
-    //===----------------------------------------===//
+    
     // MARK: - IBActions
-    //===----------------------------------------===//
     @IBAction func actionTap(_ sender: UIButton) {
         hide(canChangeWindowLevel: true)
     }
-    //===----------------------------------------===//
+    
     // MARK: - Interactions
-    //===----------------------------------------===//
     private func startTimer() {
         if dismissTime != 0 {
             Timer.scheduledTimer(timeInterval: dismissTime,
@@ -63,6 +58,7 @@ class SnackBarView: UIView {
                                  repeats: false)
         }
     }
+    
     func resizeView() {
         self.frame.size.width = UIScreen.main.bounds.size.width
         self.layoutIfNeeded()
@@ -79,10 +75,9 @@ class SnackBarView: UIView {
     }
 }
 
-//===----------------------------------------===//
 // MARK: - AlertDelegate
-//===----------------------------------------===//
 extension SnackBarView: AlertDelegate {
+    
     func show() {
         startTimer()
         self.frame.origin = CGPoint(x: self.frame.origin.x, y: -self.frame.size.height)
@@ -93,6 +88,7 @@ extension SnackBarView: AlertDelegate {
                         self.frame.origin = CGPoint(x: self.frame.origin.x, y: 0)
         }, completion: nil)
     }
+    
     @objc func hide(canChangeWindowLevel: Bool) {
         UIView.animate(withDuration: 0.25,
                        delay: 0,

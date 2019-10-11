@@ -10,17 +10,15 @@ import UIKit
 import Alamofire
 
 class SearchViewController: UIViewController {
-    //==--------------------------------==
+    
     // MARK: - IBOutlets
-    //==--------------------------------==
     @IBOutlet weak var viewHeaderSafeArea: UIView!
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var viewSearchBarSafeAreaLeft: UIView!
     @IBOutlet weak var viewSearchBarSafeAreaRight: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
-    //==--------------------------------==
+    
     // MARK: - Variables
-    //==--------------------------------==
     var collectionController: MoviesCollectionController?
     var movies: [Movie] = []
     var currentPage: Int = 0
@@ -29,9 +27,8 @@ class SearchViewController: UIViewController {
     var searchRequest: Alamofire.Request?
     var previousSearchedQuery: String?
     var timer: Timer?
-    //==--------------------------------==
+    
     // MARK: - Init
-    //==--------------------------------==
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.placeholder = NSLocalizedString("SEARCH", comment: "")
@@ -40,12 +37,8 @@ class SearchViewController: UIViewController {
         searchBar.tintColor = Colors.darkGray
         searchBar.becomeFirstResponder()
     }
-    //==--------------------------------==
+
     // MARK: - IBActions
-    //==--------------------------------==
-    //==--------------------------------==
-    // MARK: - Interactions
-    //==--------------------------------==
     func callSearchMovies() {
         let query: String = searchBar.text ?? ""
         if !isRequesting && (totalPages == 0 || currentPage <= totalPages) && query != "" {
@@ -77,9 +70,9 @@ class SearchViewController: UIViewController {
             }
         }
     }
-    //==--------------------------------==
+    
+    
     // MARK: - Navigation
-    //==--------------------------------==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier,
             identifier == "collection",
@@ -90,10 +83,9 @@ class SearchViewController: UIViewController {
     }
 }
 
-//==--------------------------------==
 // MARK: - UISearchBarDelegate
-//==--------------------------------==
 extension SearchViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let query: String = searchBar.text ?? ""
@@ -101,6 +93,7 @@ extension SearchViewController: UISearchBarDelegate {
             callSearchMovies()
         }
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
         currentPage = 0
@@ -114,13 +107,13 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-//==--------------------------------==
 // MARK: - MoviesController
-//==--------------------------------==
 extension SearchViewController: MoviesController {
+    
     func reachedTheEndOfList() {
         callSearchMovies()
     }
+    
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }

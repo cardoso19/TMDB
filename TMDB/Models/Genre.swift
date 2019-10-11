@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Genre: Codable {
-    var identifier: Int?
-    var name: String?
+struct Genre: Decodable {
+    let identifier: Int?
+    let name: String?
 }

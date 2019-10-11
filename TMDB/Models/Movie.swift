@@ -8,14 +8,15 @@
 
 import UIKit
 
-class Movie: Codable {
-    var identifier: Int?
-    var title: String?
-    var genreIDs: [Int]?
-    var posterPath: String?
-    var backdropPath: String?
-    var releaseDate: String?
-    var overview: String?
+struct Movie: Decodable {
+    let identifier: Int?
+    let title: String?
+    let genreIDs: [Int]?
+    let posterPath: String?
+    let backdropPath: String?
+    let releaseDate: DateDecodable?
+    let overview: String?
+    
     enum CodingKeys: String, CodingKey {
         case identifier
         case title

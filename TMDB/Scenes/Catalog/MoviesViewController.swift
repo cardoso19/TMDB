@@ -9,34 +9,31 @@
 import UIKit
 
 class MoviesViewController: UIViewController {
-    //==--------------------------------==
+    
     // MARK: - IBOutlets
-    //==--------------------------------==
     @IBOutlet weak var viewHeaderSafeArea: UIView!
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var imageViewIcon: UIImageView!
-    //==--------------------------------==
+    
     // MARK: - Variables
-    //==--------------------------------==
     var collectionController: MoviesCollectionController?
     var movies: [Movie] = []
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isRequesting: Bool = false
-    //==--------------------------------==
+    
     // MARK: - Init
-    //==--------------------------------==
     override func viewDidLoad() {
         super.viewDidLoad()
         callGenres()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         callMovies()
     }
-    //==--------------------------------==
+    
     // MARK: - Interactions
-    //==--------------------------------==
     func callMovies() {
         if !isRequesting && (totalPages == 0 || currentPage <= totalPages) {
             if currentPage == 0 {
@@ -59,6 +56,7 @@ class MoviesViewController: UIViewController {
             }
         }
     }
+    
     func callGenres() {
         GenreServices.getGenres { (response, error) in
             if let error = error {
@@ -69,9 +67,8 @@ class MoviesViewController: UIViewController {
             }
         }
     }
-    //==--------------------------------==
+    
     // MARK: - Navigation
-    //==--------------------------------==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier,
             identifier == "collection",
@@ -82,13 +79,13 @@ class MoviesViewController: UIViewController {
     }
 }
 
-//==--------------------------------==
 // MARK: - MoviesController
-//==--------------------------------==
 extension MoviesViewController: MoviesController {
+    
     func reachedTheEndOfList() {
         callMovies()
     }
+    
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }

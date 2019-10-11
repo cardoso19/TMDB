@@ -9,12 +9,15 @@
 import UIKit
 
 extension UISearchBar {
+    
     private var textField: UITextField? {
         return subviews.first?.subviews.compactMap { $0 as? UITextField }.first
     }
+    
     private var activityIndicator: UIActivityIndicatorView? {
         return textField?.leftView?.subviews.compactMap { $0 as? UIActivityIndicatorView }.first
     }
+    
     var isLoading: Bool {
         get {
             return activityIndicator != nil
