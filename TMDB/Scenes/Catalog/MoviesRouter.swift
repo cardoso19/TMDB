@@ -1,5 +1,5 @@
 //
-//  MoviesPresenter.swift
+//  MoviesRouter.swift
 //  TMDB
 //
 //  Created by Matheus Cardoso Kuhn on 11/10/19.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol MoviesPresenterLogic {
+protocol MoviesRouterLogic {
     
 }
 
-class MoviesPresenter: MoviesPresenterLogic {
+class MoviesRouter: MoviesRouterLogic {
     
     // MARK: - Variables
-    weak var viewController: MoviesViewController?
+    weak var dataStore: MoviesDataStoreLogic?
 }

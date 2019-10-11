@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FE7C49B2351384500B34075 /* MoviesDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE7C49A2351384500B34075 /* MoviesDataStore.swift */; };
+		2FE7C49D23513EF500B34075 /* MoviesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE7C49C23513EF500B34075 /* MoviesRouter.swift */; };
 		2FFAE85123501228002AEDBE /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFAE85023501228002AEDBE /* MovieDetail.swift */; };
 		2FFAE8542350209B002AEDBE /* DateDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFAE8532350209B002AEDBE /* DateDecodable.swift */; };
 		2FFAE8562350214C002AEDBE /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFAE8552350214C002AEDBE /* DateExtension.swift */; };
@@ -53,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2FE7C49A2351384500B34075 /* MoviesDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesDataStore.swift; sourceTree = "<group>"; };
+		2FE7C49C23513EF500B34075 /* MoviesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRouter.swift; sourceTree = "<group>"; };
 		2FFAE85023501228002AEDBE /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		2FFAE8532350209B002AEDBE /* DateDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDecodable.swift; sourceTree = "<group>"; };
 		2FFAE8552350214C002AEDBE /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -128,9 +132,11 @@
 		2FFAE8582350290C002AEDBE /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
-				AF26490B2132FCD000283E0F /* MoviesViewController.swift */,
+				2FE7C49A2351384500B34075 /* MoviesDataStore.swift */,
 				2FFAE8692350FA5C002AEDBE /* MoviesInteractor.swift */,
 				2FFAE86B2350FB8E002AEDBE /* MoviesPresenter.swift */,
+				2FE7C49C23513EF500B34075 /* MoviesRouter.swift */,
+				AF26490B2132FCD000283E0F /* MoviesViewController.swift */,
 				2FFAE86D2350FC39002AEDBE /* MoviesWorker.swift */,
 			);
 			path = Catalog;
@@ -498,6 +504,7 @@
 				AF50050021333DEC00FDCAEF /* AlertDelegate.swift in Sources */,
 				AF0470F321332C27001A6D93 /* MDTGenres.swift in Sources */,
 				AF5004F621333C7700FDCAEF /* MDTAlert.swift in Sources */,
+				2FE7C49B2351384500B34075 /* MoviesDataStore.swift in Sources */,
 				2FFAE86C2350FB8E002AEDBE /* MoviesPresenter.swift in Sources */,
 				AF5004F421333AE300FDCAEF /* MDTLoading.swift in Sources */,
 				AF5004F0213335D500FDCAEF /* MDTCurrentDevice.swift in Sources */,
@@ -514,6 +521,7 @@
 				AF2648FD2132F8BC00283E0F /* BaseTabBarController.swift in Sources */,
 				AF5004E521332E4400FDCAEF /* ErrorObject.swift in Sources */,
 				AF5004EE213334A400FDCAEF /* MDTConstants.swift in Sources */,
+				2FE7C49D23513EF500B34075 /* MoviesRouter.swift in Sources */,
 				AFEADFDF2135B3FB00172162 /* MoviesCollectionController.swift in Sources */,
 				2FFAE86A2350FA5C002AEDBE /* MoviesInteractor.swift in Sources */,
 				AFEADFDD2135B28700172162 /* MoviesController.swift in Sources */,

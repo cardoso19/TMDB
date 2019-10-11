@@ -9,7 +9,8 @@
 import Foundation
 
 protocol MoviesInteractorLogic {
-    
+    func fetchGenres()
+    func moviesCatalog()
 }
 
 class MoviesInteractor: MoviesInteractorLogic {
@@ -17,10 +18,22 @@ class MoviesInteractor: MoviesInteractorLogic {
     // MARK: - Variables
     private let presenter: MoviesPresenterLogic
     private let worker: MoviesWorkerLogic
+    private let dataStore: MoviesDataStoreLogic
     
     // MARK: - Life Cycle
-    init(presenter: MoviesPresenterLogic, worker: MoviesWorkerLogic) {
+    init(presenter: MoviesPresenterLogic, worker: MoviesWorkerLogic, dataStore: MoviesDataStoreLogic) {
         self.presenter = presenter
         self.worker = worker
+        self.dataStore = dataStore
+    }
+    
+    // MARK: - Genres
+    func fetchGenres() {
+        
+    }
+    
+    // MARK: - Catalog
+    func moviesCatalog() {
+        
     }
 }

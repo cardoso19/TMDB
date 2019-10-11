@@ -16,6 +16,8 @@ class MoviesViewController: UIViewController {
     @IBOutlet weak var imageViewIcon: UIImageView!
     
     // MARK: - Variables
+    private var interactor: MoviesInteractorLogic!
+    private var router: MoviesRouterLogic!
     var collectionController: MoviesCollectionController?
     var movies: [Movie] = []
     var currentPage: Int = 0
@@ -25,12 +27,26 @@ class MoviesViewController: UIViewController {
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         callGenres()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         callMovies()
+    }
+    
+    private func setup() {
+        let presenter = MoviesPresenter()
+        let worker = MoviesWorker()
+        let dataStore = MoviesDataStore()
+        let router = MoviesRouter()
+        router.dataStore = dataStore
+        presenter.viewController = self
+        interactor = MoviesInteractor(presenter: presenter,
+                                      worker: worker,
+                                      dataStore: dataStore)
+        self.router = router
     }
     
     // MARK: - Interactions
