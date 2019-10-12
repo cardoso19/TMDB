@@ -12,7 +12,7 @@ class MDTAlert {
     static let shared: MDTAlert = MDTAlert()
     private weak var snackBar: SnackBarView?
     private init() {}
-    
+
     // MARK: - Snack Bar
     public func showSnackBar(message: String, isError: Bool, dismissTime: TimeInterval = 3) {
         if let snack = self.snackBar {

@@ -9,7 +9,7 @@
 import UIKit
 
 extension String {
-    
+
     /// Try to convert the string to date in the given format.
     /// - Parameter format: date's final format.
     public func convertToDate(format: String) -> Date? {
@@ -18,7 +18,7 @@ extension String {
         dateFormat.locale = Locale(identifier: "en_US_POSIX")
         return dateFormat.date(from: self)
     }
-    
+
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect,
@@ -27,7 +27,7 @@ extension String {
                                             context: nil)
         return ceil(boundingBox.height)
     }
-    
+
     func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = self.boundingRect(with: constraintRect,

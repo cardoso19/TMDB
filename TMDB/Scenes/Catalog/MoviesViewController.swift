@@ -8,32 +8,31 @@
 
 import UIKit
 
+protocol MoviesViewControllerLogic: AnyObject {
+    func displayGenresError(message: String)
+    func displayMovies(movies: [MovieViewModel])
+    func displayMoviesError(message: String)
+}
+
 class MoviesViewController: UIViewController {
-    
+
     // MARK: - IBOutlets
     @IBOutlet weak var viewHeaderSafeArea: UIView!
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var imageViewIcon: UIImageView!
-    
+
     // MARK: - Variables
     private var interactor: MoviesInteractorLogic!
     private var router: MoviesRouterLogic!
     var collectionController: MoviesCollectionController?
-    var movies: [Movie] = []
-    var currentPage: Int = 0
-    var totalPages: Int = 0
-    var isRequesting: Bool = false
-    
+    var movies: [MovieViewModel] = []
+
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        callGenres()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        callMovies()
+        interactor.fetchGenres()
+        interactor.fetchMovies()
     }
     
     private func setup() {
@@ -49,41 +48,6 @@ class MoviesViewController: UIViewController {
         self.router = router
     }
     
-    // MARK: - Interactions
-    func callMovies() {
-        if !isRequesting && (totalPages == 0 || currentPage <= totalPages) {
-            if currentPage == 0 {
-                MDTLoading.showDefaultLoader()
-            }
-            isRequesting = true
-            MovieServices.getUPComingMovies(page: currentPage + 1) { (response, error) in
-                self.isRequesting = false
-                if self.currentPage == 0 {
-                    MDTLoading.hideDefaultLoading()
-                }
-                if let error = error {
-                    MDTAlert.shared.showSnackBar(message: error.message ?? "", isError: true)
-                } else if let response = response, let newMovies = response.results {
-                    self.totalPages = response.totalPages ?? -1
-                    self.currentPage += 1
-                    self.movies.append(contentsOf: newMovies)
-                    self.collectionController?.updateMovies(self.movies)
-                }
-            }
-        }
-    }
-    
-    func callGenres() {
-        GenreServices.getGenres { (response, error) in
-            if let error = error {
-                MDTAlert.shared.showSnackBar(message: error.message ?? "", isError: true)
-            } else {
-                MDTGenres.shared.genres = response
-                self.collectionController?.reloadData()
-            }
-        }
-    }
-    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier,
@@ -97,12 +61,32 @@ class MoviesViewController: UIViewController {
 
 // MARK: - MoviesController
 extension MoviesViewController: MoviesController {
-    
+
     func reachedTheEndOfList() {
-        callMovies()
+        interactor.fetchMovies()
     }
-    
+
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
+    }
+}
+
+// MARK: - MoviesViewControllerLogic
+extension MoviesViewController: MoviesViewControllerLogic {
+    
+    func displayGenresError(message: String) {
+        // TODO: Mostrar snackbar
+    }
+    
+    func displayMovies(movies: [MovieViewModel]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.movies.append(contentsOf: movies)
+            self.collectionController?.updateMovies(self.movies)
+        }
+    }
+    
+    func displayMoviesError(message: String) {
+        // TODO: Mostrar snackbar
     }
 }

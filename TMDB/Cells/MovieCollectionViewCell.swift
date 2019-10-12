@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 
 class MovieCollectionViewCell: UICollectionViewCell {
-    
+
     // MARK: - IBOutlets
     @IBOutlet weak var imageViewPoster: UIImageView!
     @IBOutlet weak var labelTitle: UILabel!
@@ -19,38 +19,25 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var labelReleaseDate: UILabel!
 
     // MARK: - Variables
-    var imageRequest: Alamofire.Request?
-    var downloadedImage: UIImage?
-    
-    // MARK: - Init
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
+//    var imageRequest: Alamofire.Request?
+//    var downloadedImage: UIImage?
 
-    // MARK: - Interactions
-    func setContent(item: Movie) {
-        labelTitle.text = item.title ?? "-"
-        if let releaseDate = item.releaseDate?.value {
-            labelReleaseDate.text = releaseDate.convertToString(format: "dd/MM/yyyy")
-        } else {
-            labelReleaseDate.text = "-/-/-"
-        }
-        if let genreID = item.genreIDs?.first, let genreName = MDTGenres.shared.getMovieGenreBy(genreID: genreID) {
-            labelGenre.text = genreName
-        } else {
-            labelGenre.text = "-"
-        }
-        imageRequest?.suspend()
+    // MARK: - Content
+    func setContent(viewModel: MovieViewModel) {
+        labelTitle.text = viewModel.title
+        labelGenre.text = viewModel.genre
+        labelReleaseDate.text = viewModel.releaseDate
+//        imageRequest?.suspend()
         imageViewPoster.image = #imageLiteral(resourceName: "defaultPosterImage")
-        downloadedImage = nil
-        if let posterPath = item.posterPath {
-            imageRequest = Request.shared.IMAGE(path: posterPath) { (image) in
-                self.imageRequest = nil
-                if let image = image {
-                    self.downloadedImage = image
-                    self.imageViewPoster.image = image
-                }
-            }
-        }
+//        downloadedImage = nil
+//        if let posterPath = item.posterPath {
+//            imageRequest = Request.shared.IMAGE(path: posterPath) { (image) in
+//                self.imageRequest = nil
+//                if let image = image {
+//                    self.downloadedImage = image
+//                    self.imageViewPoster.image = image
+//                }
+//            }
+//        }
     }
 }

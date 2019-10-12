@@ -10,14 +10,14 @@ import UIKit
 import Alamofire
 
 class SearchViewController: UIViewController {
-    
+
     // MARK: - IBOutlets
     @IBOutlet weak var viewHeaderSafeArea: UIView!
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var viewSearchBarSafeAreaLeft: UIView!
     @IBOutlet weak var viewSearchBarSafeAreaRight: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+
     // MARK: - Variables
     var collectionController: MoviesCollectionController?
     var movies: [Movie] = []
@@ -27,7 +27,7 @@ class SearchViewController: UIViewController {
     var searchRequest: Alamofire.Request?
     var previousSearchedQuery: String?
     var timer: Timer?
-    
+
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,13 +65,12 @@ class SearchViewController: UIViewController {
                                                             }
                                                             self.totalPages = response.totalPages ?? -1
                                                             self.currentPage += 1
-                                                            self.collectionController?.updateMovies(self.movies)
+//                                                            self.collectionController?.updateMovies(self.movies)
                                                         }
             }
         }
     }
-    
-    
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier,
@@ -85,7 +84,7 @@ class SearchViewController: UIViewController {
 
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let query: String = searchBar.text ?? ""
@@ -93,7 +92,7 @@ extension SearchViewController: UISearchBarDelegate {
             callSearchMovies()
         }
     }
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         timer?.invalidate()
         currentPage = 0
@@ -109,11 +108,11 @@ extension SearchViewController: UISearchBarDelegate {
 
 // MARK: - MoviesController
 extension SearchViewController: MoviesController {
-    
+
     func reachedTheEndOfList() {
         callSearchMovies()
     }
-    
+
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }

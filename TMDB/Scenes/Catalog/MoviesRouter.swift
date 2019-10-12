@@ -9,11 +9,11 @@
 import Foundation
 
 protocol MoviesRouterLogic {
-    
+
 }
 
 class MoviesRouter: MoviesRouterLogic {
-    
+
     // MARK: - Variables
     weak var dataStore: MoviesDataStoreLogic?
 }

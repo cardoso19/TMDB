@@ -9,6 +9,7 @@
 import Foundation
 
 protocol MoviesDataStoreLogic: AnyObject {
+    var genres: [Genre] { get set }
     var movies: [Movie] { get set }
     var currentPage: Int { get set }
     var totalPages: Int { get set }
@@ -16,6 +17,7 @@ protocol MoviesDataStoreLogic: AnyObject {
 }
 
 class MoviesDataStore: MoviesDataStoreLogic {
+    var genres: [Genre] = []
     var movies: [Movie] = []
     var currentPage: Int = 0
     var totalPages: Int = 0

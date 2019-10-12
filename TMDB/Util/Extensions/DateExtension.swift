@@ -9,7 +9,7 @@
 import Foundation
 
 extension Date {
-    
+
     /// Convert the date to string in the given format.
     /// - Parameter format: strings' final format.
     public func convertToString(format: String) -> String {

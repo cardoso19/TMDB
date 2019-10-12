@@ -9,15 +9,15 @@
 import Foundation
 
 struct DateDecodable: Decodable {
-    
-    //MARK: - Variables
+
+    // MARK: - Variables
     let value: Date?
-    
-    //MARK: - Life Cycle
+
+    // MARK: - Life Cycle
     init(value: Date?) {
         self.value = value
     }
-    
+
     init(from decoder: Decoder) throws {
         self.value = try String(from: decoder).convertToDate(format: "yyyy/MM/dd")
     }

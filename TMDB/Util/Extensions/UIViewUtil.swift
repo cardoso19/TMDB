@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIView {
-    
+
     /// Add shadow to the view.
     /// - Parameters:
     ///   - scale: indicate if the layer will rasterize by the content.

@@ -16,7 +16,7 @@ struct Movie: Decodable {
     let backdropPath: String?
     let releaseDate: DateDecodable?
     let overview: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case identifier
         case title

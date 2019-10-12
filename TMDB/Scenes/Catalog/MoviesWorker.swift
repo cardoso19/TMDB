@@ -9,9 +9,36 @@
 import Foundation
 
 protocol MoviesWorkerLogic {
-    
+    func fetchGenres(completion: @escaping (Result<[Genre], NSError>) -> Void)
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesDTO, NSError>) -> Void)
 }
 
 class MoviesWorker: MoviesWorkerLogic {
+    func fetchGenres(completion: @escaping (Result<[Genre], NSError>) -> Void) {
+        GenreServices.getGenres { (response, error) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let error = error {
+                    completion(.failure(NSError(domain: "Error",
+                                                code: error.code ?? -1,
+                                                userInfo: ["message": error.message ?? ""])))
+                } else if let genres = response {
+                    completion(.success(genres))
+                }
+            }
+        }
+    }
     
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesDTO, NSError>) -> Void) {
+        MovieServices.getUPComingMovies(page: page) { (response, error) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let error = error {
+                    completion(.failure(NSError(domain: "Error",
+                    code: error.code ?? -1,
+                    userInfo: ["message": error.message ?? ""])))
+                } else if let response = response {
+                    completion(.success(response))
+                }
+            }
+        }
+    }
 }
