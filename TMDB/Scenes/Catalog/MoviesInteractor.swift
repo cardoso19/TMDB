@@ -19,29 +19,41 @@ class MoviesInteractor: MoviesInteractorLogic {
     private let presenter: MoviesPresenterLogic
     private let worker: MoviesWorkerLogic
     private let dataStore: MoviesDataStoreLogic
+    private let adapter: MoviesAdapterLogic
 
     // MARK: - Life Cycle
-    init(presenter: MoviesPresenterLogic, worker: MoviesWorkerLogic, dataStore: MoviesDataStoreLogic) {
+    init(presenter: MoviesPresenterLogic, worker: MoviesWorkerLogic, dataStore: MoviesDataStoreLogic, adapter: MoviesAdapterLogic) {
         self.presenter = presenter
         self.worker = worker
         self.dataStore = dataStore
+        self.adapter = adapter
     }
 
     // MARK: - Genres
     func fetchGenres() {
+        presenter.presentLoader(isVisible: true)
         worker.fetchGenres { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let genres):
-                self.dataStore.genres = genres
+                self.genresSuccess(genres: genres)
             case .failure(let error):
-                self.presenter.presentGenreError(error: error)
+                self.genresFailure(error: error)
             }
         }
     }
 
+    private func genresSuccess(genres: [GenreResponse]) {
+        dataStore.genres = genres
+        fetchMovies()
+    }
+
+    private func genresFailure(error: NSError) {
+        presenter.presentGenreError(error: error)
+    }
+
     private func getMovieGenreBy(genreID: Int) -> String? {
-        for genre in dataStore.genres where (genre.identifier ?? -1) == genreID {
+        for genre in dataStore.genres where (genre.id ?? -1) == genreID {
             return genre.name
         }
         return nil
@@ -50,24 +62,36 @@ class MoviesInteractor: MoviesInteractorLogic {
     // MARK: - Movies
     func fetchMovies() {
         if !dataStore.isRequesting && (dataStore.totalPages == 0 || dataStore.currentPage <= dataStore.totalPages) {
-            if dataStore.currentPage == 0 {
-                MDTLoading.showDefaultLoader()
-            }
             dataStore.isRequesting = true
             worker.fetchMovies(page: dataStore.currentPage + 1) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let moviesResponse):
-                    guard let newMovies = moviesResponse.results else { return }
-                    self.dataStore.totalPages = moviesResponse.totalPages ?? -1
-                    self.dataStore.currentPage += 1
-                    self.dataStore.movies.append(contentsOf: newMovies)
-                    self.presenter.presentMovies(movies: newMovies)
+                    self.moviesSuccess(moviesResponse: moviesResponse)
                 case .failure(let error):
-                    self.presenter.presentMoviesError(error: error)
+                    self.moviesFailure(error: error)
                 }
                 self.dataStore.isRequesting = false
             }
         }
+    }
+
+    private func moviesSuccess(moviesResponse: MoviesResponse) {
+        if dataStore.currentPage == 0 {
+            presenter.presentLoader(isVisible: false)
+        }
+        guard let newMovies = moviesResponse.results else { return }
+        dataStore.totalPages = moviesResponse.totalPages ?? -1
+        dataStore.currentPage += 1
+        dataStore.movies.append(contentsOf: newMovies)
+        let transformedMovies = newMovies.map({ movie -> Catalog.Movie in
+            let genre = self.getMovieGenreBy(genreID: movie.genreIDs?.first ?? -1) ?? "-"
+            return self.adapter.transform(movie: movie, genre: genre)
+        })
+        presenter.presentMovies(movies: transformedMovies)
+    }
+
+    private func moviesFailure(error: NSError) {
+        presenter.presentMoviesError(error: error)
     }
 }

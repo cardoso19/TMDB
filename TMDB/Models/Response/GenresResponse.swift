@@ -1,5 +1,5 @@
 //
-//  Genre.swift
+//  GenresResponse.swift
 //  TMDB
 //
 //  Created by Matheus Cardoso kuhn on 26/08/2018.
@@ -8,7 +8,6 @@
 
 import Foundation
 
-struct Genre: Decodable {
-    let identifier: Int?
-    let name: String?
+struct GenresResponse: Decodable {
+    let genres: [GenreResponse]?
 }

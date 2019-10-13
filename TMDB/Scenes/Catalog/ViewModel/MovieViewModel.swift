@@ -12,4 +12,5 @@ struct MovieViewModel {
     let title: String
     let genre: String
     let releaseDate: String
+    let posterPath: String
 }

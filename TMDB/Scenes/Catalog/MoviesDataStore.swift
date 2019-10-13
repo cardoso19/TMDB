@@ -9,16 +9,16 @@
 import Foundation
 
 protocol MoviesDataStoreLogic: AnyObject {
-    var genres: [Genre] { get set }
-    var movies: [Movie] { get set }
+    var genres: [GenreResponse] { get set }
+    var movies: [MovieResponse] { get set }
     var currentPage: Int { get set }
     var totalPages: Int { get set }
     var isRequesting: Bool { get set }
 }
 
 class MoviesDataStore: MoviesDataStoreLogic {
-    var genres: [Genre] = []
-    var movies: [Movie] = []
+    var genres: [GenreResponse] = []
+    var movies: [MovieResponse] = []
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isRequesting: Bool = false

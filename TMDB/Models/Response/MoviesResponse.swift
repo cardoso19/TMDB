@@ -1,5 +1,5 @@
 //
-//  MoviesDTO.swift
+//  MoviesResponse.swift
 //  TMDB
 //
 //  Created by Matheus Cardoso kuhn on 26/08/2018.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct MoviesDTO: Decodable {
-    let results: [Movie]?
+struct MoviesResponse: Decodable {
+    let results: [MovieResponse]?
     let page: Int?
     let totalResults: Int?
     let totalPages: Int?

@@ -26,7 +26,7 @@ class MDTAlert {
     }
     private func presentSnackBar(message: String, isError: Bool, dismissTime: TimeInterval) {
         if let window = UIApplication.shared.keyWindow {
-            window.windowLevel = UIWindowLevelStatusBar
+            window.windowLevel = UIWindow.Level.statusBar
             if let snackBar: SnackBarView = SnackBarView.instanceFromNib(parentView: window,
                                                                       message: message,
                                                                       isError: isError,

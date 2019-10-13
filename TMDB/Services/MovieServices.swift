@@ -10,14 +10,14 @@ import Foundation
 
 class MovieServices {
     static func getUPComingMovies(page: Int,
-                                  completion: @escaping (_ response: MoviesDTO?, _ error: ErrorObject?) -> Void) {
+                                  completion: @escaping (_ response: MoviesResponse?, _ error: ErrorObject?) -> Void) {
         _ = Request.shared.JSON(path: String(format: "movie/upcoming?api_key=%@&language=%@&page=%d",
                                              MDTConstants.apiKey,
                                              MDTCurrentDevice.language,
                                              page),
                                 method: .get,
                                 parameters: nil,
-                                headers: nil) { (response: MoviesDTO?, error) in
+                                headers: nil) { (response: MoviesResponse?, error) in
                                     completion(response, error)
         }
     }

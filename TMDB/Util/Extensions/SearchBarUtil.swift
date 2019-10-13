@@ -24,7 +24,7 @@ extension UISearchBar {
         } set {
             if newValue {
                 if activityIndicator == nil {
-                    let newActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                    let newActivityIndicator = UIActivityIndicatorView(style: .gray)
                     newActivityIndicator.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
                     newActivityIndicator.startAnimating()
                     newActivityIndicator.backgroundColor = UIColor.white

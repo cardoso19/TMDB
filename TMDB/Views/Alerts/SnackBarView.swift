@@ -97,7 +97,7 @@ extension SnackBarView: AlertDelegate {
                         self.frame.origin = CGPoint(x: self.frame.origin.x, y: -self.frame.size.height)
         }, completion: {(_) in
             if canChangeWindowLevel {
-                UIApplication.shared.keyWindow!.windowLevel = UIWindowLevelNormal
+                UIApplication.shared.keyWindow!.windowLevel = UIWindow.Level.normal
             }
             self.removeFromSuperview()
         })

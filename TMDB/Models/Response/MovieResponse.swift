@@ -1,5 +1,5 @@
 //
-//  Movie.swift
+//  MovieResponse.swift
 //  TMDB
 //
 //  Created by Matheus Cardoso kuhn on 26/08/2018.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Movie: Decodable {
+struct MovieResponse: Decodable {
     let identifier: Int?
     let title: String?
     let genreIDs: [Int]?

@@ -20,7 +20,7 @@ class SearchViewController: UIViewController {
 
     // MARK: - Variables
     var collectionController: MoviesCollectionController?
-    var movies: [Movie] = []
+    var movies: [MovieResponse] = []
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isRequesting: Bool = false

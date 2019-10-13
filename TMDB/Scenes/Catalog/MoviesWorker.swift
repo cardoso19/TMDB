@@ -9,12 +9,12 @@
 import Foundation
 
 protocol MoviesWorkerLogic {
-    func fetchGenres(completion: @escaping (Result<[Genre], NSError>) -> Void)
-    func fetchMovies(page: Int, completion: @escaping (Result<MoviesDTO, NSError>) -> Void)
+    func fetchGenres(completion: @escaping (Result<[GenreResponse], NSError>) -> Void)
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, NSError>) -> Void)
 }
 
 class MoviesWorker: MoviesWorkerLogic {
-    func fetchGenres(completion: @escaping (Result<[Genre], NSError>) -> Void) {
+    func fetchGenres(completion: @escaping (Result<[GenreResponse], NSError>) -> Void) {
         GenreServices.getGenres { (response, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 if let error = error {
@@ -27,8 +27,8 @@ class MoviesWorker: MoviesWorkerLogic {
             }
         }
     }
-    
-    func fetchMovies(page: Int, completion: @escaping (Result<MoviesDTO, NSError>) -> Void) {
+
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, NSError>) -> Void) {
         MovieServices.getUPComingMovies(page: page) { (response, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 if let error = error {

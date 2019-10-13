@@ -12,6 +12,7 @@ protocol MoviesViewControllerLogic: AnyObject {
     func displayGenresError(message: String)
     func displayMovies(movies: [MovieViewModel])
     func displayMoviesError(message: String)
+    func displayLoader(isVisible: Bool)
 }
 
 class MoviesViewController: UIViewController {
@@ -32,22 +33,23 @@ class MoviesViewController: UIViewController {
         super.viewDidLoad()
         setup()
         interactor.fetchGenres()
-        interactor.fetchMovies()
     }
-    
+
     private func setup() {
         let presenter = MoviesPresenter()
         let worker = MoviesWorker()
         let dataStore = MoviesDataStore()
         let router = MoviesRouter()
+        let adapter = MoviesAdapter()
         router.dataStore = dataStore
         presenter.viewController = self
         interactor = MoviesInteractor(presenter: presenter,
                                       worker: worker,
-                                      dataStore: dataStore)
+                                      dataStore: dataStore,
+                                      adapter: adapter)
         self.router = router
     }
-    
+
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier,
@@ -73,11 +75,11 @@ extension MoviesViewController: MoviesController {
 
 // MARK: - MoviesViewControllerLogic
 extension MoviesViewController: MoviesViewControllerLogic {
-    
+
     func displayGenresError(message: String) {
         // TODO: Mostrar snackbar
     }
-    
+
     func displayMovies(movies: [MovieViewModel]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -85,8 +87,18 @@ extension MoviesViewController: MoviesViewControllerLogic {
             self.collectionController?.updateMovies(self.movies)
         }
     }
-    
+
     func displayMoviesError(message: String) {
         // TODO: Mostrar snackbar
+    }
+
+    func displayLoader(isVisible: Bool) {
+        DispatchQueue.main.async {
+            if isVisible {
+                MDTLoading.showDefaultLoader()
+            } else {
+                MDTLoading.hideDefaultLoading()
+            }
+        }
     }
 }

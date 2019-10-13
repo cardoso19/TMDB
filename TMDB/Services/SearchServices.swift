@@ -12,7 +12,7 @@ import Alamofire
 class SearchServices {
     static func getMoviesBy(query: String,
                             page: Int,
-                            completion: @escaping (_ response: MoviesDTO?,
+                            completion: @escaping (_ response: MoviesResponse?,
                                                    _ error: ErrorObject?) -> Void) -> Alamofire.Request {
         let basePath: String = "search/movie?"
         let apiKey: String = String(format: "api_key=%@", MDTConstants.apiKey)
@@ -24,7 +24,7 @@ class SearchServices {
         return Request.shared.JSON(path: path,
                                    method: .get,
                                    parameters: nil,
-                                   headers: nil) { (response: MoviesDTO?, error) in
+                                   headers: nil) { (response: MoviesResponse?, error) in
                                     completion(response, error)
         }
     }

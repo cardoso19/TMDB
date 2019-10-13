@@ -1,25 +1,16 @@
 PODS:
-  - Alamofire (4.9.0)
-  - AlamofireImage (3.5.2):
-    - Alamofire (~> 4.8)
   - DZNEmptyDataSet (1.8.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.7)
-  - AlamofireImage (~> 3.3)
-  - DZNEmptyDataSet
+  - DZNEmptyDataSet (= 1.8.1)
 
 SPEC REPOS:
   trunk:
-    - Alamofire
-    - AlamofireImage
     - DZNEmptyDataSet
 
 SPEC CHECKSUMS:
-  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
-  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
 
-PODFILE CHECKSUM: 160d65e89bf24655986b5d8647fe682fa554f7fb
+PODFILE CHECKSUM: 8f4e7bf91f1df961873b4f70ded8c0fb480ef818
 
 COCOAPODS: 1.8.3
