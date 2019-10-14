@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Alamofire
-import AlamofireImage
 
 class Request {
     static let shared: Request = Request()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MDTAlert
 
 protocol MoviesViewControllerLogic: AnyObject {
     func displayGenresError(message: String)
@@ -77,7 +78,14 @@ extension MoviesViewController: MoviesController {
 extension MoviesViewController: MoviesViewControllerLogic {
 
     func displayGenresError(message: String) {
-        // TODO: Mostrar snackbar
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
+                                                        message: message,
+                                                        isError: true,
+                                                        dismissTime: 3)
+            snackBar?.show()
+        }
     }
 
     func displayMovies(movies: [MovieViewModel]) {
@@ -89,7 +97,14 @@ extension MoviesViewController: MoviesViewControllerLogic {
     }
 
     func displayMoviesError(message: String) {
-        // TODO: Mostrar snackbar
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
+                                                        message: message,
+                                                        isError: true,
+                                                        dismissTime: 3)
+            snackBar?.show()
+        }
     }
 
     func displayLoader(isVisible: Bool) {

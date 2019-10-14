@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 class SearchServices {
     static func getMoviesBy(query: String,

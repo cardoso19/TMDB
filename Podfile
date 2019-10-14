@@ -6,5 +6,6 @@ target 'TMDB' do
   use_frameworks!
 
   pod 'DZNEmptyDataSet', '1.8.1'
+  pod 'MDTAlert', '1.0.3'
 
 end
