@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class MovieDetailViewController: UIViewController {
 
@@ -19,7 +18,7 @@ class MovieDetailViewController: UIViewController {
 
     // MARK: - Variables
     var movieDetail: MovieDetail?
-    var posterRequest: Alamofire.Request?
+//    var posterRequest: Alamofire.Request?
     private var isLayoutDefined: Bool = false
 
     // MARK: - Init
@@ -34,7 +33,7 @@ class MovieDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = true
-        posterRequest?.cancel()
+//        posterRequest?.cancel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -54,12 +53,12 @@ class MovieDetailViewController: UIViewController {
         if let image = movieDetail?.poster {
             imageViewPoster.image = image
         } else if let posterPath = movieDetail?.movie.posterPath {
-            posterRequest = Request.shared.IMAGE(path: posterPath) { (image) in
-                self.posterRequest = nil
-                if let image = image {
-                    self.imageViewPoster.image = image
-                }
-            }
+//            posterRequest = Request.shared.IMAGE(path: posterPath) { (image) in
+//                self.posterRequest = nil
+//                if let image = image {
+//                    self.imageViewPoster.image = image
+//                }
+//            }
         }
     }
 

@@ -9,9 +9,9 @@
 import Foundation
 
 protocol MoviesPresenterLogic {
-    func presentGenreError(error: NSError)
+    func presentGenreError(error: RequestError)
     func presentMovies(movies: [Catalog.Movie])
-    func presentMoviesError(error: NSError)
+    func presentMoviesError(error: RequestError)
     func presentLoader(isVisible: Bool)
 }
 
@@ -21,9 +21,8 @@ class MoviesPresenter: MoviesPresenterLogic {
     weak var viewController: MoviesViewControllerLogic?
 
     // MARK: - Genres
-    func presentGenreError(error: NSError) {
-        let message = (error.userInfo["message"] as? String) ?? "Error"
-        viewController?.displayGenresError(message: message)
+    func presentGenreError(error: RequestError) {
+        viewController?.displayGenresError(message: error.localizedDescription)
     }
 
     // MARK: - Movies
@@ -38,14 +37,15 @@ class MoviesPresenter: MoviesPresenterLogic {
         let title = movie.title
         let genre = movie.genre
         let releaseDate = movie.releaseDate?.convertToString(format: "dd/MM/yyyy") ?? "-"
+        let posterPath = movie.posterPath
         return MovieViewModel(title: title,
                               genre: genre,
-                              releaseDate: releaseDate)
+                              releaseDate: releaseDate,
+                              posterPath: posterPath)
     }
 
-    func presentMoviesError(error: NSError) {
-        let message = (error.userInfo["message"] as? String) ?? "Error"
-        viewController?.displayMoviesError(message: message)
+    func presentMoviesError(error: RequestError) {
+        viewController?.displayMoviesError(message: error.localizedDescription)
     }
 
     // MARK: - Loader

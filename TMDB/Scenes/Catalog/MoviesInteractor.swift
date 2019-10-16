@@ -11,6 +11,7 @@ import Foundation
 protocol MoviesInteractorLogic {
     func fetchGenres()
     func fetchMovies()
+    func downloadImage(posterUrl: String)
 }
 
 class MoviesInteractor: MoviesInteractorLogic {
@@ -35,8 +36,8 @@ class MoviesInteractor: MoviesInteractorLogic {
         worker.fetchGenres { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let genres):
-                self.genresSuccess(genres: genres)
+            case .success(let genreResponse):
+                self.genresSuccess(genres: genreResponse.genres)
             case .failure(let error):
                 self.genresFailure(error: error)
             }
@@ -48,7 +49,8 @@ class MoviesInteractor: MoviesInteractorLogic {
         fetchMovies()
     }
 
-    private func genresFailure(error: NSError) {
+    private func genresFailure(error: RequestError) {
+        presenter.presentLoader(isVisible: false)
         presenter.presentGenreError(error: error)
     }
 
@@ -61,8 +63,8 @@ class MoviesInteractor: MoviesInteractorLogic {
 
     // MARK: - Movies
     func fetchMovies() {
-        if !dataStore.isRequesting && (dataStore.totalPages == 0 || dataStore.currentPage <= dataStore.totalPages) {
-            dataStore.isRequesting = true
+        if !dataStore.isFetchingMovies && (dataStore.totalPages == 0 || dataStore.currentPage <= dataStore.totalPages) {
+            dataStore.isFetchingMovies = true
             worker.fetchMovies(page: dataStore.currentPage + 1) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
@@ -71,7 +73,7 @@ class MoviesInteractor: MoviesInteractorLogic {
                 case .failure(let error):
                     self.moviesFailure(error: error)
                 }
-                self.dataStore.isRequesting = false
+                self.dataStore.isFetchingMovies = false
             }
         }
     }
@@ -91,7 +93,13 @@ class MoviesInteractor: MoviesInteractorLogic {
         presenter.presentMovies(movies: transformedMovies)
     }
 
-    private func moviesFailure(error: NSError) {
+    private func moviesFailure(error: RequestError) {
+        presenter.presentLoader(isVisible: false)
         presenter.presentMoviesError(error: error)
+    }
+    
+    // MARK: - Image
+    func downloadImage(posterUrl: String) {
+        
     }
 }

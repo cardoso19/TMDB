@@ -38,7 +38,7 @@ class MoviesViewController: UIViewController {
 
     private func setup() {
         let presenter = MoviesPresenter()
-        let worker = MoviesWorker()
+        let worker = MoviesWorker(httpRequest: HttpRequest())
         let dataStore = MoviesDataStore()
         let router = MoviesRouter()
         let adapter = MoviesAdapter()

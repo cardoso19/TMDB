@@ -6,38 +6,63 @@
 //  Copyright © 2019 MDT. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol MoviesWorkerLogic {
-    func fetchGenres(completion: @escaping (Result<[GenreResponse], NSError>) -> Void)
-    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, NSError>) -> Void)
+    func fetchGenres(completion: @escaping (Result<GenresResponse, RequestError>) -> Void)
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, RequestError>) -> Void)
+    func downloadImage(posterUrl: String, completion: @escaping (Result<UIImage, RequestError>) -> Void)
 }
 
 class MoviesWorker: MoviesWorkerLogic {
-    func fetchGenres(completion: @escaping (Result<[GenreResponse], NSError>) -> Void) {
-        GenreServices.getGenres { (response, error) in
-            DispatchQueue.global(qos: .userInitiated).async {
-                if let error = error {
-                    completion(.failure(NSError(domain: "Error",
-                                                code: error.code ?? -1,
-                                                userInfo: ["message": error.message ?? ""])))
-                } else if let genres = response {
-                    completion(.success(genres))
-                }
+
+    // MARK: - Variables
+    private let httpRequest: HttpRequest
+
+    // MARK: - Life Cycle
+    init(httpRequest: HttpRequest) {
+        self.httpRequest = httpRequest
+    }
+
+    func fetchGenres(completion: @escaping (Result<GenresResponse, RequestError>) -> Void) {
+        let httpBody: [String: Encodable] = ["api_key": API.token,
+                                             "language": Locale.preferredLanguages.first]
+        let setup = RequestSetup(url: API.URL.base.rawValue + API.Path.genre.rawValue,
+                                 cachePolicy: API.cachePolicy,
+                                 timeoutInterval: API.timeoutInterval,
+                                 httpMethod: .get,
+                                 httpHeaders: nil,
+                                 parameters: httpBody)
+        httpRequest.request(with: setup) { result in
+            DispatchQueue.global(qos: .userInteractive).async {
+                completion(result)
             }
         }
     }
 
-    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, NSError>) -> Void) {
-        MovieServices.getUPComingMovies(page: page) { (response, error) in
-            DispatchQueue.global(qos: .userInitiated).async {
-                if let error = error {
-                    completion(.failure(NSError(domain: "Error",
-                    code: error.code ?? -1,
-                    userInfo: ["message": error.message ?? ""])))
-                } else if let response = response {
-                    completion(.success(response))
-                }
+    func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, RequestError>) -> Void) {
+        let httpBody: [String: Encodable] = ["api_key": API.token,
+                                             "language": Locale.preferredLanguages.first,
+                                             "page": page]
+        let setup = RequestSetup(url: API.URL.base.rawValue + API.Path.upcoming.rawValue,
+                                 cachePolicy: API.cachePolicy,
+                                 timeoutInterval: API.timeoutInterval,
+                                 httpMethod: .get,
+                                 httpHeaders: nil,
+                                 parameters: httpBody)
+        httpRequest.request(with: setup) { result in
+            DispatchQueue.global(qos: .userInteractive).async {
+                completion(result)
+            }
+        }
+    }
+    
+    func downloadImage(posterUrl: String, completion: @escaping (Result<UIImage, RequestError>) -> Void) {
+        let setup = ImageRequestSetup(url: API.URL.image.rawValue + posterUrl,
+                                      cachePolicy: API.cachePolicy)
+        httpRequest.downloadImage(with: setup) { result in
+            DispatchQueue.global(qos: .userInteractive).async {
+                completion(result)
             }
         }
     }

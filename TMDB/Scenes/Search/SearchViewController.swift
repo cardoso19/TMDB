@@ -23,7 +23,7 @@ class SearchViewController: UIViewController {
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isRequesting: Bool = false
-    var searchRequest: Alamofire.Request?
+//    var searchRequest: Alamofire.Request?
     var previousSearchedQuery: String?
     var timer: Timer?
 
@@ -46,27 +46,27 @@ class SearchViewController: UIViewController {
             }
             isRequesting = true
             previousSearchedQuery = query
-            searchRequest = SearchServices.getMoviesBy(query: query,
-                                                       page: currentPage + 1) { (response, error) in
-                                                        self.isRequesting = false
-                                                        if self.currentPage == 0 {
-                                                            self.searchBar.isLoading = false
-                                                        }
-                                                        if let error = error {
-                                                            MDTAlert.shared.showSnackBar(message: error.message ?? "",
-                                                                                         isError: true)
-                                                        } else if let response = response,
-                                                            let newMovies = response.results {
-                                                            if self.currentPage == 0 {
-                                                                self.movies = newMovies
-                                                            } else {
-                                                                self.movies.append(contentsOf: newMovies)
-                                                            }
-                                                            self.totalPages = response.totalPages ?? -1
-                                                            self.currentPage += 1
-//                                                            self.collectionController?.updateMovies(self.movies)
-                                                        }
-            }
+//            searchRequest = SearchServices.getMoviesBy(query: query,
+//                                                       page: currentPage + 1) { (response, error) in
+//                                                        self.isRequesting = false
+//                                                        if self.currentPage == 0 {
+//                                                            self.searchBar.isLoading = false
+//                                                        }
+//                                                        if let error = error {
+//                                                            MDTAlert.shared.showSnackBar(message: error.message ?? "",
+//                                                                                         isError: true)
+//                                                        } else if let response = response,
+//                                                            let newMovies = response.results {
+//                                                            if self.currentPage == 0 {
+//                                                                self.movies = newMovies
+//                                                            } else {
+//                                                                self.movies.append(contentsOf: newMovies)
+//                                                            }
+//                                                            self.totalPages = response.totalPages ?? -1
+//                                                            self.currentPage += 1
+////                                                            self.collectionController?.updateMovies(self.movies)
+//                                                        }
+//            }
         }
     }
 
@@ -96,7 +96,7 @@ extension SearchViewController: UISearchBarDelegate {
         timer?.invalidate()
         currentPage = 0
         totalPages = 0
-        searchRequest?.suspend()
+//        searchRequest?.suspend()
         isRequesting = false
         searchBar.isLoading = false
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
