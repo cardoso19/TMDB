@@ -20,18 +20,18 @@ enum HttpMethod: String {
     case trace = "TRACE"
 }
 
-struct RequestSetup {
-    let url: String
-    let cachePolicy: URLRequest.CachePolicy
-    let timeoutInterval: TimeInterval
-    let httpMethod: HttpMethod
-    let httpHeaders: [String: String]?
-    let parameters: [String: Encodable]?
+protocol RequestSetup {
+    var url: String { get }
+    var cachePolicy: URLRequest.CachePolicy { get }
+    var timeoutInterval: TimeInterval { get }
+    var httpMethod: HttpMethod { get }
+    var httpHeaders: [String: String]? { get }
+    var parameters: [String: Encodable]? { get }
 }
 
-struct ImageRequestSetup {
-    let url: String
-    let cachePolicy: URLRequest.CachePolicy
+protocol ImageRequestSetup {
+    var url: String { get }
+    var cachePolicy: URLRequest.CachePolicy { get }
 }
 
 protocol RequestProtocol {
@@ -136,9 +136,13 @@ class HttpRequest: RequestProtocol {
             return .failure(.unknown("Unexpected error."))
         }
     }
-    
+
     // MARK: - Image Request
     func downloadImage(with setup: ImageRequestSetup, completion: @escaping (Result<UIImage, RequestError>) -> Void) {
+        if let image = ImageCache.shared.receiveItem(key: setup.url) {
+            completion(.success(image))
+            return
+        }
         guard let url = URL(string: setup.url)
             else {
                 completion(.failure(.urlNotFound))
@@ -162,14 +166,17 @@ class HttpRequest: RequestProtocol {
                     completion(.failure(.invalidHttpResponse))
                     return
             }
-            completion(self.handleHTTPStatusImage(response: httpResponse, data: data))
+            completion(self.handleHTTPStatusImage(response: httpResponse, data: data, url: setup.url))
         }.resume()
     }
-    
-    private func handleHTTPStatusImage(response: HTTPURLResponse, data: Data) -> Result<UIImage, RequestError> {
+
+    private func handleHTTPStatusImage(response: HTTPURLResponse,
+                                       data: Data,
+                                       url: String) -> Result<UIImage, RequestError> {
         switch response.statusCode {
         case 200...299:
             if let image = UIImage(data: data) {
+                ImageCache.shared.insert(item: image, key: url)
                 return .success(image)
             } else {
                 return .failure(.couldNotParseObject)

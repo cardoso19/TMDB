@@ -9,11 +9,12 @@
 import UIKit
 import MDTAlert
 
-protocol MoviesViewControllerLogic: AnyObject {
+protocol MoviesViewControllerDisplayLogic: AnyObject {
     func displayGenresError(message: String)
     func displayMovies(movies: [MovieViewModel])
     func displayMoviesError(message: String)
-    func displayLoader(isVisible: Bool)
+    func displayImage(image: UIImage, indexPath: IndexPath)
+    func displayImageError(message: String)
 }
 
 class MoviesViewController: UIViewController {
@@ -26,26 +27,27 @@ class MoviesViewController: UIViewController {
     // MARK: - Variables
     private var interactor: MoviesInteractorLogic!
     private var router: MoviesRouterLogic!
-    var collectionController: MoviesCollectionController?
+    var collectionController: MoviesCollectionLogic?
     var movies: [MovieViewModel] = []
 
     // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        MDTLoading.showDefaultLoader()
         interactor.fetchGenres()
     }
 
     private func setup() {
         let presenter = MoviesPresenter()
-        let worker = MoviesWorker(httpRequest: HttpRequest())
+        let gateway = MoviesGateway(httpRequest: HttpRequest())
         let dataStore = MoviesDataStore()
         let router = MoviesRouter()
         let adapter = MoviesAdapter()
         router.dataStore = dataStore
         presenter.viewController = self
         interactor = MoviesInteractor(presenter: presenter,
-                                      worker: worker,
+                                      gateway: gateway,
                                       dataStore: dataStore,
                                       adapter: adapter)
         self.router = router
@@ -72,10 +74,14 @@ extension MoviesViewController: MoviesController {
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }
+
+    func downloadImage(url: String, indexPath: IndexPath) {
+        interactor.downloadImage(posterUrl: url, indexPath: indexPath)
+    }
 }
 
-// MARK: - MoviesViewControllerLogic
-extension MoviesViewController: MoviesViewControllerLogic {
+// MARK: - MoviesViewControllerDisplayLogic
+extension MoviesViewController: MoviesViewControllerDisplayLogic {
 
     func displayGenresError(message: String) {
         DispatchQueue.main.async { [weak self] in
@@ -85,6 +91,7 @@ extension MoviesViewController: MoviesViewControllerLogic {
                                                         isError: true,
                                                         dismissTime: 3)
             snackBar?.show()
+            MDTLoading.hideDefaultLoading()
         }
     }
 
@@ -93,6 +100,7 @@ extension MoviesViewController: MoviesViewControllerLogic {
             guard let self = self else { return }
             self.movies.append(contentsOf: movies)
             self.collectionController?.updateMovies(self.movies)
+            MDTLoading.hideDefaultLoading()
         }
     }
 
@@ -104,16 +112,26 @@ extension MoviesViewController: MoviesViewControllerLogic {
                                                         isError: true,
                                                         dismissTime: 3)
             snackBar?.show()
+            MDTLoading.hideDefaultLoading()
         }
     }
 
-    func displayLoader(isVisible: Bool) {
-        DispatchQueue.main.async {
-            if isVisible {
-                MDTLoading.showDefaultLoader()
-            } else {
-                MDTLoading.hideDefaultLoading()
-            }
+    func displayImage(image: UIImage, indexPath: IndexPath) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.collectionController?.showImage(image: image, indexPath: indexPath)
+        }
+    }
+
+    func displayImageError(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
+                                                        message: message,
+                                                        isError: true,
+                                                        dismissTime: 3)
+            snackBar?.show()
+            MDTLoading.hideDefaultLoading()
         }
     }
 }

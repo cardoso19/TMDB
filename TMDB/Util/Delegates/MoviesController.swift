@@ -11,4 +11,5 @@ import UIKit
 protocol MoviesController {
     func reachedTheEndOfList()
     func detail(movie: MovieDetail)
+    func downloadImage(url: String, indexPath: IndexPath)
 }

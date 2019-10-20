@@ -9,16 +9,16 @@
 import UIKit
 import DZNEmptyDataSet
 
-private let reuseIdentifier = "movieCell"
-
-protocol MoviesCollectionController {
+protocol MoviesCollectionLogic {
     func updateMovies(_ movies: [MovieViewModel])
     func reloadData()
+    func showImage(image: UIImage, indexPath: IndexPath)
 }
 
 class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - Variables
+    private let reuseIdentifier = "movieCell"
     var emptyContentText: String = NSLocalizedString("DO A SEARCH", comment: "")
     var moviesController: MoviesController?
     var movies: [MovieViewModel] = []
@@ -47,7 +47,7 @@ class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        var detail: MovieDetail = MovieDetail(movie: Movie poster: nil)
+//        var detail: MovieDetail = MovieDetail(movie: Movie,poster: nil)
 //        if let image = (collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell)?.downloadedImage {
 //            detail.poster = image
 //        }
@@ -63,7 +63,10 @@ class MoviesCollectionViewController: UICollectionViewController {
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                          for: indexPath) as? MovieCollectionViewCell {
-            cell.setContent(viewModel: movies[indexPath.row])
+            let movie = movies[indexPath.row]
+            cell.setDefaultImage()
+            cell.setContent(viewModel: movie)
+            moviesController?.downloadImage(url: movie.posterPath, indexPath: indexPath)
             return cell
         }
         return UICollectionViewCell()
@@ -87,12 +90,12 @@ extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - MoviesCollectionController
-extension MoviesCollectionViewController: MoviesCollectionController {
+// MARK: - MoviesCollectionLogic
+extension MoviesCollectionViewController: MoviesCollectionLogic {
 
     func updateMovies(_ movies: [MovieViewModel]) {
         self.movies = movies
-        if movies.count == 0 {
+        if movies.isEmpty {
             emptyContentText = NSLocalizedString("NO RESULT", comment: "")
         }
         collectionView?.reloadData()
@@ -100,6 +103,13 @@ extension MoviesCollectionViewController: MoviesCollectionController {
 
     func reloadData() {
         collectionView?.reloadData()
+    }
+
+    func showImage(image: UIImage, indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            guard let cell = self.collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell else { return }
+            cell.set(image: image)
+        }
     }
 }
 

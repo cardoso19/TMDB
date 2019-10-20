@@ -6,34 +6,36 @@
 //  Copyright © 2019 MDT. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol MoviesInteractorLogic {
     func fetchGenres()
     func fetchMovies()
-    func downloadImage(posterUrl: String)
+    func downloadImage(posterUrl: String, indexPath: IndexPath)
 }
 
 class MoviesInteractor: MoviesInteractorLogic {
 
     // MARK: - Variables
     private let presenter: MoviesPresenterLogic
-    private let worker: MoviesWorkerLogic
+    private let gateway: MoviesGatewayLogic
     private let dataStore: MoviesDataStoreLogic
     private let adapter: MoviesAdapterLogic
 
     // MARK: - Life Cycle
-    init(presenter: MoviesPresenterLogic, worker: MoviesWorkerLogic, dataStore: MoviesDataStoreLogic, adapter: MoviesAdapterLogic) {
+    init(presenter: MoviesPresenterLogic,
+         gateway: MoviesGatewayLogic,
+         dataStore: MoviesDataStoreLogic,
+         adapter: MoviesAdapterLogic) {
         self.presenter = presenter
-        self.worker = worker
+        self.gateway = gateway
         self.dataStore = dataStore
         self.adapter = adapter
     }
 
     // MARK: - Genres
     func fetchGenres() {
-        presenter.presentLoader(isVisible: true)
-        worker.fetchGenres { [weak self] result in
+        gateway.fetchGenres { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let genreResponse):
@@ -50,7 +52,6 @@ class MoviesInteractor: MoviesInteractorLogic {
     }
 
     private func genresFailure(error: RequestError) {
-        presenter.presentLoader(isVisible: false)
         presenter.presentGenreError(error: error)
     }
 
@@ -65,7 +66,7 @@ class MoviesInteractor: MoviesInteractorLogic {
     func fetchMovies() {
         if !dataStore.isFetchingMovies && (dataStore.totalPages == 0 || dataStore.currentPage <= dataStore.totalPages) {
             dataStore.isFetchingMovies = true
-            worker.fetchMovies(page: dataStore.currentPage + 1) { [weak self] result in
+            gateway.fetchMovies(page: dataStore.currentPage + 1) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let moviesResponse):
@@ -79,9 +80,6 @@ class MoviesInteractor: MoviesInteractorLogic {
     }
 
     private func moviesSuccess(moviesResponse: MoviesResponse) {
-        if dataStore.currentPage == 0 {
-            presenter.presentLoader(isVisible: false)
-        }
         guard let newMovies = moviesResponse.results else { return }
         dataStore.totalPages = moviesResponse.totalPages ?? -1
         dataStore.currentPage += 1
@@ -94,12 +92,27 @@ class MoviesInteractor: MoviesInteractorLogic {
     }
 
     private func moviesFailure(error: RequestError) {
-        presenter.presentLoader(isVisible: false)
         presenter.presentMoviesError(error: error)
     }
-    
+
     // MARK: - Image
-    func downloadImage(posterUrl: String) {
-        
+    func downloadImage(posterUrl: String, indexPath: IndexPath) {
+        gateway.downloadImage(posterUrl: posterUrl) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let image):
+                self.imageSuccess(image: image, indexPath: indexPath)
+            case .failure(let error):
+                self.imageFailure(error: error)
+            }
+        }
+    }
+
+    private func imageSuccess(image: UIImage, indexPath: IndexPath) {
+        presenter.presentImage(image: image, indexPath: indexPath)
+    }
+
+    private func imageFailure(error: RequestError) {
+        presenter.presentImageError(error: error)
     }
 }

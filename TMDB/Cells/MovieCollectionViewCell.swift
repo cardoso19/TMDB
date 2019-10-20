@@ -11,31 +11,27 @@ import UIKit
 class MovieCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var imageViewPoster: UIImageView!
-    @IBOutlet weak var labelTitle: UILabel!
-    @IBOutlet weak var labelGenre: UILabel!
-    @IBOutlet weak var labelReleaseDate: UILabel!
-
-    // MARK: - Variables
-//    var imageRequest: Alamofire.Request?
-//    var downloadedImage: UIImage?
+    @IBOutlet private weak var imageViewPoster: UIImageView!
+    @IBOutlet private weak var labelTitle: UILabel!
+    @IBOutlet private weak var labelGenre: UILabel!
+    @IBOutlet private weak var labelReleaseDate: UILabel!
 
     // MARK: - Content
     func setContent(viewModel: MovieViewModel) {
         labelTitle.text = viewModel.title
         labelGenre.text = viewModel.genre
         labelReleaseDate.text = viewModel.releaseDate
-//        imageRequest?.suspend()
+    }
+
+    func setDefaultImage() {
         imageViewPoster.image = #imageLiteral(resourceName: "defaultPosterImage")
-//        downloadedImage = nil
-//        if let posterPath = item.posterPath {
-//            imageRequest = Request.shared.IMAGE(path: posterPath) { (image) in
-//                self.imageRequest = nil
-//                if let image = image {
-//                    self.downloadedImage = image
-//                    self.imageViewPoster.image = image
-//                }
-//            }
-//        }
+    }
+
+    func set(image: UIImage) {
+        imageViewPoster.image = image
+    }
+
+    override func prepareForReuse() {
+        self.imageViewPoster.image = nil
     }
 }

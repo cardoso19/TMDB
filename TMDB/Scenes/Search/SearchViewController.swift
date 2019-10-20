@@ -18,7 +18,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
 
     // MARK: - Variables
-    var collectionController: MoviesCollectionController?
+    var collectionController: MoviesCollectionLogic?
     var movies: [MovieResponse] = []
     var currentPage: Int = 0
     var totalPages: Int = 0
@@ -114,5 +114,9 @@ extension SearchViewController: MoviesController {
 
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
+    }
+
+    func downloadImage(url: String, indexPath: IndexPath) {
+        // TODO: - Fazer o download da imagem
     }
 }

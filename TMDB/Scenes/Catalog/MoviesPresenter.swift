@@ -6,19 +6,20 @@
 //  Copyright © 2019 MDT. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol MoviesPresenterLogic {
     func presentGenreError(error: RequestError)
     func presentMovies(movies: [Catalog.Movie])
     func presentMoviesError(error: RequestError)
-    func presentLoader(isVisible: Bool)
+    func presentImage(image: UIImage, indexPath: IndexPath)
+    func presentImageError(error: RequestError)
 }
 
 class MoviesPresenter: MoviesPresenterLogic {
 
     // MARK: - Variables
-    weak var viewController: MoviesViewControllerLogic?
+    weak var viewController: MoviesViewControllerDisplayLogic?
 
     // MARK: - Genres
     func presentGenreError(error: RequestError) {
@@ -48,8 +49,12 @@ class MoviesPresenter: MoviesPresenterLogic {
         viewController?.displayMoviesError(message: error.localizedDescription)
     }
 
-    // MARK: - Loader
-    func presentLoader(isVisible: Bool) {
-        viewController?.displayLoader(isVisible: isVisible)
+    // MARK: - Image
+    func presentImage(image: UIImage, indexPath: IndexPath) {
+        viewController?.displayImage(image: image, indexPath: indexPath)
+    }
+
+    func presentImageError(error: RequestError) {
+        viewController?.displayImageError(message: error.localizedDescription)
     }
 }

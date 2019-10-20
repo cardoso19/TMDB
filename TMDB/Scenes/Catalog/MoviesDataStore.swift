@@ -14,7 +14,6 @@ protocol MoviesDataStoreLogic: AnyObject {
     var currentPage: Int { get set }
     var totalPages: Int { get set }
     var isFetchingMovies: Bool { get set }
-    var cache: NSCache<NSString, UIImage> { get set }
 }
 
 class MoviesDataStore: MoviesDataStoreLogic {
@@ -23,5 +22,4 @@ class MoviesDataStore: MoviesDataStoreLogic {
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isFetchingMovies: Bool = false
-    var cache = NSCache<NSString, UIImage>()
 }
