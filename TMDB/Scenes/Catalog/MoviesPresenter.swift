@@ -12,8 +12,6 @@ protocol MoviesPresenterLogic {
     func presentGenreError(error: RequestError)
     func presentMovies(movies: [Catalog.Movie])
     func presentMoviesError(error: RequestError)
-    func presentImage(image: UIImage, indexPath: IndexPath)
-    func presentImageError(error: RequestError)
 }
 
 class MoviesPresenter: MoviesPresenterLogic {
@@ -47,14 +45,5 @@ class MoviesPresenter: MoviesPresenterLogic {
 
     func presentMoviesError(error: RequestError) {
         viewController?.displayMoviesError(message: error.localizedDescription)
-    }
-
-    // MARK: - Image
-    func presentImage(image: UIImage, indexPath: IndexPath) {
-        viewController?.displayImage(image: image, indexPath: indexPath)
-    }
-
-    func presentImageError(error: RequestError) {
-        viewController?.displayImageError(message: error.localizedDescription)
     }
 }

@@ -11,7 +11,6 @@ import UIKit
 protocol MoviesInteractorLogic {
     func fetchGenres()
     func fetchMovies()
-    func downloadImage(posterUrl: String, indexPath: IndexPath)
 }
 
 class MoviesInteractor: MoviesInteractorLogic {
@@ -93,26 +92,5 @@ class MoviesInteractor: MoviesInteractorLogic {
 
     private func moviesFailure(error: RequestError) {
         presenter.presentMoviesError(error: error)
-    }
-
-    // MARK: - Image
-    func downloadImage(posterUrl: String, indexPath: IndexPath) {
-        gateway.downloadImage(posterUrl: posterUrl) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let image):
-                self.imageSuccess(image: image, indexPath: indexPath)
-            case .failure(let error):
-                self.imageFailure(error: error)
-            }
-        }
-    }
-
-    private func imageSuccess(image: UIImage, indexPath: IndexPath) {
-        presenter.presentImage(image: image, indexPath: indexPath)
-    }
-
-    private func imageFailure(error: RequestError) {
-        presenter.presentImageError(error: error)
     }
 }

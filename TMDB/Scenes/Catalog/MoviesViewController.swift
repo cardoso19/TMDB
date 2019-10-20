@@ -13,8 +13,6 @@ protocol MoviesViewControllerDisplayLogic: AnyObject {
     func displayGenresError(message: String)
     func displayMovies(movies: [MovieViewModel])
     func displayMoviesError(message: String)
-    func displayImage(image: UIImage, indexPath: IndexPath)
-    func displayImageError(message: String)
 }
 
 class MoviesViewController: UIViewController {
@@ -74,10 +72,6 @@ extension MoviesViewController: MoviesController {
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }
-
-    func downloadImage(url: String, indexPath: IndexPath) {
-        interactor.downloadImage(posterUrl: url, indexPath: indexPath)
-    }
 }
 
 // MARK: - MoviesViewControllerDisplayLogic
@@ -105,25 +99,6 @@ extension MoviesViewController: MoviesViewControllerDisplayLogic {
     }
 
     func displayMoviesError(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
-                                                        message: message,
-                                                        isError: true,
-                                                        dismissTime: 3)
-            snackBar?.show()
-            MDTLoading.hideDefaultLoading()
-        }
-    }
-
-    func displayImage(image: UIImage, indexPath: IndexPath) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.collectionController?.showImage(image: image, indexPath: indexPath)
-        }
-    }
-
-    func displayImageError(message: String) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let snackBar = SnackBarView.instanceFromNib(parentView: self.view,

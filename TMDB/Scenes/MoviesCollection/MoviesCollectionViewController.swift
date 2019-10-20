@@ -12,7 +12,6 @@ import DZNEmptyDataSet
 protocol MoviesCollectionLogic {
     func updateMovies(_ movies: [MovieViewModel])
     func reloadData()
-    func showImage(image: UIImage, indexPath: IndexPath)
 }
 
 class MoviesCollectionViewController: UICollectionViewController {
@@ -64,9 +63,7 @@ class MoviesCollectionViewController: UICollectionViewController {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                          for: indexPath) as? MovieCollectionViewCell {
             let movie = movies[indexPath.row]
-            cell.setDefaultImage()
             cell.setContent(viewModel: movie)
-            moviesController?.downloadImage(url: movie.posterPath, indexPath: indexPath)
             return cell
         }
         return UICollectionViewCell()
@@ -103,13 +100,6 @@ extension MoviesCollectionViewController: MoviesCollectionLogic {
 
     func reloadData() {
         collectionView?.reloadData()
-    }
-
-    func showImage(image: UIImage, indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            guard let cell = self.collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell else { return }
-            cell.set(image: image)
-        }
     }
 }
 

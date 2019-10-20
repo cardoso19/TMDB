@@ -33,7 +33,7 @@ enum MoviesGatewaySetup: RequestSetup {
         case .upcomingMovies(let page):
             return ["api_key": API.token,
                     "language": Locale.preferredLanguages.first,
-                    "page": page]
+                    "page": String(page)]
         }
     }
 }
