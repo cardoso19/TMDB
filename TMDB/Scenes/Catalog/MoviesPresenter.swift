@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol MoviesPresenterLogic {
+protocol MoviesPresenter {
     func presentGenreError(error: RequestError)
     func presentMovies(movies: [Catalog.Movie])
     func presentMoviesError(error: RequestError)
 }
 
-class MoviesPresenter: MoviesPresenterLogic {
+class MoviesPresenterImpl: MoviesPresenter {
 
     // MARK: - Variables
     weak var viewController: MoviesViewControllerDisplayLogic?

@@ -9,6 +9,5 @@
 import UIKit
 
 struct MovieDetail {
-    let movie: MovieResponse
-    var poster: UIImage?
+    let movie: MovieViewModel
 }

@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol SearchViewControllerDisplayLogic: AnyObject {
+    func display(movies: [MovieViewModel])
+    func display(message: String)
+}
+
 class SearchViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -18,56 +23,35 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
 
     // MARK: - Variables
+    private var interactor: SearchInteractor?
     var collectionController: MoviesCollectionLogic?
-    var movies: [MovieResponse] = []
-    var currentPage: Int = 0
-    var totalPages: Int = 0
-    var isRequesting: Bool = false
-//    var searchRequest: Alamofire.Request?
-    var previousSearchedQuery: String?
-    var timer: Timer?
+    var movies: [MovieViewModel] = []
 
-    // MARK: - Init
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        prepareLayout()
+    }
+
+    private func setup() {
+        let presenter = SearchPresenterImpl()
+        let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
+        let dataStore = SearchDataStoreImpl()
+        let adapter = SearchAdapterImpl()
+        interactor = SearchInteractorImpl(presenter: presenter,
+                                          gateway: gateway,
+                                          dataStore: dataStore,
+                                          adapter: adapter)
+        presenter.viewController = self
+    }
+
+    private func prepareLayout() {
         searchBar.placeholder = NSLocalizedString("SEARCH", comment: "")
         searchBar.backgroundColor = Colors.darkGray
         searchBar.barTintColor = Colors.darkGray
         searchBar.tintColor = Colors.darkGray
         searchBar.becomeFirstResponder()
-    }
-
-    // MARK: - IBActions
-    func callSearchMovies() {
-        let query: String = searchBar.text ?? ""
-        if !isRequesting && (totalPages == 0 || currentPage <= totalPages) && query != "" {
-            if currentPage == 0 {
-                searchBar.isLoading = true
-            }
-            isRequesting = true
-            previousSearchedQuery = query
-//            searchRequest = SearchServices.getMoviesBy(query: query,
-//                                                       page: currentPage + 1) { (response, error) in
-//                                                        self.isRequesting = false
-//                                                        if self.currentPage == 0 {
-//                                                            self.searchBar.isLoading = false
-//                                                        }
-//                                                        if let error = error {
-//                                                            MDTAlert.shared.showSnackBar(message: error.message ?? "",
-//                                                                                         isError: true)
-//                                                        } else if let response = response,
-//                                                            let newMovies = response.results {
-//                                                            if self.currentPage == 0 {
-//                                                                self.movies = newMovies
-//                                                            } else {
-//                                                                self.movies.append(contentsOf: newMovies)
-//                                                            }
-//                                                            self.totalPages = response.totalPages ?? -1
-//                                                            self.currentPage += 1
-////                                                            self.collectionController?.updateMovies(self.movies)
-//                                                        }
-//            }
-        }
     }
 
     // MARK: - Navigation
@@ -87,21 +71,16 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let query: String = searchBar.text ?? ""
-        if query != (previousSearchedQuery ?? "-1") {
-            callSearchMovies()
-        }
+        interactor?.doMoviesSearch(query: query)
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        timer?.invalidate()
-        currentPage = 0
-        totalPages = 0
-//        searchRequest?.suspend()
-        isRequesting = false
-        searchBar.isLoading = false
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
-            self.callSearchMovies()
-        })
+        let query: String = searchBar.text ?? ""
+        interactor?.searchTextChange(query: query)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print(searchBar)
     }
 }
 
@@ -109,14 +88,34 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: MoviesController {
 
     func reachedTheEndOfList() {
-        callSearchMovies()
+        let query: String = searchBar.text ?? ""
+        interactor?.doMoviesSearch(query: query)
     }
 
     func detail(movie: MovieDetail) {
         tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
     }
+}
 
-    func downloadImage(url: String, indexPath: IndexPath) {
-        // TODO: - Fazer o download da imagem
+// MARK: - SearchViewControllerDisplayLogic
+extension SearchViewController: SearchViewControllerDisplayLogic {
+
+    func display(movies: [MovieViewModel]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.collectionController?.updateMovies(movies)
+        }
+    }
+
+    func display(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
+                                                        message: message,
+                                                        isError: true,
+                                                        dismissTime: 3)
+            snackBar?.show()
+            MDTLoading.hideDefaultLoading()
+        }
     }
 }

@@ -19,10 +19,13 @@ class BaseTabBarController: UITabBarController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let identifier = segue.identifier,
-            identifier == "detailMovie",
-            let movie = sender as? MovieDetail,
-            let controller = segue.destination as? MovieDetailViewController {
+        if let identifier = segue.identifier, identifier == "detailMovie" {
+            guard
+                let movie = sender as? MovieDetail,
+                let controller = segue.destination as? MovieDetailViewController
+                else {
+                    return
+            }
             controller.movieDetail = movie
         }
     }

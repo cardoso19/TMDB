@@ -1,14 +1,14 @@
 //
-//  Catalog.swift
+//  Search.swift
 //  TMDB
 //
-//  Created by Matheus Cardoso Kuhn on 12/10/19.
+//  Created by Matheus Cardoso Kuhn on 20/10/19.
 //  Copyright © 2019 MDT. All rights reserved.
 //
 
 import Foundation
 
-enum Catalog {
+enum Search {
     struct Movie {
         let title: String
         let genre: String

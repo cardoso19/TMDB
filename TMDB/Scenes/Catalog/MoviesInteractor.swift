@@ -8,24 +8,24 @@
 
 import UIKit
 
-protocol MoviesInteractorLogic {
+protocol MoviesInteractor {
     func fetchGenres()
     func fetchMovies()
 }
 
-class MoviesInteractor: MoviesInteractorLogic {
+class MoviesInteractorImpl: MoviesInteractor {
 
     // MARK: - Variables
-    private let presenter: MoviesPresenterLogic
+    private let presenter: MoviesPresenter
     private let gateway: MoviesGatewayLogic
-    private let dataStore: MoviesDataStoreLogic
-    private let adapter: MoviesAdapterLogic
+    private let dataStore: MoviesDataStore
+    private let adapter: MoviesAdapter
 
     // MARK: - Life Cycle
-    init(presenter: MoviesPresenterLogic,
+    init(presenter: MoviesPresenter,
          gateway: MoviesGatewayLogic,
-         dataStore: MoviesDataStoreLogic,
-         adapter: MoviesAdapterLogic) {
+         dataStore: MoviesDataStore,
+         adapter: MoviesAdapter) {
         self.presenter = presenter
         self.gateway = gateway
         self.dataStore = dataStore

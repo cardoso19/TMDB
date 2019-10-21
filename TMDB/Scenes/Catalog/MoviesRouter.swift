@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol MoviesRouterLogic {
+protocol MoviesRouter {
 
 }
 
-class MoviesRouter: MoviesRouterLogic {
+class MoviesRouterImpl: MoviesRouter {
 
     // MARK: - Variables
-    weak var dataStore: MoviesDataStoreLogic?
+    weak var dataStore: MoviesDataStore?
 }

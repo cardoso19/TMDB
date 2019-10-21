@@ -37,7 +37,7 @@ class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - UIScrollViewDelegate
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if movies.count > 0 && scrollView.contentSize.height > scrollView.frame.size.height {
+        if !movies.isEmpty && scrollView.contentSize.height > scrollView.frame.size.height {
             if scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height * 0.8 {
                 moviesController?.reachedTheEndOfList()
             }
@@ -46,11 +46,8 @@ class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        var detail: MovieDetail = MovieDetail(movie: Movie,poster: nil)
-//        if let image = (collectionView.cellForItem(at: indexPath) as? MovieCollectionViewCell)?.downloadedImage {
-//            detail.poster = image
-//        }
-//        moviesController?.detail(movie: detail)
+        let detail: MovieDetail = MovieDetail(movie: movies[indexPath.row])
+        moviesController?.detail(movie: detail)
     }
 
     // MARK: - UICollectionViewDataSource

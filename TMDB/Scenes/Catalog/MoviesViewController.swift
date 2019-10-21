@@ -23,8 +23,8 @@ class MoviesViewController: UIViewController {
     @IBOutlet weak var imageViewIcon: UIImageView!
 
     // MARK: - Variables
-    private var interactor: MoviesInteractorLogic!
-    private var router: MoviesRouterLogic!
+    private var interactor: MoviesInteractor!
+    private var router: MoviesRouter!
     var collectionController: MoviesCollectionLogic?
     var movies: [MovieViewModel] = []
 
@@ -37,14 +37,14 @@ class MoviesViewController: UIViewController {
     }
 
     private func setup() {
-        let presenter = MoviesPresenter()
+        let presenter = MoviesPresenterImpl()
         let gateway = MoviesGateway(httpRequest: HttpRequest())
-        let dataStore = MoviesDataStore()
-        let router = MoviesRouter()
-        let adapter = MoviesAdapter()
+        let dataStore = MoviesDataStoreImpl()
+        let router = MoviesRouterImpl()
+        let adapter = MoviesAdapterImpl()
         router.dataStore = dataStore
         presenter.viewController = self
-        interactor = MoviesInteractor(presenter: presenter,
+        interactor = MoviesInteractorImpl(presenter: presenter,
                                       gateway: gateway,
                                       dataStore: dataStore,
                                       adapter: adapter)

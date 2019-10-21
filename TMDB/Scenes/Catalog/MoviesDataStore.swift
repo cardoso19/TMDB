@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MoviesDataStoreLogic: AnyObject {
+protocol MoviesDataStore: AnyObject {
     var genres: [GenreResponse] { get set }
     var movies: [MovieResponse] { get set }
     var currentPage: Int { get set }
@@ -16,7 +16,7 @@ protocol MoviesDataStoreLogic: AnyObject {
     var isFetchingMovies: Bool { get set }
 }
 
-class MoviesDataStore: MoviesDataStoreLogic {
+class MoviesDataStoreImpl: MoviesDataStore {
     var genres: [GenreResponse] = []
     var movies: [MovieResponse] = []
     var currentPage: Int = 0
