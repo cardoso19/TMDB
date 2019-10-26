@@ -9,7 +9,7 @@
 import UIKit
 import DZNEmptyDataSet
 
-protocol MoviesCollectionLogic {
+protocol MoviesCollectionLogic: AnyObject {
     func updateMovies(_ movies: [MovieViewModel])
     func reloadData()
 }
@@ -18,8 +18,8 @@ class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - Variables
     private let reuseIdentifier = "movieCell"
-    var emptyContentText: String = NSLocalizedString("DO A SEARCH", comment: "")
-    var moviesController: MoviesController?
+    private var emptyContentText: String = NSLocalizedString("DO A SEARCH", comment: "")
+    weak var moviesController: MoviesController?
     var movies: [MovieViewModel] = []
 
     // MARK: - Life Cycle
@@ -46,8 +46,7 @@ class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detail: MovieDetail = MovieDetail(movie: movies[indexPath.row])
-        moviesController?.detail(movie: detail)
+        moviesController?.detail(movieIndex: indexPath.row)
     }
 
     // MARK: - UICollectionViewDataSource

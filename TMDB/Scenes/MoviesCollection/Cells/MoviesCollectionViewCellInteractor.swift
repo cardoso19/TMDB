@@ -13,11 +13,11 @@ protocol MoviesCollectionViewCellInteractor {
 }
 
 class MoviesCollectionViewCellInteractorImpl: MoviesCollectionViewCellInteractor {
-    
+
     // MARK: - Variables
     private let presenter: MoviesCollectionViewCellPresenter
     private let gateway: MoviesCollectionViewCellGateway
-    
+
     // MARK: - Life Cycle
     init(presenter: MoviesCollectionViewCellPresenter, gateway: MoviesCollectionViewCellGateway) {
         self.presenter = presenter

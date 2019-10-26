@@ -1,18 +1,18 @@
 //
-//  MoviesCollectionViewCellGateway.swift
+//  MovieDetailGateway.swift
 //  TMDB
 //
-//  Created by Matheus Cardoso Kuhn on 20/10/19.
+//  Created by Matheus Cardoso Kuhn on 21/10/19.
 //  Copyright © 2019 MDT. All rights reserved.
 //
 
 import UIKit
 
-protocol MoviesCollectionViewCellGateway {
+protocol MovieDetailGateway {
     func downloadImage(posterUrl: String, completion: @escaping (Result<UIImage, RequestError>) -> Void)
 }
 
-class MoviesCollectionViewCellGatewayImpl: MoviesCollectionViewCellGateway {
+class MovieDetailGatewayImpl: MovieDetailGateway {
 
     // MARK: - Variables
     private let httpRequest: HttpRequest

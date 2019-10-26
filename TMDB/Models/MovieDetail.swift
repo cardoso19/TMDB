@@ -8,6 +8,12 @@
 
 import UIKit
 
-struct MovieDetail {
-    let movie: MovieViewModel
+enum MovieDetail {
+    struct Movie {
+        let title: String
+        let genre: String
+        let releaseDate: Date?
+        let posterPath: String
+        let overview: String
+    }
 }

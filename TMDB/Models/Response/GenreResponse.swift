@@ -8,6 +8,7 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name
 struct GenreResponse: Decodable {
     let id: Int?
     let name: String?

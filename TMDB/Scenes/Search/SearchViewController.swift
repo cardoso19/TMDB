@@ -23,27 +23,43 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
 
     // MARK: - Variables
-    private var interactor: SearchInteractor?
-    var collectionController: MoviesCollectionLogic?
+    private let interactor: SearchInteractor
+    let router: SearchRouter
+    weak var collectionController: MoviesCollectionLogic?
     var movies: [MovieViewModel] = []
 
     // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-        prepareLayout()
-    }
-
-    private func setup() {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         let presenter = SearchPresenterImpl()
         let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
         let dataStore = SearchDataStoreImpl()
         let adapter = SearchAdapterImpl()
+        router = SearchRouterImpl(dataStore: dataStore)
         interactor = SearchInteractorImpl(presenter: presenter,
                                           gateway: gateway,
                                           dataStore: dataStore,
                                           adapter: adapter)
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         presenter.viewController = self
+    }
+
+    required init?(coder: NSCoder) {
+        let presenter = SearchPresenterImpl()
+        let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
+        let dataStore = SearchDataStoreImpl()
+        let adapter = SearchAdapterImpl()
+        router = SearchRouterImpl(dataStore: dataStore)
+        interactor = SearchInteractorImpl(presenter: presenter,
+                                          gateway: gateway,
+                                          dataStore: dataStore,
+                                          adapter: adapter)
+        super.init(coder: coder)
+        presenter.viewController = self
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        prepareLayout()
     }
 
     private func prepareLayout() {
@@ -71,16 +87,12 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let query: String = searchBar.text ?? ""
-        interactor?.doMoviesSearch(query: query)
+        interactor.doMoviesSearch(query: query)
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let query: String = searchBar.text ?? ""
-        interactor?.searchTextChange(query: query)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print(searchBar)
+        interactor.searchTextChange(query: query)
     }
 }
 
@@ -89,11 +101,13 @@ extension SearchViewController: MoviesController {
 
     func reachedTheEndOfList() {
         let query: String = searchBar.text ?? ""
-        interactor?.doMoviesSearch(query: query)
+        interactor.doMoviesSearch(query: query)
     }
 
-    func detail(movie: MovieDetail) {
-        tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
+    func detail(movieIndex: Int) {
+        tabBarController?.performSegue(withIdentifier: "detailMovie",
+                                       sender: (source: router,
+                                                selectedIndex: movieIndex))
     }
 }
 

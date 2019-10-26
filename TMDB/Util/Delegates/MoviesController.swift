@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MoviesController {
+protocol MoviesController: AnyObject {
     func reachedTheEndOfList()
-    func detail(movie: MovieDetail)
+    func detail(movieIndex: Int)
 }

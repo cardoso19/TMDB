@@ -14,7 +14,7 @@ protocol SearchPresenter {
 }
 
 class SearchPresenterImpl: SearchPresenter {
-    
+
     // MARK: - Variables
     weak var viewController: SearchViewControllerDisplayLogic?
 

@@ -14,16 +14,16 @@ protocol MoviesCollectionViewCellPresenter {
 }
 
 class MoviesCollectionViewCellPresenterImpl: MoviesCollectionViewCellPresenter {
-    
+
     // MARK: - Variables
     weak var cell: MoviesCollectionViewCellDisplay?
-    
+
     // MARK: - Image
     func present(image: UIImage) {
         cell?.display(image: image)
     }
-    
+
     func present(error: RequestError) {
-        
+        cell?.display(imageError: error)
     }
 }

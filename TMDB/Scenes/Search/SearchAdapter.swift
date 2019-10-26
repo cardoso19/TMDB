@@ -13,7 +13,7 @@ protocol SearchAdapter {
 }
 
 class SearchAdapterImpl: SearchAdapter {
-    
+
     func transform(movie: MovieResponse, genre: String) -> Search.Movie {
         return Search.Movie(title: movie.title ?? "",
                             genre: genre,

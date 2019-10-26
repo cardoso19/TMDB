@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol MovieDetailViewControllerDisplayLogic: AnyObject {
+    func displayMovie(content: MovieDetailViewModel)
+    func displayPoster(image: UIImage)
+    func displayError(message: String)
+}
+
 class MovieDetailViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -17,23 +23,31 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var textViewOverview: UITextView!
 
     // MARK: - Variables
-    var movieDetail: MovieDetail?
-//    var posterRequest: Alamofire.Request?
+    var router: MovieDetailRouter?
+    private var interactor: MovieDetailInteractor!
     private var isLayoutDefined: Bool = false
 
-    // MARK: - Init
+    // MARK: - Life Cycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = Colors.green
         navigationController?.isNavigationBarHidden = false
-        loadMovieTexts()
-        loadMovieImage()
+        interactor.showMovieContent()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = true
-//        posterRequest?.cancel()
     }
 
     override func viewDidLayoutSubviews() {
@@ -44,41 +58,55 @@ class MovieDetailViewController: UIViewController {
         }
     }
 
-    func configLayout() {
+    private func setup() {
+        let presenter = MovieDetailPresenterImpl()
+        let dataStore = MovieDetailDataStoreImpl()
+        let router = MovieDetailRouterImpl(dataStore: dataStore)
+        let gateway = MovieDetailGatewayImpl(httpRequest: HttpRequest())
+        let adapter = MovieDetailAdapterImpl()
+        let interactor = MovieDetailInteractorImpl(presenter: presenter,
+                                                   gateway: gateway,
+                                                   dataStore: dataStore,
+                                                   adapter: adapter)
+        presenter.viewController = self
+        self.interactor = interactor
+        self.router = router
+    }
+
+    private func configLayout() {
         imageViewPoster.dropShadow()
     }
+}
 
-    func loadMovieImage() {
-        imageViewPoster.image = #imageLiteral(resourceName: "defaultPosterImage")
-        if let image = movieDetail?.poster {
-            imageViewPoster.image = image
-        } else if let posterPath = movieDetail?.movie.posterPath {
-//            posterRequest = Request.shared.IMAGE(path: posterPath) { (image) in
-//                self.posterRequest = nil
-//                if let image = image {
-//                    self.imageViewPoster.image = image
-//                }
-//            }
+// MARK: - MovieDetailViewControllerDisplayLogic
+extension MovieDetailViewController: MovieDetailViewControllerDisplayLogic {
+
+    func displayMovie(content: MovieDetailViewModel) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.navigationItem.title = content.title
+            self.labelGenre.text = content.genre
+            self.labelReleaseDate.text = content.releaseDate
+            self.textViewOverview.text = content.overview
         }
     }
 
-    func loadMovieTexts() {
-        navigationItem.title = movieDetail?.movie.title
-//        if let genreID = movieDetail?.movie.genreIDs?.first,
-//           let genreName = MDTGenres.shared.getMovieGenreBy(genreID: genreID) {
-//            labelGenre.text = genreName
-//        } else {
-            labelGenre.text = "-"
-//        }
-        if let releaseDate = movieDetail?.movie.releaseDate?.value {
-            labelReleaseDate.text = releaseDate.convertToString(format: "dd/MM/YYYY")
-        } else {
-            labelReleaseDate.text = "-/-/-"
+    func displayPoster(image: UIImage) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.imageViewPoster.image = image
         }
-        if let overview = movieDetail?.movie.overview, overview != "" {
-            textViewOverview.text = overview
-        } else {
-            textViewOverview.text = NSLocalizedString("NO OVERVIEW", comment: "")
+    }
+
+    func displayError(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
+                                                        message: message,
+                                                        isError: true,
+                                                        dismissTime: 3)
+            snackBar?.show()
+            MDTLoading.hideDefaultLoading()
         }
     }
 }

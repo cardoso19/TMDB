@@ -9,11 +9,16 @@
 import Foundation
 
 protocol MoviesRouter {
-
+    var dataStore: MoviesDataStore? { get }
 }
 
 class MoviesRouterImpl: MoviesRouter {
 
     // MARK: - Variables
     weak var dataStore: MoviesDataStore?
+
+    // MARK: - Life Cycle
+    init(dataStore: MoviesDataStore) {
+        self.dataStore = dataStore
+    }
 }

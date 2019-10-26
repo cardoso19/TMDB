@@ -23,39 +23,52 @@ class MoviesViewController: UIViewController {
     @IBOutlet weak var imageViewIcon: UIImageView!
 
     // MARK: - Variables
-    private var interactor: MoviesInteractor!
-    private var router: MoviesRouter!
+    private let interactor: MoviesInteractor
+    let router: MoviesRouter
     var collectionController: MoviesCollectionLogic?
     var movies: [MovieViewModel] = []
 
-    // MARK: - Init
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-        MDTLoading.showDefaultLoader()
-        interactor.fetchGenres()
-    }
-
-    private func setup() {
+    // MARK: - Life Cycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         let presenter = MoviesPresenterImpl()
         let gateway = MoviesGateway(httpRequest: HttpRequest())
         let dataStore = MoviesDataStoreImpl()
-        let router = MoviesRouterImpl()
+        let router = MoviesRouterImpl(dataStore: dataStore)
         let adapter = MoviesAdapterImpl()
-        router.dataStore = dataStore
-        presenter.viewController = self
         interactor = MoviesInteractorImpl(presenter: presenter,
                                       gateway: gateway,
                                       dataStore: dataStore,
                                       adapter: adapter)
         self.router = router
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        presenter.viewController = self
+    }
+
+    required init?(coder: NSCoder) {
+        let presenter = MoviesPresenterImpl()
+        let gateway = MoviesGateway(httpRequest: HttpRequest())
+        let dataStore = MoviesDataStoreImpl()
+        let router = MoviesRouterImpl(dataStore: dataStore)
+        let adapter = MoviesAdapterImpl()
+        interactor = MoviesInteractorImpl(presenter: presenter,
+                                      gateway: gateway,
+                                      dataStore: dataStore,
+                                      adapter: adapter)
+        self.router = router
+        super.init(coder: coder)
+        presenter.viewController = self
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        MDTLoading.showDefaultLoader()
+        interactor.fetchGenres()
     }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let identifier = segue.identifier,
-            identifier == "collection",
-            let controller = segue.destination as? MoviesCollectionViewController {
+        guard let identifier = segue.identifier else { return }
+        if identifier == "collection", let controller = segue.destination as? MoviesCollectionViewController {
             controller.moviesController = self
             collectionController = controller
         }
@@ -69,8 +82,10 @@ extension MoviesViewController: MoviesController {
         interactor.fetchMovies()
     }
 
-    func detail(movie: MovieDetail) {
-        tabBarController?.performSegue(withIdentifier: "detailMovie", sender: movie)
+    func detail(movieIndex: Int) {
+        tabBarController?.performSegue(withIdentifier: "detailMovie",
+                                       sender: (source: router,
+                                                selectedIndex: movieIndex))
     }
 }
 

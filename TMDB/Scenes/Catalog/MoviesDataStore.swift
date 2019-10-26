@@ -14,6 +14,7 @@ protocol MoviesDataStore: AnyObject {
     var currentPage: Int { get set }
     var totalPages: Int { get set }
     var isFetchingMovies: Bool { get set }
+    var selectedIndex: Int? { get set }
 }
 
 class MoviesDataStoreImpl: MoviesDataStore {
@@ -22,4 +23,5 @@ class MoviesDataStoreImpl: MoviesDataStore {
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isFetchingMovies: Bool = false
+    var selectedIndex: Int?
 }

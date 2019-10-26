@@ -13,19 +13,21 @@ protocol SearchGateway {
 }
 
 class SearchGatewayImpl: SearchGateway {
-    
+
     // MARK: - Variables
     private let httpRequest: HttpRequest
-    
+
     // MARK: - Life Cycle
     init(httpRequest: HttpRequest) {
         self.httpRequest = httpRequest
     }
-    
+
     // MARK: - Search
     func searchMovies(query: String, page: Int, completion: @escaping (Result<MoviesResponse, RequestError>) -> Void) {
         httpRequest.request(with: SearchGatewaySetup.searchMovie(query: query, page: page)) { result in
-            completion(result)
+            DispatchQueue.global().async {
+                completion(result)
+            }
         }
     }
 }
