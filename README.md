@@ -1,6 +1,8 @@
 # TMDB
+[![codebeat  badge](https://codebeat.co/badges/f7dc0564-6f75-4ee5-b4be-52fb799c7661)](https://codebeat.co/projects/github-com-cardoso19-tmdb-master) [![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://swift.org) [![Xcode](https://img.shields.io/badge/Xcode-10.2.1-blue.svg)](https://developer.apple.com/xcode) [![MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
 ### Description
+
 This app provides a view of the upcoming movies and searches for movies by part or full name, all of the data that are shown are provided by https://www.themoviedb.org. The app is currently localized to English and Portuguese, but it requests data in the language that the device uses.
 
 ## Platform
@@ -25,7 +27,5 @@ After the project had been cloned, inside of the generated directory, using Term
 With the dependencies managemend has been made by Cocoa Pods, to run the project you need to open it by clicking on the file "TMDB.xcworkspace".
 
 ## Third-party Libraries Used
-- [Alamofire](https://github.com/Alamofire/Alamofire): Was chosen by his easy utilization and for his reliability with requests on all of the kind of types. It was used on each request that the app does to the backend.
-- [Alamofire Image](https://github.com/Alamofire/AlamofireImage): As a component library of Alamofire, Alamofire Image provides an easy way to get images from the backend and cache them. The application has used this Framework to manage the memory usage of the cache of images.
-- [DZNEmptyDataSet](https://github.com/dzenbot/DZNEmptyDataSet): This framework provides a simplified form to show UITableViews and UICollectionView without content. The app used this framework to show messages when the collection view of movies doesn't have any content to show.
-
+- [MDTAlert](https://github.com/cardoso19/MDTAlert): This is a personal framework to present customized alerts.
+- [DZNEmptyDataSet](https://github.com/dzenbot/DZNEmptyDataSet): This framework provide a simplified form to show UITableViews and UICollectionView without content. The app used this framework to show messages when the collection view of movies don't have any content to show.
