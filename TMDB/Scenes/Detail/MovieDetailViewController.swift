@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MDTAlert
 
 protocol MovieDetailViewControllerDisplayLogic: AnyObject {
     func displayMovie(content: MovieDetailViewModel)
@@ -99,13 +100,11 @@ extension MovieDetailViewController: MovieDetailViewControllerDisplayLogic {
     }
 
     func displayError(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            let snackBar = SnackBarView.instanceFromNib(parentView: self.view,
-                                                        message: message,
-                                                        isError: true,
-                                                        dismissTime: 3)
-            snackBar?.show()
+        DispatchQueue.main.async {
+            let alert = MDTAlertView(message: message,
+                                        position: .top,
+                                        dismissTime: 3)
+            alert.present()
             MDTLoading.hideDefaultLoading()
         }
     }
