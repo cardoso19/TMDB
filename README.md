@@ -1,7 +1,7 @@
 # TMDB
 
 ### Description
-This app provides a view of the upcoming movies and search for movies by part or full name, all of the data that are show are provided by https://www.themoviedb.org. The app is currently localized to english and portuguese, but it request data in the language that the device uses.
+This app provides a view of the upcoming movies and searches for movies by part or full name, all of the data that are shown are provided by https://www.themoviedb.org. The app is currently localized to English and Portuguese, but it requests data in the language that the device uses.
 
 ## Platform
 iOS
@@ -27,4 +27,3 @@ With the dependencies managemend has been made by Cocoa Pods, to run the project
 ## Third-party Libraries Used
 - [MDTAlert](https://github.com/cardoso19/MDTAlert): This is a personal framework to present customized alerts.
 - [DZNEmptyDataSet](https://github.com/dzenbot/DZNEmptyDataSet): This framework provide a simplified form to show UITableViews and UICollectionView without content. The app used this framework to show messages when the collection view of movies don't have any content to show.
-
