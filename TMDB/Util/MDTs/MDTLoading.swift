@@ -28,7 +28,7 @@ class MDTLoading {
             overlayView.backgroundColor = .white
             overlayView.layer.cornerRadius = 6
             let activityIndicator = UIActivityIndicatorView()
-            activityIndicator.activityIndicatorViewStyle = .gray
+            activityIndicator.style = .gray
             activityIndicator.center = CGPoint(x: overlayView.bounds.width / 2.0, y: overlayView.bounds.height / 2.0)
             activityIndicator.startAnimating()
             activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
