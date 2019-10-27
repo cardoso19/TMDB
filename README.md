@@ -1,6 +1,8 @@
 # TMDB
+[![codebeat  badge](https://codebeat.co/badges/f7dc0564-6f75-4ee5-b4be-52fb799c7661)](https://codebeat.co/projects/github-com-cardoso19-tmdb-master) [![Swift](https://img.shields.io/badge/Swift-5.0-orange.svg)](https://swift.org) [![Xcode](https://img.shields.io/badge/Xcode-10.2.1-blue.svg)](https://developer.apple.com/xcode) [![MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
 
 ### Description
+
 This app provides a view of the upcoming movies and searches for movies by part or full name, all of the data that are shown are provided by https://www.themoviedb.org. The app is currently localized to English and Portuguese, but it requests data in the language that the device uses.
 
 ## Platform
