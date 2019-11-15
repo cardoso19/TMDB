@@ -16,4 +16,11 @@ enum MovieDetail {
         let posterPath: String
         let overview: String
     }
+
+    struct MovieViewModel {
+        let title: String
+        let genre: String
+        let releaseDate: String
+        let overview: String
+    }
 }

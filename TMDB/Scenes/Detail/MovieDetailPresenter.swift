@@ -25,10 +25,10 @@ class MovieDetailPresenterImpl: MovieDetailPresenter {
         let genre = content.genre
         let releaseDate = content.releaseDate?.convertToString(format: "dd/MM/yyyy") ?? "-"
         let overview = content.overview
-        let viewModel = MovieDetailViewModel(title: title,
-                                             genre: genre,
-                                             releaseDate: releaseDate,
-                                             overview: overview)
+        let viewModel = MovieDetail.MovieViewModel(title: title,
+                                                   genre: genre,
+                                                   releaseDate: releaseDate,
+                                                   overview: overview)
         viewController?.displayMovie(content: viewModel)
     }
 

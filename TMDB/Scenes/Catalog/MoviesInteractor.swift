@@ -16,19 +16,25 @@ protocol MoviesInteractor {
 class MoviesInteractorImpl: MoviesInteractor {
 
     // MARK: - Variables
-    private let presenter: MoviesPresenter
+    private let moviesPresenter: MoviesPresenter
+    private let genrePresenter: GenrePresenter
     private let gateway: MoviesGatewayLogic
-    private let dataStore: MoviesDataStore
+    private let moviesDataStore: MoviesDataStore
+    private let serviceDataStore: MoviesServiceDataStore
     private let adapter: MoviesAdapter
 
     // MARK: - Life Cycle
-    init(presenter: MoviesPresenter,
+    init(moviesPresenter: MoviesPresenter,
+         genrePresenter: GenrePresenter,
          gateway: MoviesGatewayLogic,
-         dataStore: MoviesDataStore,
+         moviesDataStore: MoviesDataStore,
+         serviceDataStore: MoviesServiceDataStore,
          adapter: MoviesAdapter) {
-        self.presenter = presenter
+        self.moviesPresenter = moviesPresenter
+        self.genrePresenter = genrePresenter
         self.gateway = gateway
-        self.dataStore = dataStore
+        self.moviesDataStore = moviesDataStore
+        self.serviceDataStore = serviceDataStore
         self.adapter = adapter
     }
 
@@ -46,16 +52,16 @@ class MoviesInteractorImpl: MoviesInteractor {
     }
 
     private func genresSuccess(genres: [GenreResponse]) {
-        dataStore.genres = genres
+        moviesDataStore.genres = genres
         fetchMovies()
     }
 
     private func genresFailure(error: RequestError) {
-        presenter.presentGenreError(error: error)
+        genrePresenter.presentGenreError(error: error)
     }
 
     private func getMovieGenreBy(genreID: Int) -> String? {
-        for genre in dataStore.genres where (genre.id ?? -1) == genreID {
+        for genre in moviesDataStore.genres where (genre.id ?? -1) == genreID {
             return genre.name
         }
         return nil
@@ -63,34 +69,38 @@ class MoviesInteractorImpl: MoviesInteractor {
 
     // MARK: - Movies
     func fetchMovies() {
-        if !dataStore.isFetchingMovies && (dataStore.totalPages == 0 || dataStore.currentPage <= dataStore.totalPages) {
-            dataStore.isFetchingMovies = true
-            gateway.fetchMovies(page: dataStore.currentPage + 1) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let moviesResponse):
-                    self.moviesSuccess(moviesResponse: moviesResponse)
-                case .failure(let error):
-                    self.moviesFailure(error: error)
-                }
-                self.dataStore.isFetchingMovies = false
+        guard
+        !serviceDataStore.isFetchingMovies,
+        (serviceDataStore.totalPages == 0 || serviceDataStore.currentPage <= serviceDataStore.totalPages)
+            else {
+                return
+        }
+        serviceDataStore.isFetchingMovies = true
+        gateway.fetchMovies(page: serviceDataStore.currentPage + 1) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let moviesResponse):
+                self.moviesSuccess(moviesResponse: moviesResponse)
+            case .failure(let error):
+                self.moviesFailure(error: error)
             }
+            self.serviceDataStore.isFetchingMovies = false
         }
     }
 
     private func moviesSuccess(moviesResponse: MoviesResponse) {
         guard let newMovies = moviesResponse.results else { return }
-        dataStore.totalPages = moviesResponse.totalPages ?? -1
-        dataStore.currentPage += 1
-        dataStore.movies.append(contentsOf: newMovies)
-        let transformedMovies = newMovies.map({ movie -> Catalog.Movie in
+        serviceDataStore.totalPages = moviesResponse.totalPages ?? -1
+        serviceDataStore.currentPage += 1
+        moviesDataStore.movies.append(contentsOf: newMovies)
+        let transformedMovies = newMovies.map({ movie -> Movies.Movie in
             let genre = self.getMovieGenreBy(genreID: movie.genreIDs?.first ?? -1) ?? "-"
             return self.adapter.transform(movie: movie, genre: genre)
         })
-        presenter.presentMovies(movies: transformedMovies)
+        moviesPresenter.presentMovies(transformedMovies)
     }
 
     private func moviesFailure(error: RequestError) {
-        presenter.presentMoviesError(error: error)
+        moviesPresenter.presentError(error)
     }
 }

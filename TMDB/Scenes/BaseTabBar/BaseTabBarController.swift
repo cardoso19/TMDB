@@ -37,19 +37,13 @@ class BaseTabBarController: UITabBarController {
         if let identifier = segue.identifier, identifier == "detailMovie" {
             guard
                 let destination = segue.destination as? MovieDetailViewController,
-                let destinationRouter = destination.router
+                let destinationRouter = destination.router,
+                let sender = sender as? (source: MovieDetailPassingData, selectedIndex: Int)
                 else {
                     return
             }
-            if let sender = sender as? (source: MoviesRouter, selectedIndex: Int) {
-                router.passDetailData(sourceRouter: sender.source,
-                                      destination: destinationRouter,
-                                      selectedIndex: sender.selectedIndex)
-            } else if let sender = sender as? (source: SearchRouter, selectedIndex: Int) {
-                router.passDetailData(sourceRouter: sender.source,
-                                      destination: destinationRouter,
-                                      selectedIndex: sender.selectedIndex)
-            }
+            sender.source.passDetailData(destination: destinationRouter,
+                                         selectedIndex: sender.selectedIndex)
         }
     }
 }

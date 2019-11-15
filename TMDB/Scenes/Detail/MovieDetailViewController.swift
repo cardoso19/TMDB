@@ -10,7 +10,7 @@ import UIKit
 import MDTAlert
 
 protocol MovieDetailViewControllerDisplayLogic: AnyObject {
-    func displayMovie(content: MovieDetailViewModel)
+    func displayMovie(content: MovieDetail.MovieViewModel)
     func displayPoster(image: UIImage)
     func displayError(message: String)
 }
@@ -63,10 +63,10 @@ class MovieDetailViewController: UIViewController {
         let presenter = MovieDetailPresenterImpl()
         let dataStore = MovieDetailDataStoreImpl()
         let router = MovieDetailRouterImpl(dataStore: dataStore)
-        let gateway = MovieDetailGatewayImpl(httpRequest: HttpRequest())
+        let imageGateway = ImageGatewayImpl(httpRequest: HttpRequest())
         let adapter = MovieDetailAdapterImpl()
         let interactor = MovieDetailInteractorImpl(presenter: presenter,
-                                                   gateway: gateway,
+                                                   imageGateway: imageGateway,
                                                    dataStore: dataStore,
                                                    adapter: adapter)
         presenter.viewController = self
@@ -82,7 +82,7 @@ class MovieDetailViewController: UIViewController {
 // MARK: - MovieDetailViewControllerDisplayLogic
 extension MovieDetailViewController: MovieDetailViewControllerDisplayLogic {
 
-    func displayMovie(content: MovieDetailViewModel) {
+    func displayMovie(content: MovieDetail.MovieViewModel) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.navigationItem.title = content.title
