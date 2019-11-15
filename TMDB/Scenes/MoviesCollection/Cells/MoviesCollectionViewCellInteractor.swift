@@ -16,17 +16,17 @@ class MoviesCollectionViewCellInteractorImpl: MoviesCollectionViewCellInteractor
 
     // MARK: - Variables
     private let presenter: MoviesCollectionViewCellPresenter
-    private let gateway: MoviesCollectionViewCellGateway
+    private let imageGateway: ImageGateway
 
     // MARK: - Life Cycle
-    init(presenter: MoviesCollectionViewCellPresenter, gateway: MoviesCollectionViewCellGateway) {
+    init(presenter: MoviesCollectionViewCellPresenter, imageGateway: ImageGateway) {
         self.presenter = presenter
-        self.gateway = gateway
+        self.imageGateway = imageGateway
     }
 
     // MARK: - Image
     func downloadImage(posterUrl: String) {
-        gateway.downloadImage(posterUrl: posterUrl) { [weak self] result in
+        imageGateway.downloadImage(posterUrl: posterUrl) { [weak self] result in
             switch result {
             case .success(let image):
                 self?.downloadImageSuccess(image: image)

@@ -36,14 +36,14 @@ class MovieCollectionViewCell: UICollectionViewCell {
 
     private func setup() {
         let presenter = MoviesCollectionViewCellPresenterImpl()
-        let gateway = MoviesCollectionViewCellGatewayImpl(httpRequest: HttpRequest())
+        let imageGateway = ImageGatewayImpl(httpRequest: HttpRequest())
         interactor = MoviesCollectionViewCellInteractorImpl(presenter: presenter,
-                                                            gateway: gateway)
+                                                            imageGateway: imageGateway)
         presenter.cell = self
     }
 
     // MARK: - Content
-    func setContent(viewModel: MovieViewModel) {
+    func setContent(viewModel: Movies.MovieViewModel) {
         labelTitle.text = viewModel.title
         labelGenre.text = viewModel.genre
         labelReleaseDate.text = viewModel.releaseDate

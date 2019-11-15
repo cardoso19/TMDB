@@ -9,16 +9,39 @@
 import Foundation
 
 protocol SearchRouter {
-    var dataStore: SearchDataStore? { get }
+    var searchDataStore: SearchDataStore? { get }
+    var moviesDataStore: MoviesDataStore? { get }
+    var moviesServiceDataStore: MoviesServiceDataStore? { get }
 }
 
 class SearchRouterImpl: SearchRouter {
 
     // MARK: - Variables
-    weak var dataStore: SearchDataStore?
+    private(set) weak var searchDataStore: SearchDataStore?
+    private(set) weak var moviesDataStore: MoviesDataStore?
+    private(set) weak var moviesServiceDataStore: MoviesServiceDataStore?
 
     // MARK: - Life Cycle
-    init(dataStore: SearchDataStore) {
-        self.dataStore = dataStore
+    init(searchDataStore: SearchDataStore,
+         moviesDataStore: MoviesDataStore,
+         moviesServiceDataStore: MoviesServiceDataStore) {
+        self.searchDataStore = searchDataStore
+        self.moviesDataStore = moviesDataStore
+        self.moviesServiceDataStore = moviesServiceDataStore
+    }
+}
+
+// MARK: - MovieDetailPassingData
+extension SearchRouterImpl: MovieDetailPassingData {
+
+    func passDetailData(destination: MovieDetailRouter, selectedIndex: Int) {
+        guard
+            let movie = moviesDataStore?.movies[selectedIndex],
+            let genres = moviesDataStore?.genres
+            else {
+                return
+        }
+        destination.dataStore?.movieResponse = movie
+        destination.dataStore?.genres = genres
     }
 }

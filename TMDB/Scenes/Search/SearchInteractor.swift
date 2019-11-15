@@ -16,22 +16,31 @@ protocol SearchInteractor {
 class SearchInteractorImpl: SearchInteractor {
 
     // MARK: - Variables
-    private let presenter: SearchPresenter
+    private let moviesPresenter: MoviesPresenter
     private let gateway: SearchGateway
-    private let dataStore: SearchDataStore
-    private let adapter: SearchAdapter
+    private let searchDataStore: SearchDataStore
+    private let moviesDataStore: MoviesDataStore
+    private let moviesServiceDataStore: MoviesServiceDataStore
+    private let moviesAdapter: MoviesAdapter
 
     // MARK: - Life Cycle
-    init(presenter: SearchPresenter, gateway: SearchGateway, dataStore: SearchDataStore, adapter: SearchAdapter) {
-        self.presenter = presenter
+    init(moviesPresenter: MoviesPresenter,
+         gateway: SearchGateway,
+         searchDataStore: SearchDataStore,
+         moviesDataStore: MoviesDataStore,
+         moviesServiceDataStore: MoviesServiceDataStore,
+         moviesAdapter: MoviesAdapter) {
+        self.moviesPresenter = moviesPresenter
         self.gateway = gateway
-        self.dataStore = dataStore
-        self.adapter = adapter
+        self.searchDataStore = searchDataStore
+        self.moviesDataStore = moviesDataStore
+        self.moviesServiceDataStore = moviesServiceDataStore
+        self.moviesAdapter = moviesAdapter
     }
 
     // MARK: - Genre
     private func getMovieGenreBy(genreID: Int) -> String? {
-        for genre in dataStore.genres where (genre.id ?? -1) == genreID {
+        for genre in moviesDataStore.genres where (genre.id ?? -1) == genreID {
             return genre.name
         }
         return nil
@@ -40,20 +49,21 @@ class SearchInteractorImpl: SearchInteractor {
     // MARK: - Movies
     func doMoviesSearch(query: String) {
         if query.isEmpty {
-            presenter.present(movies: [])
+            moviesPresenter.presentMovies([])
         } else {
             guard
-                !dataStore.isSearchingMovies,
-                query != dataStore.previousSearchedQuery,
-                (dataStore.totalPages == 0 || dataStore.currentPage <= dataStore.totalPages)
+                !moviesServiceDataStore.isFetchingMovies,
+                query != searchDataStore.previousSearchedQuery,
+                // swiftlint:disable:next line_length
+                (moviesServiceDataStore.totalPages == 0 || moviesServiceDataStore.currentPage <= moviesServiceDataStore.totalPages)
                 else {
                     return
             }
-            dataStore.isSearchingMovies = true
-            dataStore.previousSearchedQuery = query
-            gateway.searchMovies(query: query, page: dataStore.currentPage + 1) { [weak self] result in
+            moviesServiceDataStore.isFetchingMovies = true
+            searchDataStore.previousSearchedQuery = query
+            gateway.searchMovies(query: query, page: moviesServiceDataStore.currentPage + 1) { [weak self] result in
                 guard let self = self else { return }
-                self.dataStore.isSearchingMovies = false
+                self.moviesServiceDataStore.isFetchingMovies = false
                 switch result {
                 case .success(let response):
                     self.moviesSearchSuccess(response: response)
@@ -66,28 +76,28 @@ class SearchInteractorImpl: SearchInteractor {
 
     private func moviesSearchSuccess(response: MoviesResponse) {
         guard let newMovies = response.results else { return }
-        dataStore.movies.append(contentsOf: newMovies)
-        dataStore.totalPages = response.totalPages ?? -1
-        dataStore.currentPage += 1
-        let transformedMovies = newMovies.map { movie -> Search.Movie in
+        moviesDataStore.movies.append(contentsOf: newMovies)
+        moviesServiceDataStore.totalPages = response.totalPages ?? -1
+        moviesServiceDataStore.currentPage += 1
+        let transformedMovies = newMovies.map { movie -> Movies.Movie in
             let genre = self.getMovieGenreBy(genreID: movie.genreIDs?.first ?? -1) ?? "-"
-            return adapter.transform(movie: movie, genre: genre)
+            return moviesAdapter.transform(movie: movie, genre: genre)
         }
-        presenter.present(movies: transformedMovies)
+        moviesPresenter.presentMovies(transformedMovies)
     }
 
     private func moviesSearchFailure(error: RequestError) {
-        presenter.present(error: error)
+        moviesPresenter.presentError(error)
     }
 
     // MARK: - Search
     func searchTextChange(query: String) {
-        dataStore.timer?.invalidate()
+        searchDataStore.timer?.invalidate()
         // TODO: - Suspend search request
-        dataStore.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
+        searchDataStore.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
             guard let self = self else { return }
-            self.dataStore.currentPage = 0
-            self.dataStore.totalPages = 0
+            self.moviesServiceDataStore.currentPage = 0
+            self.moviesServiceDataStore.totalPages = 0
             self.doMoviesSearch(query: query)
         })
     }

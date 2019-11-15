@@ -12,6 +12,10 @@ protocol MovieDetailRouter {
     var dataStore: MovieDetailDataStore? { get }
 }
 
+protocol MovieDetailPassingData {
+    func passDetailData(destination: MovieDetailRouter, selectedIndex: Int)
+}
+
 class MovieDetailRouterImpl: MovieDetailRouter {
 
     // MARK: - Variables

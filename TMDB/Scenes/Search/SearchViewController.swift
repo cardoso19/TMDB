@@ -9,11 +9,6 @@
 import UIKit
 import MDTAlert
 
-protocol SearchViewControllerDisplayLogic: AnyObject {
-    func display(movies: [MovieViewModel])
-    func display(message: String)
-}
-
 class SearchViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -25,37 +20,49 @@ class SearchViewController: UIViewController {
 
     // MARK: - Variables
     private let interactor: SearchInteractor
-    let router: SearchRouter
+    let router: SearchRouter & MovieDetailPassingData
     weak var collectionController: MoviesCollectionLogic?
-    var movies: [MovieViewModel] = []
+    var movies: [Movies.MovieViewModel] = []
 
     // MARK: - Life Cycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        let presenter = SearchPresenterImpl()
+        let moviesPresenter = MoviesPresenterImpl()
         let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
-        let dataStore = SearchDataStoreImpl()
-        let adapter = SearchAdapterImpl()
-        router = SearchRouterImpl(dataStore: dataStore)
-        interactor = SearchInteractorImpl(presenter: presenter,
+        let searchDataStore = SearchDataStoreImpl()
+        let moviesDataStore = MoviesDataStoreImpl()
+        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
+        let adapter = MoviesAdapterImpl()
+        router = SearchRouterImpl(searchDataStore: searchDataStore,
+                                  moviesDataStore: moviesDataStore,
+                                  moviesServiceDataStore: moviesServiceDataStore)
+        interactor = SearchInteractorImpl(moviesPresenter: moviesPresenter,
                                           gateway: gateway,
-                                          dataStore: dataStore,
-                                          adapter: adapter)
+                                          searchDataStore: searchDataStore,
+                                          moviesDataStore: moviesDataStore,
+                                          moviesServiceDataStore: moviesServiceDataStore,
+                                          moviesAdapter: adapter)
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        presenter.viewController = self
+        moviesPresenter.viewController = self
     }
 
     required init?(coder: NSCoder) {
-        let presenter = SearchPresenterImpl()
+        let moviesPresenter = MoviesPresenterImpl()
         let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
-        let dataStore = SearchDataStoreImpl()
-        let adapter = SearchAdapterImpl()
-        router = SearchRouterImpl(dataStore: dataStore)
-        interactor = SearchInteractorImpl(presenter: presenter,
+        let searchDataStore = SearchDataStoreImpl()
+        let moviesDataStore = MoviesDataStoreImpl()
+        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
+        let adapter = MoviesAdapterImpl()
+        router = SearchRouterImpl(searchDataStore: searchDataStore,
+                                  moviesDataStore: moviesDataStore,
+                                  moviesServiceDataStore: moviesServiceDataStore)
+        interactor = SearchInteractorImpl(moviesPresenter: moviesPresenter,
                                           gateway: gateway,
-                                          dataStore: dataStore,
-                                          adapter: adapter)
+                                          searchDataStore: searchDataStore,
+                                          moviesDataStore: moviesDataStore,
+                                          moviesServiceDataStore: moviesServiceDataStore,
+                                          moviesAdapter: adapter)
         super.init(coder: coder)
-        presenter.viewController = self
+        moviesPresenter.viewController = self
     }
 
     override func viewDidLoad() {
@@ -112,17 +119,17 @@ extension SearchViewController: MoviesController {
     }
 }
 
-// MARK: - SearchViewControllerDisplayLogic
-extension SearchViewController: SearchViewControllerDisplayLogic {
+// MARK: - MoviesDisplayLogic
+extension SearchViewController: MoviesDisplayLogic {
 
-    func display(movies: [MovieViewModel]) {
+    func displayMovies(_ movies: [Movies.MovieViewModel]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.collectionController?.updateMovies(movies)
         }
     }
 
-    func display(message: String) {
+    func displayError(message: String) {
         DispatchQueue.main.async {
             let alert = MDTAlertView(message: message,
                                         position: .top,

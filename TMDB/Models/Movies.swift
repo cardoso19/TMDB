@@ -1,5 +1,5 @@
 //
-//  Catalog.swift
+//  Movies.swift
 //  TMDB
 //
 //  Created by Matheus Cardoso Kuhn on 12/10/19.
@@ -8,11 +8,18 @@
 
 import Foundation
 
-enum Catalog {
+enum Movies {
     struct Movie {
         let title: String
         let genre: String
         let releaseDate: Date?
+        let posterPath: String
+    }
+
+    struct MovieViewModel {
+        let title: String
+        let genre: String
+        let releaseDate: String
         let posterPath: String
     }
 }
