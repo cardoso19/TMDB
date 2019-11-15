@@ -9,13 +9,13 @@
 import Foundation
 
 protocol MoviesAdapter {
-    func transform(movie: MovieResponse, genre: String) -> Catalog.Movie
+    func transform(movie: MovieResponse, genre: String) -> Movies.Movie
 }
 
 class MoviesAdapterImpl: MoviesAdapter {
 
-    func transform(movie: MovieResponse, genre: String) -> Catalog.Movie {
-        return Catalog.Movie(title: movie.title ?? "",
+    func transform(movie: MovieResponse, genre: String) -> Movies.Movie {
+        return Movies.Movie(title: movie.title ?? "",
                              genre: genre,
                              releaseDate: movie.releaseDate?.value,
                              posterPath: movie.posterPath ?? "")

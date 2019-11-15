@@ -16,17 +16,17 @@ class MovieDetailInteractorImpl: MovieDetailInteractor {
 
     // MARK: - Variables
     private let presenter: MovieDetailPresenter
-    private let gateway: MovieDetailGateway
+    private let imageGateway: ImageGateway
     private let dataStore: MovieDetailDataStore
     private let adapter: MovieDetailAdapter
 
     // MARK: - Life Cycle
     init(presenter: MovieDetailPresenter,
-         gateway: MovieDetailGateway,
+         imageGateway: ImageGateway,
          dataStore: MovieDetailDataStore,
          adapter: MovieDetailAdapter) {
         self.presenter = presenter
-        self.gateway = gateway
+        self.imageGateway = imageGateway
         self.dataStore = dataStore
         self.adapter = adapter
     }
@@ -41,7 +41,7 @@ class MovieDetailInteractorImpl: MovieDetailInteractor {
             else {
                 return
         }
-        gateway.downloadImage(posterUrl: dataStore.movie.posterPath) { [weak self] result in
+        imageGateway.downloadImage(posterUrl: dataStore.movie.posterPath) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let image):

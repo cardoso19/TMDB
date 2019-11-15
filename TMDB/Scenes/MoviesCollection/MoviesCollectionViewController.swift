@@ -10,7 +10,7 @@ import UIKit
 import DZNEmptyDataSet
 
 protocol MoviesCollectionLogic: AnyObject {
-    func updateMovies(_ movies: [MovieViewModel])
+    func updateMovies(_ movies: [Movies.MovieViewModel])
     func reloadData()
 }
 
@@ -20,7 +20,7 @@ class MoviesCollectionViewController: UICollectionViewController {
     private let reuseIdentifier = "movieCell"
     private var emptyContentText: String = NSLocalizedString("DO A SEARCH", comment: "")
     weak var moviesController: MoviesController?
-    var movies: [MovieViewModel] = []
+    var movies: [Movies.MovieViewModel] = []
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -86,7 +86,7 @@ extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - MoviesCollectionLogic
 extension MoviesCollectionViewController: MoviesCollectionLogic {
 
-    func updateMovies(_ movies: [MovieViewModel]) {
+    func updateMovies(_ movies: [Movies.MovieViewModel]) {
         self.movies = movies
         if movies.isEmpty {
             emptyContentText = NSLocalizedString("NO RESULT", comment: "")

@@ -9,10 +9,13 @@
 import UIKit
 import MDTAlert
 
-protocol MoviesViewControllerDisplayLogic: AnyObject {
-    func displayGenresError(message: String)
-    func displayMovies(movies: [MovieViewModel])
-    func displayMoviesError(message: String)
+protocol MoviesDisplayLogic: AnyObject {
+    func displayMovies(_ movies: [Movies.MovieViewModel])
+    func displayError(message: String)
+}
+
+protocol GenreDisplayLogic: AnyObject {
+    func displayError(message: String)
 }
 
 class MoviesViewController: UIViewController {
@@ -24,39 +27,51 @@ class MoviesViewController: UIViewController {
 
     // MARK: - Variables
     private let interactor: MoviesInteractor
-    let router: MoviesRouter
+    let router: MoviesRouter & MovieDetailPassingData
     var collectionController: MoviesCollectionLogic?
-    var movies: [MovieViewModel] = []
+    var movies: [Movies.MovieViewModel] = []
 
     // MARK: - Life Cycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        let presenter = MoviesPresenterImpl()
+        let moviesPresenter = MoviesPresenterImpl()
+        let genrePresenter = GenrePresenterImpl()
         let gateway = MoviesGateway(httpRequest: HttpRequest())
-        let dataStore = MoviesDataStoreImpl()
-        let router = MoviesRouterImpl(dataStore: dataStore)
+        let moviesDataStore = MoviesDataStoreImpl()
+        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
+        let router = MoviesRouterImpl(moviesDataStore: moviesDataStore,
+                                      moviesServiceDataStore: moviesServiceDataStore)
         let adapter = MoviesAdapterImpl()
-        interactor = MoviesInteractorImpl(presenter: presenter,
-                                      gateway: gateway,
-                                      dataStore: dataStore,
-                                      adapter: adapter)
+        interactor = MoviesInteractorImpl(moviesPresenter: moviesPresenter,
+                                          genrePresenter: genrePresenter,
+                                          gateway: gateway,
+                                          moviesDataStore: moviesDataStore,
+                                          serviceDataStore: moviesServiceDataStore,
+                                          adapter: adapter)
         self.router = router
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        presenter.viewController = self
+        moviesPresenter.viewController = self
+        genrePresenter.viewController = self
     }
 
     required init?(coder: NSCoder) {
-        let presenter = MoviesPresenterImpl()
+        let moviesPresenter = MoviesPresenterImpl()
+        let genrePresenter = GenrePresenterImpl()
         let gateway = MoviesGateway(httpRequest: HttpRequest())
-        let dataStore = MoviesDataStoreImpl()
-        let router = MoviesRouterImpl(dataStore: dataStore)
+        let moviesDataStore = MoviesDataStoreImpl()
+        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
+        let router = MoviesRouterImpl(moviesDataStore: moviesDataStore,
+                                      moviesServiceDataStore: moviesServiceDataStore)
         let adapter = MoviesAdapterImpl()
-        interactor = MoviesInteractorImpl(presenter: presenter,
-                                      gateway: gateway,
-                                      dataStore: dataStore,
-                                      adapter: adapter)
+        interactor = MoviesInteractorImpl(moviesPresenter: moviesPresenter,
+                                          genrePresenter: genrePresenter,
+                                          gateway: gateway,
+                                          moviesDataStore: moviesDataStore,
+                                          serviceDataStore: moviesServiceDataStore,
+                                          adapter: adapter)
         self.router = router
         super.init(coder: coder)
-        presenter.viewController = self
+        moviesPresenter.viewController = self
+        genrePresenter.viewController = self
     }
 
     override func viewDidLoad() {
@@ -72,6 +87,14 @@ class MoviesViewController: UIViewController {
             controller.moviesController = self
             collectionController = controller
         }
+    }
+    
+    // MARK: - Alert
+    private func showAlert(message: String) {
+        let alert = MDTAlertView(message: message,
+                                    position: .top,
+                                    dismissTime: 3)
+        alert.present()
     }
 }
 
@@ -89,20 +112,10 @@ extension MoviesViewController: MoviesController {
     }
 }
 
-// MARK: - MoviesViewControllerDisplayLogic
-extension MoviesViewController: MoviesViewControllerDisplayLogic {
+// MARK: - MoviesDisplayLogic
+extension MoviesViewController: MoviesDisplayLogic {
 
-    func displayGenresError(message: String) {
-        DispatchQueue.main.async {
-            let alert = MDTAlertView(message: message,
-                                        position: .top,
-                                        dismissTime: 3)
-            alert.present()
-            MDTLoading.hideDefaultLoading()
-        }
-    }
-
-    func displayMovies(movies: [MovieViewModel]) {
+    func displayMovies(_ movies: [Movies.MovieViewModel]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.movies.append(contentsOf: movies)
@@ -112,11 +125,21 @@ extension MoviesViewController: MoviesViewControllerDisplayLogic {
     }
 
     func displayMoviesError(message: String) {
-        DispatchQueue.main.async {
-            let alert = MDTAlertView(message: message,
-                                        position: .top,
-                                        dismissTime: 3)
-            alert.present()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.showAlert(message: message)
+            MDTLoading.hideDefaultLoading()
+        }
+    }
+}
+
+// MARK: - GenreDisplayLogic
+extension MoviesViewController: GenreDisplayLogic {
+
+    func displayError(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.showAlert(message: message)
             MDTLoading.hideDefaultLoading()
         }
     }

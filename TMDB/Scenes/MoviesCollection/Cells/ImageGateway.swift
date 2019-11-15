@@ -1,18 +1,18 @@
 //
-//  MovieDetailGateway.swift
+//  ImageGateway.swift
 //  TMDB
 //
-//  Created by Matheus Cardoso Kuhn on 21/10/19.
+//  Created by Matheus Cardoso Kuhn on 20/10/19.
 //  Copyright © 2019 MDT. All rights reserved.
 //
 
 import UIKit
 
-protocol MovieDetailGateway {
+protocol ImageGateway {
     func downloadImage(posterUrl: String, completion: @escaping (Result<UIImage, RequestError>) -> Void)
 }
 
-class MovieDetailGatewayImpl: MovieDetailGateway {
+class ImageGatewayImpl: ImageGateway {
 
     // MARK: - Variables
     private let httpRequest: HttpRequest

@@ -9,16 +9,34 @@
 import Foundation
 
 protocol MoviesRouter {
-    var dataStore: MoviesDataStore? { get }
+    var moviesDataStore: MoviesDataStore? { get }
+    var moviesServiceDataStore: MoviesServiceDataStore? { get }
 }
 
 class MoviesRouterImpl: MoviesRouter {
 
     // MARK: - Variables
-    weak var dataStore: MoviesDataStore?
+    private(set) weak var moviesDataStore: MoviesDataStore?
+    private(set) weak var moviesServiceDataStore: MoviesServiceDataStore?
 
     // MARK: - Life Cycle
-    init(dataStore: MoviesDataStore) {
-        self.dataStore = dataStore
+    init(moviesDataStore: MoviesDataStore, moviesServiceDataStore: MoviesServiceDataStore) {
+        self.moviesDataStore = moviesDataStore
+        self.moviesServiceDataStore = moviesServiceDataStore
+    }
+}
+
+// MARK: - MovieDetailPassingData
+extension MoviesRouterImpl: MovieDetailPassingData {
+
+    func passDetailData(destination: MovieDetailRouter, selectedIndex: Int) {
+        guard
+            let movie = moviesDataStore?.movies[selectedIndex],
+            let genres = moviesDataStore?.genres
+            else {
+                return
+        }
+        destination.dataStore?.movieResponse = movie
+        destination.dataStore?.genres = genres
     }
 }
