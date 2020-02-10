@@ -8,18 +8,18 @@
 
 import UIKit
 
-protocol MoviesCollectionViewCellInteractor {
+protocol MoviesCollectionViewCellInteracting {
     func downloadImage(posterUrl: String)
 }
 
-class MoviesCollectionViewCellInteractorImpl: MoviesCollectionViewCellInteractor {
+final class MoviesCollectionViewCellInteractor: MoviesCollectionViewCellInteracting {
 
     // MARK: - Variables
-    private let presenter: MoviesCollectionViewCellPresenter
-    private let imageGateway: ImageGateway
+    private let presenter: MoviesCollectionViewCellPresenting
+    private let imageGateway: ImageGatewayLogic
 
     // MARK: - Life Cycle
-    init(presenter: MoviesCollectionViewCellPresenter, imageGateway: ImageGateway) {
+    init(presenter: MoviesCollectionViewCellPresenting, imageGateway: ImageGatewayLogic) {
         self.presenter = presenter
         self.imageGateway = imageGateway
     }

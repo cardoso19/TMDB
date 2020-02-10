@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol MoviesDataStore: AnyObject {
+protocol MoviesDataStoring: AnyObject {
     var genres: [GenreResponse] { get set }
     var movies: [MovieResponse] { get set }
 }
 
-class MoviesDataStoreImpl: MoviesDataStore {
+final class MoviesDataStore: MoviesDataStoring {
     var genres: [GenreResponse] = []
     var movies: [MovieResponse] = []
 }

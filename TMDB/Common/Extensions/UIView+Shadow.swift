@@ -1,5 +1,5 @@
 //
-//  UIViewUtil.swift
+//  UIView+Shadow.swift
 //  TMDB
 //
 //  Created by Matheus Cardoso kuhn on 26/08/2018.
@@ -22,9 +22,7 @@ extension UIView {
         layer.shadowOpacity = opacity
         layer.shadowOffset = CGSize.zero
         layer.shadowRadius = 3
-        if let path = path {
-            layer.shadowPath = path
-        }
+        layer.shadowPath = path
         layer.shouldRasterize = true
         layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }

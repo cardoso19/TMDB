@@ -9,7 +9,7 @@
 import UIKit
 import MDTAlert
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var viewHeaderSafeArea: UIView!
@@ -19,48 +19,48 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
 
     // MARK: - Variables
-    private let interactor: SearchInteractor
-    let router: SearchRouter & MovieDetailPassingData
+    private let interactor: SearchInteracting
+    let router: SearchRouting & MovieDetailDataPassing
     weak var collectionController: MoviesCollectionLogic?
     var movies: [Movies.MovieViewModel] = []
 
     // MARK: - Life Cycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        let moviesPresenter = MoviesPresenterImpl()
-        let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
-        let searchDataStore = SearchDataStoreImpl()
-        let moviesDataStore = MoviesDataStoreImpl()
-        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
-        let adapter = MoviesAdapterImpl()
-        router = SearchRouterImpl(searchDataStore: searchDataStore,
-                                  moviesDataStore: moviesDataStore,
-                                  moviesServiceDataStore: moviesServiceDataStore)
-        interactor = SearchInteractorImpl(moviesPresenter: moviesPresenter,
-                                          gateway: gateway,
-                                          searchDataStore: searchDataStore,
-                                          moviesDataStore: moviesDataStore,
-                                          moviesServiceDataStore: moviesServiceDataStore,
-                                          moviesAdapter: adapter)
+        let moviesPresenter = MoviesPresenter()
+        let gateway = SearchGateway(httpRequest: HttpRequest())
+        let searchDataStore = SearchDataStore()
+        let moviesDataStore = MoviesDataStore()
+        let moviesServiceDataStore = MoviesServiceDataStore()
+        let adapter = MoviesAdapter()
+        router = SearchRouter(searchDataStore: searchDataStore,
+                              moviesDataStore: moviesDataStore,
+                              moviesServiceDataStore: moviesServiceDataStore)
+        interactor = SearchInteractor(moviesPresenter: moviesPresenter,
+                                      gateway: gateway,
+                                      searchDataStore: searchDataStore,
+                                      moviesDataStore: moviesDataStore,
+                                      moviesServiceDataStore: moviesServiceDataStore,
+                                      moviesAdapter: adapter)
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         moviesPresenter.viewController = self
     }
 
     required init?(coder: NSCoder) {
-        let moviesPresenter = MoviesPresenterImpl()
-        let gateway = SearchGatewayImpl(httpRequest: HttpRequest())
-        let searchDataStore = SearchDataStoreImpl()
-        let moviesDataStore = MoviesDataStoreImpl()
-        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
-        let adapter = MoviesAdapterImpl()
-        router = SearchRouterImpl(searchDataStore: searchDataStore,
-                                  moviesDataStore: moviesDataStore,
-                                  moviesServiceDataStore: moviesServiceDataStore)
-        interactor = SearchInteractorImpl(moviesPresenter: moviesPresenter,
-                                          gateway: gateway,
-                                          searchDataStore: searchDataStore,
-                                          moviesDataStore: moviesDataStore,
-                                          moviesServiceDataStore: moviesServiceDataStore,
-                                          moviesAdapter: adapter)
+        let moviesPresenter = MoviesPresenter()
+        let gateway = SearchGateway(httpRequest: HttpRequest())
+        let searchDataStore = SearchDataStore()
+        let moviesDataStore = MoviesDataStore()
+        let moviesServiceDataStore = MoviesServiceDataStore()
+        let adapter = MoviesAdapter()
+        router = SearchRouter(searchDataStore: searchDataStore,
+                              moviesDataStore: moviesDataStore,
+                              moviesServiceDataStore: moviesServiceDataStore)
+        interactor = SearchInteractor(moviesPresenter: moviesPresenter,
+                                      gateway: gateway,
+                                      searchDataStore: searchDataStore,
+                                      moviesDataStore: moviesDataStore,
+                                      moviesServiceDataStore: moviesServiceDataStore,
+                                      moviesAdapter: adapter)
         super.init(coder: coder)
         moviesPresenter.viewController = self
     }
@@ -132,8 +132,8 @@ extension SearchViewController: MoviesDisplayLogic {
     func displayError(message: String) {
         DispatchQueue.main.async {
             let alert = MDTAlertView(message: message,
-                                        position: .top,
-                                        dismissTime: 3)
+                                     position: .top,
+                                     dismissTime: 3)
             alert.present()
             MDTLoading.hideDefaultLoading()
         }

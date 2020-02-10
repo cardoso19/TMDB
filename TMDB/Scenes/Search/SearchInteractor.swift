@@ -8,28 +8,28 @@
 
 import Foundation
 
-protocol SearchInteractor {
+protocol SearchInteracting {
     func doMoviesSearch(query: String)
     func searchTextChange(query: String)
 }
 
-class SearchInteractorImpl: SearchInteractor {
+final class SearchInteractor: SearchInteracting {
 
     // MARK: - Variables
-    private let moviesPresenter: MoviesPresenter
-    private let gateway: SearchGateway
-    private let searchDataStore: SearchDataStore
-    private let moviesDataStore: MoviesDataStore
-    private let moviesServiceDataStore: MoviesServiceDataStore
-    private let moviesAdapter: MoviesAdapter
+    private let moviesPresenter: MoviesPresenting
+    private let gateway: SearchGatewayLogic
+    private let searchDataStore: SearchDataStoring
+    private let moviesDataStore: MoviesDataStoring
+    private let moviesServiceDataStore: MoviesServiceDataStoring
+    private let moviesAdapter: MoviesAdapting
 
     // MARK: - Life Cycle
-    init(moviesPresenter: MoviesPresenter,
-         gateway: SearchGateway,
-         searchDataStore: SearchDataStore,
-         moviesDataStore: MoviesDataStore,
-         moviesServiceDataStore: MoviesServiceDataStore,
-         moviesAdapter: MoviesAdapter) {
+    init(moviesPresenter: MoviesPresenting,
+         gateway: SearchGatewayLogic,
+         searchDataStore: SearchDataStoring,
+         moviesDataStore: MoviesDataStoring,
+         moviesServiceDataStore: MoviesServiceDataStoring,
+         moviesAdapter: MoviesAdapting) {
         self.moviesPresenter = moviesPresenter
         self.gateway = gateway
         self.searchDataStore = searchDataStore

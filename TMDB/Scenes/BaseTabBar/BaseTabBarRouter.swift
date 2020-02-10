@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol BaseTabBarRouter {
-    func passGenreData(sourceRouter: MoviesRouter, destination: SearchRouter)
+protocol BaseTabBarRouting {
+    func passGenreData(sourceRouter: MoviesRouting, destination: SearchRouting)
 }
 
-class BaseTabBarRouterImpl: BaseTabBarRouter {
+final class BaseTabBarRouter: BaseTabBarRouting {
 
-    func passGenreData(sourceRouter: MoviesRouter, destination: SearchRouter) {
+    func passGenreData(sourceRouter: MoviesRouting, destination: SearchRouting) {
         destination.moviesDataStore?.genres = sourceRouter.moviesDataStore?.genres ?? []
     }
 }

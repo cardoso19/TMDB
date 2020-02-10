@@ -18,7 +18,7 @@ protocol GenreDisplayLogic: AnyObject {
     func displayError(message: String)
 }
 
-class MoviesViewController: UIViewController {
+final class MoviesViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var viewHeaderSafeArea: UIView!
@@ -26,22 +26,22 @@ class MoviesViewController: UIViewController {
     @IBOutlet weak var imageViewIcon: UIImageView!
 
     // MARK: - Variables
-    private let interactor: MoviesInteractor
-    let router: MoviesRouter & MovieDetailPassingData
+    private let interactor: MoviesInteracting
+    let router: MoviesRouting & MovieDetailDataPassing
     var collectionController: MoviesCollectionLogic?
     var movies: [Movies.MovieViewModel] = []
 
     // MARK: - Life Cycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        let moviesPresenter = MoviesPresenterImpl()
-        let genrePresenter = GenrePresenterImpl()
+        let moviesPresenter = MoviesPresenter()
+        let genrePresenter = GenrePresenter()
         let gateway = MoviesGateway(httpRequest: HttpRequest())
-        let moviesDataStore = MoviesDataStoreImpl()
-        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
-        let router = MoviesRouterImpl(moviesDataStore: moviesDataStore,
+        let moviesDataStore = MoviesDataStore()
+        let moviesServiceDataStore = MoviesServiceDataStore()
+        let router = MoviesRouter(moviesDataStore: moviesDataStore,
                                       moviesServiceDataStore: moviesServiceDataStore)
-        let adapter = MoviesAdapterImpl()
-        interactor = MoviesInteractorImpl(moviesPresenter: moviesPresenter,
+        let adapter = MoviesAdapter()
+        interactor = MoviesInteractor(moviesPresenter: moviesPresenter,
                                           genrePresenter: genrePresenter,
                                           gateway: gateway,
                                           moviesDataStore: moviesDataStore,
@@ -54,15 +54,15 @@ class MoviesViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        let moviesPresenter = MoviesPresenterImpl()
-        let genrePresenter = GenrePresenterImpl()
+        let moviesPresenter = MoviesPresenter()
+        let genrePresenter = GenrePresenter()
         let gateway = MoviesGateway(httpRequest: HttpRequest())
-        let moviesDataStore = MoviesDataStoreImpl()
-        let moviesServiceDataStore = MoviesServiceDataStoreImpl()
-        let router = MoviesRouterImpl(moviesDataStore: moviesDataStore,
+        let moviesDataStore = MoviesDataStore()
+        let moviesServiceDataStore = MoviesServiceDataStore()
+        let router = MoviesRouter(moviesDataStore: moviesDataStore,
                                       moviesServiceDataStore: moviesServiceDataStore)
-        let adapter = MoviesAdapterImpl()
-        interactor = MoviesInteractorImpl(moviesPresenter: moviesPresenter,
+        let adapter = MoviesAdapter()
+        interactor = MoviesInteractor(moviesPresenter: moviesPresenter,
                                           genrePresenter: genrePresenter,
                                           gateway: gateway,
                                           moviesDataStore: moviesDataStore,
@@ -88,7 +88,7 @@ class MoviesViewController: UIViewController {
             collectionController = controller
         }
     }
-    
+
     // MARK: - Alert
     private func showAlert(message: String) {
         let alert = MDTAlertView(message: message,

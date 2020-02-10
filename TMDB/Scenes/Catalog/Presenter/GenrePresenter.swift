@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol GenrePresenter {
+protocol GenrePresenting {
     func presentGenreError(error: RequestError)
 }
 
-class GenrePresenterImpl: GenrePresenter {
+final class GenrePresenter: GenrePresenting {
 
     // MARK: - Variables
     weak var viewController: GenreDisplayLogic?

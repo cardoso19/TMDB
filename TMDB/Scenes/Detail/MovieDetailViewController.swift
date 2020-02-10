@@ -15,7 +15,7 @@ protocol MovieDetailViewControllerDisplayLogic: AnyObject {
     func displayError(message: String)
 }
 
-class MovieDetailViewController: UIViewController {
+final class MovieDetailViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var imageViewPoster: UIImageView!
@@ -24,8 +24,8 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var textViewOverview: UITextView!
 
     // MARK: - Variables
-    var router: MovieDetailRouter?
-    private var interactor: MovieDetailInteractor!
+    var router: MovieDetailRouting?
+    private var interactor: MovieDetailInteracting!
     private var isLayoutDefined: Bool = false
 
     // MARK: - Life Cycle
@@ -60,12 +60,12 @@ class MovieDetailViewController: UIViewController {
     }
 
     private func setup() {
-        let presenter = MovieDetailPresenterImpl()
-        let dataStore = MovieDetailDataStoreImpl()
-        let router = MovieDetailRouterImpl(dataStore: dataStore)
-        let imageGateway = ImageGatewayImpl(httpRequest: HttpRequest())
-        let adapter = MovieDetailAdapterImpl()
-        let interactor = MovieDetailInteractorImpl(presenter: presenter,
+        let presenter = MovieDetailPresenter()
+        let dataStore = MovieDetailDataStore()
+        let router = MovieDetailRouter(dataStore: dataStore)
+        let imageGateway = ImageGateway(httpRequest: HttpRequest())
+        let adapter = MovieDetailAdapter()
+        let interactor = MovieDetailInteractor(presenter: presenter,
                                                    imageGateway: imageGateway,
                                                    dataStore: dataStore,
                                                    adapter: adapter)

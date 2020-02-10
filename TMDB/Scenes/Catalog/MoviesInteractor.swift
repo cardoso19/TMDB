@@ -8,28 +8,28 @@
 
 import UIKit
 
-protocol MoviesInteractor {
+protocol MoviesInteracting {
     func fetchGenres()
     func fetchMovies()
 }
 
-class MoviesInteractorImpl: MoviesInteractor {
+final class MoviesInteractor: MoviesInteracting {
 
     // MARK: - Variables
-    private let moviesPresenter: MoviesPresenter
-    private let genrePresenter: GenrePresenter
+    private let moviesPresenter: MoviesPresenting
+    private let genrePresenter: GenrePresenting
     private let gateway: MoviesGatewayLogic
-    private let moviesDataStore: MoviesDataStore
-    private let serviceDataStore: MoviesServiceDataStore
-    private let adapter: MoviesAdapter
+    private let moviesDataStore: MoviesDataStoring
+    private let serviceDataStore: MoviesServiceDataStoring
+    private let adapter: MoviesAdapting
 
     // MARK: - Life Cycle
-    init(moviesPresenter: MoviesPresenter,
-         genrePresenter: GenrePresenter,
+    init(moviesPresenter: MoviesPresenting,
+         genrePresenter: GenrePresenting,
          gateway: MoviesGatewayLogic,
-         moviesDataStore: MoviesDataStore,
-         serviceDataStore: MoviesServiceDataStore,
-         adapter: MoviesAdapter) {
+         moviesDataStore: MoviesDataStoring,
+         serviceDataStore: MoviesServiceDataStoring,
+         adapter: MoviesAdapting) {
         self.moviesPresenter = moviesPresenter
         self.genrePresenter = genrePresenter
         self.gateway = gateway
@@ -70,8 +70,8 @@ class MoviesInteractorImpl: MoviesInteractor {
     // MARK: - Movies
     func fetchMovies() {
         guard
-        !serviceDataStore.isFetchingMovies,
-        (serviceDataStore.totalPages == 0 || serviceDataStore.currentPage <= serviceDataStore.totalPages)
+            !serviceDataStore.isFetchingMovies,
+            (serviceDataStore.totalPages == 0 || serviceDataStore.currentPage <= serviceDataStore.totalPages)
             else {
                 return
         }

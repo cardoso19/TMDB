@@ -1,0 +1,39 @@
+[2020-02-07 09:48:36.090][info ][command:null][tid:01][org.pf4j.DefaultPluginStatusProvider] Enabled plugins: []
+[2020-02-07 09:48:36.155][info ][command:null][tid:01][org.pf4j.DefaultPluginStatusProvider] Disabled plugins: []
+[2020-02-07 09:48:36.156][info ][command:null][tid:01][org.pf4j.DefaultPluginManager] PF4J version 0.0.0 in 'deployment' mode
+[2020-02-07 09:48:36.184][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.python@0.0.1' resolved
+[2020-02-07 09:48:36.184][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.lua@0.0.1' resolved
+[2020-02-07 09:48:36.184][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.go@0.0.1' resolved
+[2020-02-07 09:48:36.184][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.rust@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.haskell@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.dotnet@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.ocaml@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.halide@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.js@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.apple.project@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.d@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.gwt@0.0.1' resolved
+[2020-02-07 09:48:36.185][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.filebundler@0.0.1' resolved
+[2020-02-07 09:48:36.186][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.filegroup@0.0.1' resolved
+[2020-02-07 09:48:36.186][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.zip.rules@0.0.1' resolved
+[2020-02-07 09:48:36.186][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.project.intellij@0.0.1' resolved
+[2020-02-07 09:48:36.186][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.python@0.0.1'
+[2020-02-07 09:48:36.187][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.lua@0.0.1'
+[2020-02-07 09:48:36.187][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.go@0.0.1'
+[2020-02-07 09:48:36.188][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.rust@0.0.1'
+[2020-02-07 09:48:36.188][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.haskell@0.0.1'
+[2020-02-07 09:48:36.189][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.dotnet@0.0.1'
+[2020-02-07 09:48:36.189][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.ocaml@0.0.1'
+[2020-02-07 09:48:36.190][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.halide@0.0.1'
+[2020-02-07 09:48:36.190][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.js@0.0.1'
+[2020-02-07 09:48:36.191][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.apple.project@0.0.1'
+[2020-02-07 09:48:36.192][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.d@0.0.1'
+[2020-02-07 09:48:36.192][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.gwt@0.0.1'
+[2020-02-07 09:48:36.193][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.filebundler@0.0.1'
+[2020-02-07 09:48:36.193][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.filegroup@0.0.1'
+[2020-02-07 09:48:36.194][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.zip.rules@0.0.1'
+[2020-02-07 09:48:36.194][info ][command:null][tid:01][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.project.intellij@0.0.1'
+[2020-02-07 09:48:36.503][debug][command:null][tid:01][com.facebook.buck.util.config.Configs] Loading configuration for /Users/matheus/Documents/TMDB
+[2020-02-07 09:48:36.510][debug][command:null][tid:01][com.facebook.buck.util.config.Configs] Loaded project configuration file /Users/matheus/Documents/TMDB/.buckconfig
+[2020-02-07 09:48:36.514][debug][command:null][tid:01][com.facebook.buck.util.config.Configs] Adding configuration overrides RawConfig{values={}}
+[2020-02-07 09:48:36.580][debug][command:null][tid:01][com.facebook.buck.cli.MainRunner] Done.

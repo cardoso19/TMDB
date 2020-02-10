@@ -13,7 +13,7 @@ protocol MoviesGatewayLogic {
     func fetchMovies(page: Int, completion: @escaping (Result<MoviesResponse, RequestError>) -> Void)
 }
 
-class MoviesGateway: MoviesGatewayLogic {
+final class MoviesGateway: MoviesGatewayLogic {
 
     // MARK: - Variables
     private let httpRequest: HttpRequest

@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol MovieDetailAdapter {
+protocol MovieDetailAdapting {
     func transform(movie: MovieResponse, genre: String) -> MovieDetail.Movie
 }
 
-class MovieDetailAdapterImpl: MovieDetailAdapter {
+final class MovieDetailAdapter: MovieDetailAdapting {
 
     func transform(movie: MovieResponse, genre: String) -> MovieDetail.Movie {
         return MovieDetail.Movie(title: movie.title ?? "",

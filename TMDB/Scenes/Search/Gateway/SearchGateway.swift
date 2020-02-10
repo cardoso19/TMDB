@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol SearchGateway {
+protocol SearchGatewayLogic {
     func searchMovies(query: String, page: Int, completion: @escaping (Result<MoviesResponse, RequestError>) -> Void)
 }
 
-class SearchGatewayImpl: SearchGateway {
+final class SearchGateway: SearchGatewayLogic {
 
     // MARK: - Variables
     private let httpRequest: HttpRequest

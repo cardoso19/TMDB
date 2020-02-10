@@ -8,23 +8,23 @@
 
 import Foundation
 
-protocol SearchRouter {
-    var searchDataStore: SearchDataStore? { get }
-    var moviesDataStore: MoviesDataStore? { get }
-    var moviesServiceDataStore: MoviesServiceDataStore? { get }
+protocol SearchRouting {
+    var searchDataStore: SearchDataStoring? { get }
+    var moviesDataStore: MoviesDataStoring? { get }
+    var moviesServiceDataStore: MoviesServiceDataStoring? { get }
 }
 
-class SearchRouterImpl: SearchRouter {
+final class SearchRouter: SearchRouting {
 
     // MARK: - Variables
-    private(set) weak var searchDataStore: SearchDataStore?
-    private(set) weak var moviesDataStore: MoviesDataStore?
-    private(set) weak var moviesServiceDataStore: MoviesServiceDataStore?
+    private(set) weak var searchDataStore: SearchDataStoring?
+    private(set) weak var moviesDataStore: MoviesDataStoring?
+    private(set) weak var moviesServiceDataStore: MoviesServiceDataStoring?
 
     // MARK: - Life Cycle
-    init(searchDataStore: SearchDataStore,
-         moviesDataStore: MoviesDataStore,
-         moviesServiceDataStore: MoviesServiceDataStore) {
+    init(searchDataStore: SearchDataStoring,
+         moviesDataStore: MoviesDataStoring,
+         moviesServiceDataStore: MoviesServiceDataStoring) {
         self.searchDataStore = searchDataStore
         self.moviesDataStore = moviesDataStore
         self.moviesServiceDataStore = moviesServiceDataStore
@@ -32,9 +32,9 @@ class SearchRouterImpl: SearchRouter {
 }
 
 // MARK: - MovieDetailPassingData
-extension SearchRouterImpl: MovieDetailPassingData {
+extension SearchRouter: MovieDetailDataPassing {
 
-    func passDetailData(destination: MovieDetailRouter, selectedIndex: Int) {
+    func passDetailData(destination: MovieDetailRouting, selectedIndex: Int) {
         guard
             let movie = moviesDataStore?.movies[selectedIndex],
             let genres = moviesDataStore?.genres

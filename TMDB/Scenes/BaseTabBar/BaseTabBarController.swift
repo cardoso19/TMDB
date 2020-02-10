@@ -8,20 +8,20 @@
 
 import UIKit
 
-class BaseTabBarController: UITabBarController {
+final class BaseTabBarController: UITabBarController {
 
     // MARK: - Variables
-    let router: BaseTabBarRouter
+    let router: BaseTabBarRouting
 
     // MARK: - Life Cycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.router = BaseTabBarRouterImpl()
+        self.router = BaseTabBarRouter()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         delegate = self
     }
 
     required init?(coder: NSCoder) {
-        self.router = BaseTabBarRouterImpl()
+        self.router = BaseTabBarRouter()
         super.init(coder: coder)
         delegate = self
     }
@@ -38,7 +38,7 @@ class BaseTabBarController: UITabBarController {
             guard
                 let destination = segue.destination as? MovieDetailViewController,
                 let destinationRouter = destination.router,
-                let sender = sender as? (source: MovieDetailPassingData, selectedIndex: Int)
+                let sender = sender as? (source: MovieDetailDataPassing, selectedIndex: Int)
                 else {
                     return
             }

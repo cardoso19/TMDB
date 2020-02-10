@@ -8,21 +8,21 @@
 
 import Foundation
 
-protocol MovieDetailRouter {
-    var dataStore: MovieDetailDataStore? { get }
+protocol MovieDetailRouting {
+    var dataStore: MovieDetailDataStoring? { get }
 }
 
-protocol MovieDetailPassingData {
-    func passDetailData(destination: MovieDetailRouter, selectedIndex: Int)
+protocol MovieDetailDataPassing {
+    func passDetailData(destination: MovieDetailRouting, selectedIndex: Int)
 }
 
-class MovieDetailRouterImpl: MovieDetailRouter {
+final class MovieDetailRouter: MovieDetailRouting {
 
     // MARK: - Variables
-    weak var dataStore: MovieDetailDataStore?
+    weak var dataStore: MovieDetailDataStoring?
 
     // MARK: - Life Cycle
-    init(dataStore: MovieDetailDataStore) {
+    init(dataStore: MovieDetailDataStoring) {
         self.dataStore = dataStore
     }
 }

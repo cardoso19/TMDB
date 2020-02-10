@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol MovieDetailPresenter {
+protocol MovieDetailPresenting {
     func presentMovie(content: MovieDetail.Movie)
     func presentMovie(poster: UIImage)
     func present(error: RequestError)
 }
 
-class MovieDetailPresenterImpl: MovieDetailPresenter {
+final class MovieDetailPresenter: MovieDetailPresenting {
 
     // MARK: - Variables
     weak var viewController: MovieDetailViewControllerDisplayLogic?

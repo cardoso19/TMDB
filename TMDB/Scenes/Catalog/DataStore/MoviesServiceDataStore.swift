@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol MoviesServiceDataStore: AnyObject {
+protocol MoviesServiceDataStoring: AnyObject {
     var currentPage: Int { get set }
     var totalPages: Int { get set }
     var isFetchingMovies: Bool { get set }
 }
 
-class MoviesServiceDataStoreImpl: MoviesServiceDataStore {
+final class MoviesServiceDataStore: MoviesServiceDataStoring {
     var currentPage: Int = 0
     var totalPages: Int = 0
     var isFetchingMovies: Bool = false

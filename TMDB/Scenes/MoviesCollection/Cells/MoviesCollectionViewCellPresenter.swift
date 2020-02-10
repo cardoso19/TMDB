@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol MoviesCollectionViewCellPresenter {
+protocol MoviesCollectionViewCellPresenting {
     func present(image: UIImage)
     func present(error: RequestError)
 }
 
-class MoviesCollectionViewCellPresenterImpl: MoviesCollectionViewCellPresenter {
+final class MoviesCollectionViewCellPresenter: MoviesCollectionViewCellPresenting {
 
     // MARK: - Variables
     weak var cell: MoviesCollectionViewCellDisplay?

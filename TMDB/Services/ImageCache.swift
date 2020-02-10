@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageCache {
+final class ImageCache {
 
     // MARK: - Variables
     static let shared: ImageCache = ImageCache()

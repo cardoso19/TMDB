@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol ImageGateway {
+protocol ImageGatewayLogic {
     func downloadImage(posterUrl: String, completion: @escaping (Result<UIImage, RequestError>) -> Void)
 }
 
-class ImageGatewayImpl: ImageGateway {
+final class ImageGateway: ImageGatewayLogic {
 
     // MARK: - Variables
     private let httpRequest: HttpRequest

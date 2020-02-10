@@ -8,23 +8,23 @@
 
 import UIKit
 
-protocol MovieDetailInteractor {
+protocol MovieDetailInteracting {
     func showMovieContent()
 }
 
-class MovieDetailInteractorImpl: MovieDetailInteractor {
+final class MovieDetailInteractor: MovieDetailInteracting {
 
     // MARK: - Variables
-    private let presenter: MovieDetailPresenter
-    private let imageGateway: ImageGateway
-    private let dataStore: MovieDetailDataStore
-    private let adapter: MovieDetailAdapter
+    private let presenter: MovieDetailPresenting
+    private let imageGateway: ImageGatewayLogic
+    private let dataStore: MovieDetailDataStoring
+    private let adapter: MovieDetailAdapting
 
     // MARK: - Life Cycle
-    init(presenter: MovieDetailPresenter,
-         imageGateway: ImageGateway,
-         dataStore: MovieDetailDataStore,
-         adapter: MovieDetailAdapter) {
+    init(presenter: MovieDetailPresenting,
+         imageGateway: ImageGatewayLogic,
+         dataStore: MovieDetailDataStoring,
+         adapter: MovieDetailAdapting) {
         self.presenter = presenter
         self.imageGateway = imageGateway
         self.dataStore = dataStore

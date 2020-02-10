@@ -8,28 +8,28 @@
 
 import Foundation
 
-protocol MoviesRouter {
-    var moviesDataStore: MoviesDataStore? { get }
-    var moviesServiceDataStore: MoviesServiceDataStore? { get }
+protocol MoviesRouting {
+    var moviesDataStore: MoviesDataStoring? { get }
+    var moviesServiceDataStore: MoviesServiceDataStoring? { get }
 }
 
-class MoviesRouterImpl: MoviesRouter {
+final class MoviesRouter: MoviesRouting {
 
     // MARK: - Variables
-    private(set) weak var moviesDataStore: MoviesDataStore?
-    private(set) weak var moviesServiceDataStore: MoviesServiceDataStore?
+    private(set) weak var moviesDataStore: MoviesDataStoring?
+    private(set) weak var moviesServiceDataStore: MoviesServiceDataStoring?
 
     // MARK: - Life Cycle
-    init(moviesDataStore: MoviesDataStore, moviesServiceDataStore: MoviesServiceDataStore) {
+    init(moviesDataStore: MoviesDataStoring, moviesServiceDataStore: MoviesServiceDataStoring) {
         self.moviesDataStore = moviesDataStore
         self.moviesServiceDataStore = moviesServiceDataStore
     }
 }
 
 // MARK: - MovieDetailPassingData
-extension MoviesRouterImpl: MovieDetailPassingData {
+extension MoviesRouter: MovieDetailDataPassing {
 
-    func passDetailData(destination: MovieDetailRouter, selectedIndex: Int) {
+    func passDetailData(destination: MovieDetailRouting, selectedIndex: Int) {
         guard
             let movie = moviesDataStore?.movies[selectedIndex],
             let genres = moviesDataStore?.genres

@@ -14,7 +14,7 @@ protocol MoviesCollectionLogic: AnyObject {
     func reloadData()
 }
 
-class MoviesCollectionViewController: UICollectionViewController {
+final class MoviesCollectionViewController: UICollectionViewController {
 
     // MARK: - Variables
     private let reuseIdentifier = "movieCell"

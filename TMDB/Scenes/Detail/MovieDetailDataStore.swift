@@ -8,13 +8,13 @@
 
 import Foundation
 
-protocol MovieDetailDataStore: AnyObject {
+protocol MovieDetailDataStoring: AnyObject {
     var genres: [GenreResponse] { get set }
     var movieResponse: MovieResponse! { get set }
     var movie: MovieDetail.Movie! { get set }
 }
 
-class MovieDetailDataStoreImpl: MovieDetailDataStore {
+final class MovieDetailDataStore: MovieDetailDataStoring {
     var genres: [GenreResponse] = []
     var movieResponse: MovieResponse!
     var movie: MovieDetail.Movie!

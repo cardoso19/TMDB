@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Colors {
+enum Colors {
     static let red: UIColor? = UIColor(named: "red")
     static let darkGray: UIColor? = UIColor(named: "darkGray")
     static let green: UIColor? = UIColor(named: "green")

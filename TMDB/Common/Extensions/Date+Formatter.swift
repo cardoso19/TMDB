@@ -1,7 +1,7 @@
 //
-//  DateExtension.swift
+//  Date+Formatter.swift
 //  TMDB
-//
+// 
 //  Created by Matheus Cardoso Kuhn on 10/10/19.
 //  Copyright © 2019 MDT. All rights reserved.
 //

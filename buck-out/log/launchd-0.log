@@ -1,0 +1,86 @@
+[2020-02-07 09:48:25.932][debug][command:null][tid:01][com.facebook.buck.cli.SystemInfoLogger] Soft file limit: 10240, hard file limit: unlimited
+[2020-02-07 09:48:26.016][debug][command:null][tid:01][com.facebook.buck.cli.SystemInfoLogger] Parent process chain:
+  18725 /usr/bin/java -Dbuck.is_buckd=true -Dbuck.buckd_launch_time_nanos=259647640960492 -Dfile.encoding=UTF-8 -XX:MaxGCPauseMillis=15000 -XX:SoftRefLRUPolicyMSPerMB=0 -XX:PerfDataSamplingInterval=5000 -Xrs -XX:+UnlockDiagnosticVMOptions -XX:GuaranteedSafepointInterval=5000 -Djava.io.tmpdir=/Users/matheus/Documents/TMDB/buck-out/tmp/buckd_tmp.BAuoKE -Dcom.facebook.nailgun.NGServer.outputPath=/Users/matheus/Documents/TMDB/buck-out/tmp/buckd_tmp.BAuoKE/ngserver-out -XX:+UseG1GC -XX:MaxHeapFreeRatio=40 -Djava.nio.file.spi.DefaultFileSystemProvider=com.facebook.buck.core.filesystems.BuckFileSystemProvider -Xmx1000m -Djava.awt.headless=true -Djna.nosys=true -Djava.util.logging.config.class=com.facebook.buck.cli.bootstrapper.LogConfig -Dbuck.test_util_no_tests_dir=true -Dbuck.version_uid=2019.10.17.01 -Dbuck.buckd_dir=/Users/matheus/Documents/TMDB/.buckd -Dorg.eclipse.jetty.util.log.class=org.eclipse.jetty.util.log.JavaUtilLog -Dbuck.git_commit=2019.10.17.01 -Dbuck.git_commit_timestamp=1571375412 -Dbuck.binary_hash=0446ea8c0d5770fbc5dabe7b9692877b -Dbuck.base_buck_out_dir=buck-out -Dbuck.resource_lock_path=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/.buck_lock -Dbuck.legacy_fix_script=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/legacy_fix_script -Dbuck.testrunner_classes=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/testrunner_classes -Dbuck.logging_config_file=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/logging_config_file -Dbuck.path_to_pathlib_py=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/pathlib.py -Dbuck.path_to_pywatchman=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/path_to_pywatchman -Dbuck.path_to_typing=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/path_to_typing -Dbuck.path_to_six_py=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/six.py -Dbuck.path_to_sh_binary_template=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/path_to_sh_binary_template -Dbuck.path_to_isolated_trampoline=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/path_to_isolated_trampoline -Dbuck.jacoco_agent_jar=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/jacoco_agent_jar -Dbuck.report_generator_jar=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/report_generator_jar -Dbuck.dx=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/dx -Dbuck.android_agent_path=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/android_agent_path -Dbuck.buck_build_type_info=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/buck_build_type_info -Dbuck.native_exopackage_fake_path=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/native_exopackage_fake_path -Dbuck.enable_objc=true -Djava.library.path=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01 -Dbuck.git_dirty=0 -Dbuck.path_to_python_dsl= -Dpf4j.pluginsDir=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/buck-modules -Dbuck.mode=package -Dbuck.module.resources=/Users/matheus/Documents/TMDB/.buckd/resources/2019.10.17.01/buck-modules-resources com.facebook.buck.cli.bootstrapper.ClassLoaderBootstrapper com.facebook.buck.cli.BuckDaemon local:.buckd/sock 180000
+  18719 /usr/local/Cellar/python@2/2.7.17_1/Frameworks/Python.framework/Versions/2.7/Resources/Python.app/Contents/MacOS/Python /usr/local/bin/buck command help
+  55519 -zsh
+  55518 login -pf matheus
+  55517 /System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal
+      1 /sbin/launchd
+
+[2020-02-07 09:48:26.018][info ][command:null][tid:01][com.facebook.buck.cli.BuckDaemon] enabling background process killing for buckd
+[2020-02-07 09:48:26.020][info ][command:null][tid:01][com.facebook.buck.cli.BuckDaemon] enabled background process killing for buckd
+[2020-02-07 09:48:26.021][info ][command:null][tid:01][com.facebook.buck.cli.BuckDaemon] initialized bg session killer
+[2020-02-07 09:48:26.116][debug][command:null][tid:13][com.facebook.nailgun.NGSession] NGSession 1 is waiting for first client to connect
+[2020-02-07 09:48:26.117][debug][command:null][tid:13][com.facebook.nailgun.NGSession] NGSession 1 accepted new connection
+[2020-02-07 09:48:26.122][debug][command:null][tid:14][com.facebook.nailgun.NGCommunicator] Orchestrator thread started
+[2020-02-07 09:48:26.141][info ][command:null][tid:13][org.pf4j.DefaultPluginStatusProvider] Enabled plugins: []
+[2020-02-07 09:48:26.141][info ][command:null][tid:13][org.pf4j.DefaultPluginStatusProvider] Disabled plugins: []
+[2020-02-07 09:48:26.143][info ][command:null][tid:13][org.pf4j.DefaultPluginManager] PF4J version 0.0.0 in 'deployment' mode
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.python@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.lua@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.go@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.rust@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.haskell@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.dotnet@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.ocaml@0.0.1' resolved
+[2020-02-07 09:48:26.171][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.halide@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.js@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.apple.project@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.d@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.gwt@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.filebundler@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.filegroup@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.zip.rules@0.0.1' resolved
+[2020-02-07 09:48:26.172][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Plugin 'com.facebook.buck.features.project.intellij@0.0.1' resolved
+[2020-02-07 09:48:26.173][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.python@0.0.1'
+[2020-02-07 09:48:26.174][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.lua@0.0.1'
+[2020-02-07 09:48:26.175][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.go@0.0.1'
+[2020-02-07 09:48:26.176][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.rust@0.0.1'
+[2020-02-07 09:48:26.176][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.haskell@0.0.1'
+[2020-02-07 09:48:26.177][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.dotnet@0.0.1'
+[2020-02-07 09:48:26.177][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.ocaml@0.0.1'
+[2020-02-07 09:48:26.178][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.halide@0.0.1'
+[2020-02-07 09:48:26.179][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.js@0.0.1'
+[2020-02-07 09:48:26.179][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.apple.project@0.0.1'
+[2020-02-07 09:48:26.180][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.d@0.0.1'
+[2020-02-07 09:48:26.180][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.gwt@0.0.1'
+[2020-02-07 09:48:26.181][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.filebundler@0.0.1'
+[2020-02-07 09:48:26.182][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.filegroup@0.0.1'
+[2020-02-07 09:48:26.182][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.zip.rules@0.0.1'
+[2020-02-07 09:48:26.183][info ][command:null][tid:13][org.pf4j.AbstractPluginManager] Start plugin 'com.facebook.buck.features.project.intellij@0.0.1'
+[2020-02-07 09:48:26.289][debug][command:null][tid:13][com.facebook.buck.util.config.Configs] Loading configuration for /Users/matheus/Documents/TMDB
+[2020-02-07 09:48:26.297][debug][command:null][tid:13][com.facebook.buck.util.config.Configs] Loaded project configuration file /Users/matheus/Documents/TMDB/.buckconfig
+[2020-02-07 09:48:26.301][debug][command:null][tid:13][com.facebook.buck.util.config.Configs] Adding configuration overrides RawConfig{values={}}
+[2020-02-07 09:48:26.354][warn ][command:null][tid:13][com.facebook.buck.cli.MainRunner] Command failed:
+com.facebook.buck.util.CommandLineException: BAD ARGUMENTS: "command" is not a valid value for "subcommand"
+For help see 'buck --help'.
+	at com.facebook.buck.cli.MainRunner.runMainWithExitCode(MainRunner.java:639)
+	at com.facebook.buck.cli.MainRunner.runMainThenExit(MainRunner.java:476)
+	at com.facebook.buck.cli.MainWithNailgun.nailMain(MainWithNailgun.java:76)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.facebook.nailgun.NGSession.runImpl(NGSession.java:313)
+	at com.facebook.nailgun.NGSession.run(NGSession.java:199)
+Caused by: org.kohsuke.args4j.CmdLineException: "command" is not a valid value for "subcommand"
+	at org.kohsuke.args4j.spi.SubCommandHandler.fallback(SubCommandHandler.java:111)
+	at com.facebook.buck.cli.AdditionalOptionsSubCommandHandler.parseArguments(AdditionalOptionsSubCommandHandler.java:86)
+	at org.kohsuke.args4j.CmdLineParser.parseArgument(CmdLineParser.java:520)
+	at org.kohsuke.args4j.CmdLineParser.parseArgument(CmdLineParser.java:459)
+	at com.facebook.buck.cli.MainRunner.runMainWithExitCode(MainRunner.java:637)
+	... 8 more
+
+[2020-02-07 09:48:26.357][warn ][command:null][tid:13][com.facebook.buck.util.Console] Command failure: BAD ARGUMENTS: "command" is not a valid value for "subcommand"
+For help see 'buck --help'.
+[2020-02-07 09:48:26.360][debug][command:null][tid:13][com.facebook.buck.cli.MainRunner] Done.
+[2020-02-07 09:48:26.361][info ][command:null][tid:13][com.facebook.nailgun.NGSession] Nail cleanly exited with status 3
+[2020-02-07 09:48:26.361][debug][command:null][tid:13][com.facebook.nailgun.NGCommunicator] Shutting down socket for input
+[2020-02-07 09:48:26.362][debug][command:null][tid:13][com.facebook.nailgun.NGCommunicator] Shutting down socket for output
+[2020-02-07 09:48:26.362][debug][command:null][tid:14][com.facebook.nailgun.NGCommunicator] Socket is disconnected
+[2020-02-07 09:48:26.362][debug][command:null][tid:13][com.facebook.nailgun.NGCommunicator] Shutting down read ExecutorService
+[2020-02-07 09:48:26.362][debug][command:null][tid:14][com.facebook.nailgun.NGCommunicator] Nailgun client disconnected
+[2020-02-07 09:48:26.362][debug][command:null][tid:14][com.facebook.nailgun.NGCommunicator] Orchestrator thread finished
+[2020-02-07 09:48:26.362][debug][command:null][tid:13][com.facebook.nailgun.NGCommunicator] Shutting down orchestrator ExecutorService
+[2020-02-07 09:48:26.363][debug][command:null][tid:13][com.facebook.nailgun.NGSession] NGSession 1 is closing client socket
+[2020-02-07 09:53:26.284][info ][command:null][tid:18][com.facebook.buck.cli.MainRunner] No recent activity, dumping thread stacks (`tr , '\n'` to decode): Thread [Finalizer],stack:[java.lang.Object.wait(Native Method), java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144), java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165), java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)],Thread [NonReentrantSystemExit],stack:[sun.misc.Unsafe.park(Native Method), java.util.concurrent.locks.LockSupport.park(LockSupport.java:175), java.util.concurrent.locks.AbstractQueuedSynchronizer.parkAndCheckInterrupt(AbstractQueuedSynchronizer.java:836), java.util.concurrent.locks.AbstractQueuedSynchronizer.doAcquireSharedInterruptibly(AbstractQueuedSynchronizer.java:997), java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly(AbstractQueuedSynchronizer.java:1304), java.util.concurrent.CountDownLatch.await(CountDownLatch.java:231), com.facebook.buck.util.shutdown.NonReentrantSystemExit$1.run(NonReentrantSystemExit.java:42)],Thread [pool-4-thread-1],stack:[java.lang.Object.wait(Native Method), java.lang.Object.wait(Object.java:502), com.facebook.buck.support.bgtasks.AsyncBackgroundTaskManager.scheduleLoop(AsyncBackgroundTaskManager.java:213), com.facebook.buck.support.bgtasks.AsyncBackgroundTaskManager$$Lambda$22/1660755008.run(Unknown Source), java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511), java.util.concurrent.FutureTask.run(FutureTask.java:266), java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149), java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624), java.lang.Thread.run(Thread.java:748)],Thread [Reference Handler],stack:[java.lang.Object.wait(Native Method), java.lang.Object.wait(Object.java:502), java.lang.ref.Reference.tryHandlePending(Reference.java:191), java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)],Thread [main],stack:[com.facebook.nailgun.NGUnixDomainSocketLibrary.accept(Native Method), com.facebook.nailgun.NGUnixDomainServerSocket.accept(NGUnixDomainServerSocket.java:149), com.facebook.nailgun.NGServer.run(NGServer.java:384), com.facebook.buck.cli.BuckDaemon.main(BuckDaemon.java:110), sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method), sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62), sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.lang.reflect.Method.invoke(Method.java:498), com.facebook.buck.cli.bootstrapper.ClassLoaderBootstrapper.main(ClassLoaderBootstrapper.java:55)],Thread [pool-1-thread-1],stack:[sun.misc.Unsafe.park(Native Method), java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215), java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078), java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093), java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809), java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074), java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134), java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624), java.lang.Thread.run(Thread.java:748)],Thread [Attach Listener],stack:[],Thread [NGSession 1: (idle)],stack:[java.lang.Object.wait(Native Method), java.lang.Object.wait(Object.java:502), com.facebook.nailgun.NGSession.nextSocket(NGSession.java:158), com.facebook.nailgun.NGSession.run(NGSession.java:221)],

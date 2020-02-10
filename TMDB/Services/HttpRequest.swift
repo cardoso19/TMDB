@@ -34,12 +34,12 @@ protocol ImageRequestSetup {
     var cachePolicy: URLRequest.CachePolicy { get }
 }
 
-protocol RequestProtocol {
+protocol Requesting {
     func request<T: Decodable>(with setup: RequestSetup, completion: @escaping (Result<T, RequestError>) -> Void)
     func downloadImage(with setup: ImageRequestSetup, completion: @escaping (Result<UIImage, RequestError>) -> Void)
 }
 
-class HttpRequest: RequestProtocol {
+final class HttpRequest: Requesting {
 
     // MARK: - Variables
     private let session: URLSession

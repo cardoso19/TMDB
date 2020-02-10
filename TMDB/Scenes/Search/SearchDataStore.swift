@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol SearchDataStore: AnyObject {
+protocol SearchDataStoring: AnyObject {
     var previousSearchedQuery: String? { get set }
     var timer: Timer? { get set }
 }
 
-class SearchDataStoreImpl: SearchDataStore {
+final class SearchDataStore: SearchDataStoring {
     var previousSearchedQuery: String?
     var timer: Timer?
 }

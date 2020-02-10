@@ -13,7 +13,7 @@ protocol MoviesCollectionViewCellDisplay: AnyObject {
     func display(imageError: RequestError)
 }
 
-class MovieCollectionViewCell: UICollectionViewCell {
+final class MovieCollectionViewCell: UICollectionViewCell {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var imageViewPoster: UIImageView!
@@ -22,7 +22,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var labelReleaseDate: UILabel!
 
     // MARK: - Variables
-    private var interactor: MoviesCollectionViewCellInteractor!
+    private var interactor: MoviesCollectionViewCellInteracting!
 
     // MARK: - Life Cycle
     override func awakeFromNib() {
@@ -35,9 +35,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
 
     private func setup() {
-        let presenter = MoviesCollectionViewCellPresenterImpl()
-        let imageGateway = ImageGatewayImpl(httpRequest: HttpRequest())
-        interactor = MoviesCollectionViewCellInteractorImpl(presenter: presenter,
+        let presenter = MoviesCollectionViewCellPresenter()
+        let imageGateway = ImageGateway(httpRequest: HttpRequest())
+        interactor = MoviesCollectionViewCellInteractor(presenter: presenter,
                                                             imageGateway: imageGateway)
         presenter.cell = self
     }

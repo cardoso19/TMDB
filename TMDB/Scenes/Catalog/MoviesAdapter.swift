@@ -8,16 +8,17 @@
 
 import Foundation
 
-protocol MoviesAdapter {
+protocol MoviesAdapting {
     func transform(movie: MovieResponse, genre: String) -> Movies.Movie
 }
 
-class MoviesAdapterImpl: MoviesAdapter {
+final class MoviesAdapter: MoviesAdapting {
 
     func transform(movie: MovieResponse, genre: String) -> Movies.Movie {
         return Movies.Movie(title: movie.title ?? "",
-                             genre: genre,
-                             releaseDate: movie.releaseDate?.value,
-                             posterPath: movie.posterPath ?? "")
+                            genre: genre,
+                            releaseDate: movie.releaseDate?.value,
+                            posterPath: movie.posterPath ?? "")
     }
+
 }
